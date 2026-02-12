@@ -9,7 +9,7 @@ btc = rel[29:34]
 won = str(int(btc) * 1450)     
 
 print("비트코인 가격:", btc + "원")
-print("원화가격:", won[:1] + "억 " + won[1:5] + "만 " + won[5:] + "원")
+print("원화가격:", won[:1] + "억 " + won[1:4] + "만 " + won[4:] + "원")
 ```
 
 #### disp.py
