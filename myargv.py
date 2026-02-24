@@ -1,6 +1,8 @@
-import sys
-args = sys.argv[1:]
-output = 0 
-for arg in args:
-    output += int(arg) 
-print(output) 
+import sys  
+numbers = sys.argv[1:] 
+
+result = 0 
+for number in numbers: 
+    result += int(number) 
+
+print(result)
