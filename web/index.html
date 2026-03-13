@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML, CSS, JavaScript 정리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg: #f7f5f0;
+        --surface: #ffffff;
+        --ink: #1a1814;
+        --muted: #8a8478;
+        --rule: #e4e0d8;
+        --html: #e05a2b;
+        --css:  #2563b0;
+        --js:   #c49a00;
+        --hover-bg: #f0ece4;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Noto Sans KR', sans-serif;
+        min-height: 100vh;
+        padding: 60px 32px 80px;
+      }
+
+      .page { max-width: 1100px; margin: 0 auto; }
+
+      /* ── 헤더 ── */
+      .page-header { margin-bottom: 48px; }
+
+      .page-header .eyebrow {
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 400;
+        margin-bottom: 12px;
+      }
+
+      .page-header h1 {
+        font-size: 42px;
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        line-height: 1.1;
+        color: var(--ink);
+      }
+
+      .page-header h1 .dot { color: var(--html); }
+
+      .page-header .desc {
+        margin-top: 14px;
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.7;
+      }
+
+      /* ── 3단 그리드 ── */
+      .columns {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        align-items: start;
+      }
+
+      /* ── 컬럼 카드 ── */
+      .col {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        border-radius: 12px;
+        overflow: hidden;
+        animation: fadeIn .4s ease both;
+      }
+
+      .col:nth-child(1) { animation-delay: .00s; }
+      .col:nth-child(2) { animation-delay: .08s; }
+      .col:nth-child(3) { animation-delay: .16s; }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(14px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ── 컬럼 헤더 ── */
+      .col-header {
+        padding: 18px 22px 16px;
+        border-bottom: 1px solid var(--rule);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .col-icon {
+        width: 34px; height: 34px;
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .html-col .col-icon { background: rgba(224,90,43,.12); color: var(--html); }
+      .css-col  .col-icon { background: rgba(37,99,176,.12);  color: var(--css);  }
+      .js-col   .col-icon { background: rgba(196,154,0,.12);  color: var(--js);   }
+
+      .col-title { font-size: 15px; font-weight: 700; }
+
+      /* ── 폴더 그룹 ── */
+      .folder-group { border-bottom: 1px solid var(--rule); }
+      .folder-group:last-child { border-bottom: none; }
+
+      /* 폴더 헤더 (클릭 가능) */
+      .folder-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 22px 9px;
+        background: #faf8f4;
+        border-bottom: 1px solid var(--rule);
+        cursor: pointer;
+        user-select: none;
+        transition: background .15s;
+      }
+
+      .folder-toggle:hover { background: #f0ece4; }
+
+      .folder-toggle.collapsed { border-bottom: none; }
+
+      .folder-chevron {
+        font-size: 10px;
+        color: var(--muted);
+        transition: transform .22s ease;
+        margin-right: 2px;
+        display: inline-block;
+      }
+
+      .folder-toggle.collapsed .folder-chevron {
+        transform: rotate(-90deg);
+      }
+
+      .folder-icon-emoji { font-size: 12px; opacity: .55; }
+
+      .folder-name {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: var(--muted);
+        font-weight: 700;
+        letter-spacing: .5px;
+        flex: 1;
+      }
+
+      .folder-count {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: var(--muted);
+        opacity: .6;
+      }
+
+      /* 폴더 내용 접기/펼치기 */
+      .folder-body {
+        overflow: hidden;
+        transition: max-height .28s cubic-bezier(.4,0,.2,1),
+                    opacity    .22s ease;
+        max-height: 1000px;
+        opacity: 1;
+      }
+
+      .folder-body.collapsed {
+        max-height: 0;
+        opacity: 0;
+      }
+
+      /* ── 링크 아이템 ── */
+      .link-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 22px;
+        text-decoration: none;
+        color: var(--ink);
+        border-bottom: 1px solid var(--rule);
+        transition: background .15s;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .link-item:last-child { border-bottom: none; }
+      .link-item:hover { background: var(--hover-bg); }
+      .link-item:hover .arrow { transform: translateX(3px); opacity: 1; }
+
+      .link-item::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 22%; bottom: 22%;
+        width: 2px;
+        border-radius: 2px;
+        opacity: 0;
+        transition: opacity .2s;
+      }
+
+      .html-col .link-item:hover::before { background: var(--html); opacity: 1; }
+      .css-col  .link-item:hover::before { background: var(--css);  opacity: 1; }
+      .js-col   .link-item:hover::before { background: var(--js);   opacity: 1; }
+
+      .item-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: var(--muted);
+        min-width: 20px;
+      }
+
+      .item-name { flex: 1; font-size: 13px; font-weight: 500; }
+
+      .arrow {
+        font-size: 13px;
+        color: var(--muted);
+        opacity: 0.3;
+        transition: transform .2s, opacity .2s;
+      }
+
+      .link-item.pending { opacity: .4; pointer-events: none; }
+
+      /* ── 미리보기 사이드 패널 ── */
+      .preview-panel {
+        position: fixed;
+        top: 0; right: 0;
+        width: min(520px, 48vw);
+        height: 100vh;
+        background: var(--surface);
+        border-left: 1px solid var(--rule);
+        box-shadow: -8px 0 32px rgba(0,0,0,.10);
+        display: flex;
+        flex-direction: column;
+        z-index: 200;
+        transform: translateX(100%);
+        transition: transform .3s cubic-bezier(.4,0,.2,1);
+        pointer-events: none;
+      }
+
+      .preview-panel.visible {
+        transform: translateX(0);
+        pointer-events: all;
+      }
+
+      .preview-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 18px;
+        background: #f4f1eb;
+        border-bottom: 1px solid var(--rule);
+        flex-shrink: 0;
+      }
+
+      .preview-dots { display: flex; gap: 5px; }
+      .preview-dot { width: 10px; height: 10px; border-radius: 50%; }
+      .preview-dot:nth-child(1) { background: #ff5f57; }
+      .preview-dot:nth-child(2) { background: #febc2e; }
+      .preview-dot:nth-child(3) { background: #28c840; }
+
+      .preview-url {
+        flex: 1;
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        border-radius: 5px;
+        padding: 4px 10px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: var(--muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .preview-open-btn {
+        background: var(--ink);
+        border: none;
+        border-radius: 5px;
+        padding: 4px 12px;
+        font-size: 11px;
+        color: #fff;
+        cursor: pointer;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-weight: 500;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: opacity .15s;
+      }
+
+      .preview-open-btn:hover { opacity: .7; }
+
+      .preview-iframe {
+        flex: 1;
+        width: 100%;
+        border: none;
+        background: #fff;
+      }
+
+      /* ── 반응형 ── */
+      @media (max-width: 720px) {
+        .columns { grid-template-columns: 1fr; }
+        body { padding: 40px 20px 60px; }
+        .preview-panel { width: 100vw; border-left: none; }
+      }
+
+      @media (max-width: 1000px) and (min-width: 721px) {
+        .columns { grid-template-columns: 1fr 1fr; }
+        .preview-panel { width: 55vw; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+
+      <header class="page-header">
+        <p class="eyebrow">웹 개발 학습 노트</p>
+        <h1>HTML, CSS<span class="dot"> &</span> JS</h1>
+      </header>
+
+      <div class="columns">
+
+        <!-- ── HTML ── -->
+        <div class="col html-col">
+          <div class="col-header">
+            <div class="col-icon">HTML</div>
+            <span class="col-title">HTML</span>
+          </div>
+
+          <div class="folder-group">
+            <div class="folder-toggle" onclick="toggleFolder(this)">
+              <span class="folder-chevron">▾</span>
+              <span class="folder-icon-emoji">📁</span>
+              <span class="folder-name">ex01</span>
+            </div>
+            <div class="folder-body">
+              <a class="link-item" data-src="./ex01/ex01-01.html" href="./ex01/ex01-01.html" target="_blank">
+                <span class="item-num">01</span>
+                <span class="item-name">헤딩 태그</span>
+                <span class="arrow">→</span>
+              </a>
+              <a class="link-item" data-src="./ex01/ex01-02.html" href="./ex01/ex01-02.html" target="_blank">
+                <span class="item-num">02</span>
+                <span class="item-name">하이퍼링크</span>
+                <span class="arrow">→</span>
+              </a>
+              <a class="link-item" data-src="./ex01/ex01-03.html" href="./ex01/ex01-03.html" target="_blank">
+                <span class="item-num">03</span>
+                <span class="item-name">띄어쓰기 & 엔터</span>
+                <span class="arrow">→</span>
+              </a>
+              <a class="link-item" data-src="./ex01/ex01-04.html" href="./ex01/ex01-04.html" target="_blank">
+                <span class="item-num">04</span>
+                <span class="item-name">자주 쓰는 태그와 특징</span>
+                <span class="arrow">→</span>
+              </a>
+              <a class="link-item" data-src="./ex01/ex01-05.html" href="./ex01/ex01-05.html" target="_blank">
+                <span class="item-num">05</span>
+                <span class="item-name">시맨틱 레이아웃</span>
+                <span class="arrow">→</span>
+              </a>
+              <a class="link-item" data-src="./ex01/ex01-06.html" href="./ex01/ex01-06.html" target="_blank">
+                <span class="item-num">06</span>
+                <span class="item-name">시메틱 태그</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="folder-group">
+            <div class="folder-toggle" onclick="toggleFolder(this)">
+              <span class="folder-chevron">▾</span>
+              <span class="folder-icon-emoji">📁</span>
+              <span class="folder-name">ex02</span>
+            </div>
+            <div class="folder-body">
+              <a class="link-item pending">
+                <span class="item-num">—</span>
+                <span class="item-name">준비 중...</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="folder-group">
+            <div class="folder-toggle" onclick="toggleFolder(this)">
+              <span class="folder-chevron">▾</span>
+              <span class="folder-icon-emoji">📁</span>
+              <span class="folder-name">ex03</span>
+            </div>
+            <div class="folder-body">
+              <a class="link-item pending">
+                <span class="item-num">—</span>
+                <span class="item-name">준비 중...</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        
+
+        <!-- ── CSS ── -->
+        <div class="col css-col">
+          <div class="col-header">
+            <div class="col-icon">CSS</div>
+            <span class="col-title">CSS</span>
+          </div>
+          <div class="folder-group">
+            <div class="folder-toggle" onclick="toggleFolder(this)">
+              <span class="folder-chevron">▾</span>
+              <span class="folder-icon-emoji">📁</span>
+              <span class="folder-name">ex01</span>
+              <span class="folder-count">—</span>
+            </div>
+            <div class="folder-body">
+              <a class="link-item pending">
+                <span class="item-num">—</span>
+                <span class="item-name">준비 중...</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── JavaScript ── -->
+        <div class="col js-col">
+          <div class="col-header">
+            <div class="col-icon">JS</div>
+            <span class="col-title">JavaScript</span>
+          </div>
+          <div class="folder-group">
+            <div class="folder-toggle" onclick="toggleFolder(this)">
+              <span class="folder-chevron">▾</span>
+              <span class="folder-icon-emoji">📁</span>
+              <span class="folder-name">ex01</span>
+              <span class="folder-count">—</span>
+            </div>
+            <div class="folder-body">
+              <a class="link-item pending">
+                <span class="item-num">—</span>
+                <span class="item-name">준비 중...</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── 미리보기 사이드 패널 ── -->
+    <div class="preview-panel" id="previewPanel">
+      <div class="preview-bar">
+        <div class="preview-dots">
+          <div class="preview-dot"></div>
+          <div class="preview-dot"></div>
+          <div class="preview-dot"></div>
+        </div>
+        <div class="preview-url" id="previewUrl"></div>
+        <a class="preview-open-btn" id="previewOpenBtn" target="_blank">↗ 새 탭</a>
+      </div>
+      <iframe class="preview-iframe" id="previewIframe"></iframe>
+    </div>
+
+    <script>
+      /* ── 폴더 접기/펼치기 ── */
+      function toggleFolder(toggle) {
+        const body = toggle.nextElementSibling;
+        const isCollapsed = body.classList.toggle('collapsed');
+        toggle.classList.toggle('collapsed', isCollapsed);
+        // 이모지도 변경
+        const emoji = toggle.querySelector('.folder-icon-emoji');
+        emoji.textContent = isCollapsed ? '📂' : '📁';
+      }
+
+      /* ── 미리보기 패널 ── */
+      const panel    = document.getElementById('previewPanel');
+      const iframe   = document.getElementById('previewIframe');
+      const urlLabel = document.getElementById('previewUrl');
+      const openBtn  = document.getElementById('previewOpenBtn');
+
+      let hideTimer  = null;
+      let showTimer  = null;
+      let currentSrc = '';
+
+      function showPreview(src) {
+        clearTimeout(hideTimer);
+        if (src === currentSrc && panel.classList.contains('visible')) return;
+        currentSrc = src;
+        iframe.src = src;
+        urlLabel.textContent = src;
+        openBtn.href = src;
+        panel.classList.add('visible');
+      }
+
+      function scheduleHide() {
+        clearTimeout(showTimer);
+        hideTimer = setTimeout(() => {
+          panel.classList.remove('visible');
+          setTimeout(() => {
+            if (!panel.classList.contains('visible')) {
+              iframe.src = '';
+              currentSrc = '';
+            }
+          }, 320);
+        }, 200);
+      }
+
+      document.querySelectorAll('.link-item[data-src]').forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          clearTimeout(hideTimer);
+          showTimer = setTimeout(() => showPreview(item.dataset.src), 150);
+        });
+        item.addEventListener('mouseleave', scheduleHide);
+      });
+
+      panel.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+      panel.addEventListener('mouseleave', scheduleHide);
+    </script>
+  </body>
+</html>
