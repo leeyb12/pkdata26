@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>패턴테스트</title>
+  </head>
+  <body>
+    <h1>패턴테스트</h1>  
+    <hr />
+
+    <fieldset>
+      <legend>전송테스트</legend>
+      <!-- form>(input+br)*3+div>em{패턴에 맞출것} -->
+      <form action="">
+        ID : <input type="text" pattern="010-[a-z0-9]{3,4}-[0-9]{4}" required /><br />
+        PW : <input type="password" required /><br />
+        Etc : <input type="text" value="멋져요!" readonly /><br />
+        <input type="submit" value="전송" /><br />
+        <div><em>패턴에 맞출것</em></div>
+      </form>
+    </fieldset>
+  </body>
+</html>

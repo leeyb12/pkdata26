@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg,#74ebd5,#ACB6E5);
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        height:100vh;
+        margin:0;
+      }
+      h1 {
+        color: #1a7328;
+        text-align:center;
+        margin-bottom:10px;
+      }
+      a {
+        display:block;
+        text-align:center;
+        margin-bottom:15px;
+        text-decoration:none;
+        color:#444;
+        font-weight:bold;
+      }
+      form {
+        background:white;
+        padding:30px;
+        border-radius:12px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        width:320px;
+      }
+      input[type=text],
+      input[type=number]{
+        width:100%;
+        padding:8px;
+        margin:5px 0 10px 0;
+        border-radius:6px;
+        border:1px solid #ccc;
+        box-sizing:border-box;
+      }
+      input[type=text]:focus,
+      input[type=number]:focus{
+        outline:none;
+        border:1px solid #4CAF50;
+        box-shadow:0 0 5px rgba(76,175,80,0.5);
+      }
+      input[type=checkbox],
+      input[type=radio]{
+        margin-right:6px;
+      }
+      input[type=submit]{
+        background:#4CAF50;
+        color:white;
+        border:none;
+        padding:10px 20px;
+        border-radius:6px;
+        cursor:pointer;
+        margin-top:10px;
+      }
+      input[type=submit]:hover{
+        background:#43a047;
+      }
+      input[type=reset]{
+        background:#f44336;
+        color:white;
+        border:none;
+        padding:10px 20px;
+        border-radius:6px;
+        cursor:pointer;
+      }
+      input[type=reset]:hover{
+        background:#d32f2f;
+      }
+      hr {
+        margin:15px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>input 기능</h1>
+    <hr />
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSczI4ZrnrxBZEi2EWjohWA5NIhx1482zVFfHhIfrcn_eCobMg/formResponse"
+          method="GET"
+    >
+        First name : <input type="text" name="entry.1588505478" /><br />
+        Last name : <input type="text" name="entry.747331064" /><br />
+        Age : 
+        <input type="number" min="12" max="20" value="15" step="1" name="entry.1851480827" />
+        <hr />
+        아침식사 밥 : 
+        <input type="checkbox" name="entry.1601537900" value="밥을 먹는다." id="" /> <br />
+        아침식사 빵 :
+        <input type="checkbox" name="entry.1601537900" value="빵을 먹는다." id="" checked /> <br />
+        <!-- ({radio$:}input:radio+br)*4 -->
+        학생인가요?: <br />
+        예<input type="radio" name="entry.1961894529" value="예" id="" checked />
+        아니요<input type="radio" name="entry.1961894529" value="아니요" id="" />
+        <hr /> 
+        공부잘하나요? <br />
+        잘해요 : <input type="radio" name="entry.143585455" value="잘해요" id="" />
+        보통요 : <input type="radio" name="entry.143585455" value="보통요" id="" checked /><br />
+        <input type="submit" />
+        <input type="reset" />
+    </form>  
+  </body>
+</html>
