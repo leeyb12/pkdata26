@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선택자 id, class</title>
+    <style>
+      * {
+        background-color: rgb(82, 195, 233);
+      }
+      div,
+      p {
+        background-color: yellow;
+        color: rgb(14, 76, 105);
+      }
+      p {
+        background-color: rgb(106, 228, 106);
+      }
+      .gym {
+        border: 2px solid #000;
+        color: #00f;
+      }
+      .bab {
+        border: 2px dotted #f00;
+      }
+      #tree {
+        color: #fff;
+        background-color: cadetblue;
+      }
+      #five {
+        color: #0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>1. 선택자 id, class</h1>
+    <hr />
+
+    <p>숫자입니다.</p>
+    <div class="gym">1</div>
+    <div class="gym bab play">2</div>
+    <div class="gym" id="tree">3</div>
+    <div class="bab">4</div>
+    <div class="bab" id="five">5</div>
+    <p>그렇다네요.</p>
+  </body>
+</html>

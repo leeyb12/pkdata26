@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>border-box</title>
+    <style>
+      div {
+        border: 1px solid gray;
+        width: 200px;
+        height: 100px;
+      }
+      .box1 {
+        box-sizing: border-box;
+        border: 30px solid rgb(53, 53, 235);
+      }
+      .box2 {
+        box-sizing: content-box;
+        border: 30px solid rgb(30, 185, 139);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>border-box</h1>
+    <hr />
+
+    <div class="box1">border-box</div>
+    <div class="box2">content-box(기본)</div>
+  </body>
+</html>

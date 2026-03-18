@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>background</title>
+    <style>
+      #container {
+        width: 1100px;
+        height: 700px;
+        margin: 50px auto;
+        border: 1px solid #ccc;
+      }
+      .box {
+        width: 300px;
+        height: 300px;
+        margin: 20px;
+        border: 1px solid coral;
+        float: left;
+        background: url(https://static.artguru.ai/_next/static/media/tips_1.a7b27fc8.jpg)
+          no-repeat left top;
+      }
+      #bg1 {
+        background-size: auto;
+      }
+      #bg2 {
+        background-size: 250px;
+      }
+      #bg3 {
+        background-size: 50%;
+      }
+      #bg4 {
+        background-size: 100% 100%;
+      }
+      #bg5 {
+        background-size: contain;
+      }
+      #bg6 {
+        background-size: cover;
+        background-position: -100px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>background</h1>
+    <hr />
+
+    <!-- div#container>(div.box#bg$)*6 -->
+    <div id="container">
+      <div class="box" id="bg1"></div>
+      <div class="box" id="bg2"></div>
+      <div class="box" id="bg3"></div>
+      <div class="box" id="bg4"></div>
+      <div class="box" id="bg5"></div>
+      <div class="box" id="bg6"></div>
+    </div>
+  </body>
+</html>

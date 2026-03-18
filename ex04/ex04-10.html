@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>background</title>
+    <style>
+      div {
+        width: 400px;
+        height: 250px;
+        border: 20px solid #ccc;
+        padding: 20px;
+        margin-bottom: 20px;
+        background: url(./data/sample_money.png) no-repeat top right / 30%;
+      }
+      #bg1 {
+        background-origin: padding-box;
+      }
+      #bg2 {
+        background-origin: border-box;
+      }
+      #bg3 {
+        background-origin: content-box;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>background</h1>
+    <hr />
+
+    <!-- (div#bg$>h2{행복을 위해서라면}+h3{시간을 벌자, 돈도 벌고}+p)*3 -->
+    <div id="bg1">
+      <h2>행복을 위해서라면</h2>
+      <h3>시간을 벌자, 돈도 벌고</h3>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione beatae
+        nostrum debitis quis, cupiditate natus in voluptates maiores ad facilis
+        a doloribus inventore recusandae quo.
+      </p>
+    </div>
+    <div id="bg2">
+      <h2>행복을 위해서라면</h2>
+      <h3>시간을 벌자, 돈도 벌고</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores
+        tempore veritatis a exercitationem repellendus voluptatibus, voluptas
+        provident eum qui nemo explicabo incidunt repudiandae numquam corporis.
+      </p>
+    </div>
+    <div id="bg3">
+      <h2>행복을 위해서라면</h2>
+      <h3>시간을 벌자, 돈도 벌고</h3>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+        dignissimos nihil inventore impedit placeat voluptate? Sit tempore
+        asperiores ab rerum aperiam libero beatae dolorum deleniti!
+      </p>
+    </div>
+  </body>
+</html>

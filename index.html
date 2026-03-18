@@ -14,6 +14,7 @@
         --rule: #e4e0d8;
         --html: #e05a2b;
         --css:  #2563b0;
+        --ex: #7979eb;
         --js:   #c49a00;
         --hover-bg: #f0ece4;
       }
@@ -72,7 +73,7 @@
       /* ── 3단 그리드 ── */
       .columns {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 24px;
         align-items: start;
       }
@@ -89,6 +90,7 @@
       .col:nth-child(1) { animation-delay: .00s; }
       .col:nth-child(2) { animation-delay: .08s; }
       .col:nth-child(3) { animation-delay: .16s; }
+      .col:nth-child(4) { animation-delay: .24s; }
 
       @keyframes fadeIn {
         from { opacity: 0; transform: translateY(14px); }
@@ -116,6 +118,7 @@
 
       .html-col .col-icon { background: rgba(224,90,43,.12); color: var(--html); }
       .css-col  .col-icon { background: rgba(37,99,176,.12);  color: var(--css);  }
+      .ex-col   .col-icon { background: rgba(128, 176, 234, .24); color: var(--ex); }
       .js-col   .col-icon { background: rgba(196,154,0,.12);  color: var(--js);   }
 
       .col-title { font-size: 15px; font-weight: 700; }
@@ -206,6 +209,7 @@
 
       .html-col .link-item:hover::before { background: var(--html); opacity: 1; }
       .css-col  .link-item:hover::before { background: var(--css);  opacity: 1; }
+      .ex-col   .link-item:hover::before { background: var(--ex);   opacity: 1; }
       .js-col   .link-item:hover::before { background: var(--js);   opacity: 1; }
 
       .item-num {
@@ -440,37 +444,37 @@
                 <span class="folder-name">ex01</span>
               </div>
               <div class="folder-body">
-                <a class="link-item" data-src="ex01-01.html" data-label="ex01-01.html">
+                <a class="link-item" data-src="./ex01/ex01-01.html" data-label="ex01-01.html">
                   <span class="item-num">01</span>
                   <span class="item-name">헤딩 태그</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex01-02.html" data-label="ex01-02.html">
+                <a class="link-item" data-src="./ex01/ex01-02.html" data-label="ex01-02.html">
                   <span class="item-num">02</span>
                   <span class="item-name">하이퍼링크</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex01-03.html" data-label="ex01-03.html">
+                <a class="link-item" data-src="./ex01/ex01-03.html" data-label="ex01-03.html">
                   <span class="item-num">03</span>
                   <span class="item-name">띄어쓰기 & 엔터</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex01-04.html" data-label="ex01-04.html">
+                <a class="link-item" data-src="./ex01/ex01-04.html" data-label="ex01-04.html">
                   <span class="item-num">04</span>
                   <span class="item-name">자주 쓰는 태그와 특징</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex01-05.html" data-label="ex01-05.html">
+                <a class="link-item" data-src="./ex01/ex01-05.html" data-label="ex01-05.html">
                   <span class="item-num">05</span>
                   <span class="item-name">시맨틱 레이아웃</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex01-06.html" data-label="ex01-06.html">
+                <a class="link-item" data-src="./ex01/ex01-06.html" data-label="ex01-06.html">
                   <span class="item-num">06</span>
                   <span class="item-name">시메틱 태그</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex01-07.html" data-label="ex01-07.html">
+                <a class="link-item" data-src="./ex01/ex01-07.html" data-label="ex01-07.html">
                   <span class="item-num">07</span>
                   <span class="item-name">링크</span>
                   <span class="arrow">→</span>
@@ -485,84 +489,69 @@
                 <span class="folder-name">ex02</span>
               </div>
               <div class="folder-body">
-                <a class="link-item" data-src="ex02-01.html" data-label="ex02-01.html">
+                <a class="link-item" data-src="./ex02/ex02-01.html" data-label="ex02-01.html">
                   <span class="item-num">01</span>
                   <span class="item-name">input 기능</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-01a.html" data-label="ex02-01a.html">
+                <a class="link-item" data-src="./ex02/ex02-01a.html" data-label="ex02-01a.html">
                   <span class="item-num">01-1</span>
                   <span class="item-name">input 기능-2</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-02.html" data-label="ex02-02.html">
+                <a class="link-item" data-src="./ex02/ex02-02.html" data-label="ex02-02.html">
                   <span class="item-num">02</span>
                   <span class="item-name">input 응용</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-02a.html" data-label="ex02-02a.html">
+                <a class="link-item" data-src="./ex02/ex02-02a.html" data-label="ex02-02a.html">
                   <span class="item-num">02-1</span>
                   <span class="item-name">알림창</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-03.html" data-label="ex02-03.html">
+                <a class="link-item" data-src="./ex02/ex02-03.html" data-label="ex02-03.html">
                   <span class="item-num">03</span>
                   <span class="item-name">패턴테스트</span>
                   <span class="arrow">→</span>                  
                 </a>
-                <a class="link-item" data-src="ex02-04.html" data-label="ex02-04.html">
+                <a class="link-item" data-src="./ex02/ex02-04.html" data-label="ex02-04.html">
                   <span class="item-num">04</span>
                   <span class="item-name">input 응용-2</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-05.html" data-label="ex02-05.html">
+                <a class="link-item" data-src="./ex02/ex02-05.html" data-label="ex02-05.html">
                   <span class="item-num">05</span>
                   <span class="item-name">리스트 응용</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-06.html" data-label="ex02-06.html">
+                <a class="link-item" data-src="./ex02/ex02-06.html" data-label="ex02-06.html">
                   <span class="item-num">06</span>
                   <span class="item-name">연습문제</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-07.html" data-label="ex02-07.html">
+                <a class="link-item" data-src="./ex02/ex02-07.html" data-label="ex02-07.html">
                   <span class="item-num">07</span>
                   <span class="item-name">리스트 응용-2</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-08.html" data-label="ex02-08.html">
+                <a class="link-item" data-src="./ex02/ex02-08.html" data-label="ex02-08.html">
                   <span class="item-num">08</span>
                   <span class="item-name">정의리스트</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-09.html" data-label="ex02-09.html">
+                <a class="link-item" data-src="./ex02/ex02-09.html" data-label="ex02-09.html">
                   <span class="item-num">09</span>
                   <span class="item-name">오디오와 비디오 삽입하기</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-10.html" data-label="ex02-10.html">
+                <a class="link-item" data-src="./ex02/ex02-10.html" data-label="ex02-10.html">
                   <span class="item-num">10</span>
                   <span class="item-name">표 구조</span>
                   <span class="arrow">→</span>
                 </a>
-                <a class="link-item" data-src="ex02-11.html" data-label="ex02-11.html">
+                <a class="link-item" data-src="./ex02/ex02-11.html" data-label="ex02-11.html">
                   <span class="item-num">11</span>
                   <span class="item-name">표 구조 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex03</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item pending">
-                  <span class="item-num">—</span>
-                  <span class="item-name">준비 중...</span>
                   <span class="arrow">→</span>
                 </a>
               </div>
@@ -579,13 +568,191 @@
               <div class="folder-toggle" onclick="toggleFolder(this)">
                 <span class="folder-chevron">▾</span>
                 <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex01</span>
+                <span class="folder-name">ex03</span>
                 <span class="folder-count">—</span>
               </div>
               <div class="folder-body">
-                <a class="link-item pending">
-                  <span class="item-num">—</span>
-                  <span class="item-name">준비 중...</span>
+                <a class="link-item" data-src="./ex03/ex03-01.html" data-label="ex03-01.html">
+                  <span class="item-num">01</span>
+                  <span class="item-name">테이블 구조</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-02.html" data-label="ex03-02.html">
+                  <span class="item-num">02</span>
+                  <span class="item-name">테이블 응용</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-03.html" data-label="ex03-03.html">
+                  <span class="item-num">03</span>
+                  <span class="item-name">태그 그외</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-04.html" data-label="ex03-04.html">
+                  <span class="item-num">04</span>
+                  <span class="item-name">외부스타일</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-05.html" data-label="ex03-05.html">
+                  <span class="item-num">05</span>
+                  <span class="item-name">div 응용</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-06.html" data-label="ex03-06.html">
+                  <span class="item-num">06</span>
+                  <span class="item-name">선택자 id, class</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-07.html" data-label="ex03-07.html">
+                  <span class="item-num">07</span>
+                  <span class="item-name">복합선택자</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-08.html" data-label="ex03-08.html">
+                  <span class="item-num">08</span>
+                  <span class="item-name">자식선택자</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-09.html" data-label="ex03-09.html">
+                  <span class="item-num">09</span>
+                  <span class="item-name">인접선택자</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-10.html" data-label="ex03-10.html">
+                  <span class="item-num">10</span>
+                  <span class="item-name">형제 선택자</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-11.html" data-label="ex03-11.html">
+                  <span class="item-num">11</span>
+                  <span class="item-name">CDN , 구글폰트</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex03/ex03-12.html" data-label="ex03-12.html">
+                  <span class="item-num">12</span>
+                  <span class="item-name">여기서부터 아이콘</span>
+                  <span class="arrow">→</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="folder-group">
+              <div class="folder-toggle" onclick="toggleFolder(this)">
+                <span class="folder-chevron">▾</span>
+                <span class="folder-icon-emoji">📁</span>
+                <span class="folder-name">ex04</span>
+                <span class="folder-count">—</span>
+              </div>
+              <div class="folder-body">
+                <a class="link-item" data-src="./ex04/ex04-01.html" data-label="ex04-01.html">
+                  <span class="item-num">01</span>
+                  <span class="item-name">속성선택자</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-02.html" data-label="ex04-02.html">
+                  <span class="item-num">02</span>
+                  <span class="item-name">가상선택자 응용</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-03.html" data-label="ex04-03.html">
+                  <span class="item-num">03</span>
+                  <span class="item-name">미니얼페이지</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-04.html" data-label="ex04-04.html">
+                  <span class="item-num">04</span>
+                  <span class="item-name">폰트</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-05.html" data-label="ex04-05.html">
+                  <span class="item-num">05</span>
+                  <span class="item-name">텍스트 정렬</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-06.html" data-label="ex04-06.html">
+                  <span class="item-num">06</span>
+                  <span class="item-name">줄간격</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-07.html" data-label="ex04-07.html">
+                  <span class="item-num">07</span>
+                  <span class="item-name">text-decoration</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-08.html" data-label="ex04-08.html">
+                  <span class="item-num">08</span>
+                  <span class="item-name">text-decoration</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-09.html" data-label="ex04-09.html">
+                  <span class="item-num">09</span>
+                  <span class="item-name">border-box</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-10.html" data-label="ex04-10.html">
+                  <span class="item-num">10</span>
+                  <span class="item-name">background</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-11.html" data-label="ex04-11.html">
+                  <span class="item-num">11</span>
+                  <span class="item-name">border</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-12.html" data-label="ex04-12.html">
+                  <span class="item-num">12</span>
+                  <span class="item-name">box position</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-13.html" data-label="ex04-13.html">
+                  <span class="item-num">13</span>
+                  <span class="item-name">프사만들기</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-14.html" data-label="ex04-14.html">
+                  <span class="item-num">14</span>
+                  <span class="item-name">position</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-15.html" data-label="ex04-15.html">
+                  <span class="item-num">15</span>
+                  <span class="item-name">float</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-16.html" data-label="ex04-07.html">
+                  <span class="item-num">16</span>
+                  <span class="item-name">리스트 응용</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./ex04/ex04-17.html" data-label="ex04-17.html">
+                  <span class="item-num">17</span>
+                  <span class="item-name">background 2</span>
+                  <span class="arrow">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col ex-col">
+            <div class="col-header">
+              <div class="col-icon">CSS</div>
+              <span class="col-title">CSS 파일</span>
+            </div>
+            <div class="folder-group">
+              <div class="folder-toggle" onclick="toggleFolder(this)">
+                <span class="folder-chevron">▾</span>
+                <span class="folder-icon-emoji">📁</span>
+                <span class="folder-name">파일 모음</span>
+                <span class="folder-count">—</span>
+              </div>
+              <div class="folder-body">
+                <a class="link-item" data-src="./ex03/ex03-04.css" data-label="ex03-04.css">
+                  <span class="item-num">01</span>
+                  <span class="item-name">외부 스타일 CSS</span>
+                  <span class="arrow">→</span>
+                </a>
+                <a class="link-item" data-src="./myreset.css" data-label="myreset.css">
+                  <span class="item-num">02</span>
+                  <span class="item-name">리셋 CSS</span>
                   <span class="arrow">→</span>
                 </a>
               </div>

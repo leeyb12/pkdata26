@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>속성선택자</title>
+    <style>
+       /* 속성의 키값만 */
+       /* [lyb] {
+        color: blueviolet;
+       } */
+       /* 정확하게 지정 */
+       /* p[class="item"] {
+         color: rgb(33,168, 6);
+       } */
+       /* item이 들어가거나 item- 시리즈일때 */
+       p [class |="item"] {
+        color: blue;
+       }
+       /* item이라고 문구가 들어가면 모두다 */
+       /* p [class*="item"] {
+        color: rgb(218, 90, 5);
+       } */
+       /* item 문구가 혼자있거나 뒤에 배치될 때 */
+       /* p[class$="item"] {
+        color: rgb(194, 226, 14);
+       } */
+       /* item 문구가 혼자있거나 앞에 배치될 때 */
+       /* p[class^="item"] {
+        color: rgb(16, 239, 225);
+       } */
+       /* item이 순수히 혼자 글자일 때 */
+       /* p[class~="item"] {
+        color: rgb(250, 125, 223);
+       } */
+    </style>
+  </head>
+  <body>
+    <h1>속성선택자</h1>
+    <hr />
+    
+    <h2 lyb="who">속성선택자의 내용</h2>
+    <h2 class="logo">부산광역시</h2>
+    <h2 id="kyungsang">경상도</h2>
+    <!-- p.item{작성합니다}*7 -->
+    <p class="item">주소록을 작성합니다</p>
+    <p class="itempage">전화번호를 작성합니다</p>
+    <p class="screenitem">건강기록부를 작성합니다</p>
+    <p class="who item me">금전출납부를 작성합니다</p>
+    <p class="item-1">손익계산서를 작성합니다</p>
+    <p class="item-a">이익계산서를 작성합니다</p>
+    <p class="a-item">손해계산서를 작성합니다</p>
+  </body>
+</html>

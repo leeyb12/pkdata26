@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>position</title>
+    <style>
+      .grandparent {
+        width: 200px;
+        height: 200px;
+        background-color: rgb(21, 153, 153);
+        position: relative;
+      }
+      .parent {
+        width: 150px;
+        height: 150px;
+        background-color: rgb(255, 192, 110);
+        position: absolute;
+        top: 20px;
+      }
+      .child {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(30, 47, 139);
+        position: absolute;
+        top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>position</h1>
+    <hr />
+
+    <h2>조부모, 부모, 자식 관계</h2>
+    <!-- div.grandparent>div.parent>div.child -->
+    <div class="grandparent">
+      <div class="parent">
+        <div class="child"></div>
+      </div>
+    </div>
+  </body>
+</html>
