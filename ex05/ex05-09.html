@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가상요소선택자 응용</title>
+    <style>
+      li {
+        list-style: none;
+        float: left;
+        padding: 0  15px;
+        /* margin: 0 15px; */
+        cursor: pointer;
+      }
+      li::after {
+        content: "|";
+        color: #888;
+        margin-right: -17px;
+        float: right;
+      }
+      li:last-of-type::after {
+        content: "";
+      }
+    </style>
+  </head>
+  <body>
+    <h1>메뉴만들기</h1>  
+    <hr />
+    
+    <ul>
+      <li>로그인</li>
+      <li>회원가입</li>
+      <li>마이페이지</li>
+      <li>사이트맵</li>
+      <li>고객센터</li>
+    </ul>
+    <script>
+      const pt = document.querySelectorAll("li")
+
+      pt.forEach((v) => {
+        v.addEventListener("click", () => {
+            alert("누르지마!");
+        });
+      });
+    </script>
+  </body>
+</html>

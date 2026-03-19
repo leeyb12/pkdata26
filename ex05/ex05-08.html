@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가상요소선택자</title>
+    <style>
+      p::before {
+        content: "🍥";
+      }
+      p:first-of-type {
+        color: blue;
+      }
+      p:first-of-type::after {
+        content: "다영";
+        color: brown;
+      }
+      p:nth-of-type(2) {
+        background-color: yellow;
+        display: inline;
+        color: cadetblue;
+      }
+      p:nth-of-type(3)::after {
+        content: "💵";
+        font-size: 0.5rem;
+      }
+      p:nth-last-of-type(2)::after {
+        content: " 메로나 ~ 🍦🍦";
+        color: aquamarine;
+      }
+      p:last-of-type:after {
+        content: "감사합니다.";
+        color: white;
+        background-color: black;;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>가상요소선택자</h1>  
+    <hr />
+
+    <p>나의사랑</p>
+    <p>나의가족</p>
+    <p>행복미래</p>
+    <p>올 때</p>
+    <p>이제 끝.</p>
+  </body>
+</html>

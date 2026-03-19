@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>달력</title>
+    <style>
+      :root {
+        --cwidth: 293px;
+        --cheight: 35px;
+      }
+      h2 {
+        background-color: rgb(26, 83, 136);
+        width: var(--cwidth);
+        height: var(--cheight);
+        text-align: center;
+        color: white;
+        margin-bottom: 3px;
+      }
+      div {
+        width: var(--cwidth);
+        background-color: beige;
+        height: 210px;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      div > div {
+        width: 30px;
+        height: 30px;
+        border: 1px solid blue;
+        float: left;
+        margin: 4px;
+        font-size: 1.1rem;
+      }
+      div > div:nth-of-type(-n + 3) {
+        opacity: 0;
+      }
+ 
+      div > div:nth-of-type(7n) {
+        color: blue;
+      }
+
+      div > div:nth-of-type(7n - 6) {
+        color: red;
+      }
+      div > div:nth-of-type(7) {
+        color: red;
+      }
+      div > div:nth-of-type(n + 17):nth-of-type(-n + 19) {
+        color: green;
+      }
+      div > div:nth-of-type(n + 3):nth-of-type(-n + 10) {
+        background-color: rgb(207, 253, 255);
+      }
+ 
+      div > div:nth-of-type(n + 13):nth-of-type(-n + 18) {
+        background-color: rgb(251, 255, 0);
+      }
+
+      div > div:nth-of-type(n + 30) {
+        background-color: rgb(162, 248, 151);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>달력</h1>
+    <hr />
+ 
+    <h2>2026년 4월 달력</h2>
+    <div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+      <div>10</div>
+      <div>11</div>
+      <div>12</div>
+      <div>13</div>
+      <div>14</div>
+      <div>15</div>
+      <div>16</div>
+      <div>17</div>
+      <div>18</div>
+      <div>19</div>
+      <div>20</div>
+      <div>21</div>
+      <div>22</div>
+      <div>23</div>
+      <div>24</div>
+      <div>25</div>
+      <div>26</div>
+      <div>27</div>
+      <div>28</div>
+      <div>29</div>
+      <div>30</div>
+    </div>
+  </body>
+</html>
