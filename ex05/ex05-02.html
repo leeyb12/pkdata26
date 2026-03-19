@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>position</title>
+    <style>
+      .table-wrapper {
+        max-height: 200px;
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        /* border-collapse: collapse; */
+        /* border-collapse: separate; */
+        table-layout: fixed;
+        border-spacing: 0;
+      }
+      th, 
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+      thead,
+      tfoot {
+        position: sticky;
+        color: white;
+        background-color: rgb(47, 100, 143);
+      }
+      thead {
+        top: 0;
+      }
+      tfoot {
+        bottom: 0;
+      }
+      #fix {
+        position: fixed;
+        right: 30px;
+        bottom: 170px;
+        background-color: rgb(46, 120,231);
+        padding: 10px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 2rem;
+        color: white;
+        text-align: center;
+        line-height: 1;
+        box-shadow: 5px 5px 20px 2px black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>position fixed</h1>  
+    <hr />
+
+    <!-- div.table-wrapper>table>thead>tr>th*4^^tbody>(tr>td*4)*10^^tfoot>tr>td*4 -->
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>나이</th>
+            <th>직업</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>홍길동</td>
+            <td>25</td>
+            <td>아버지 없음</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>이순신</td>
+            <td>32</td>
+            <td>알리지 마라</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>궁예</td>
+            <td>45</td>
+            <td>누가기침을하였는가</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>세종대왕</td>
+            <td>53</td>
+            <td>고기반찬필수</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>허준</td>
+            <td>48</td>
+            <td>줄을서시오</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>김두한</td>
+            <td>35</td>
+            <td>사딸라</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>심청이</td>
+            <td>16</td>
+            <td>공양미300석</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>신사임당</td>
+            <td>47</td>
+            <td>5만원권주인공</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>흥부</td>
+            <td>40</td>
+            <td>제비다리수리전문</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>단군할아버지</td>
+            <td>1908</td>
+            <td>쑥과마늘매니아</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">명단의 끝</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div id="fix">^</div>
+  </body>
+</html>

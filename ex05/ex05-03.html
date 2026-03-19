@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사진 가운데</title>
+    <style>
+      :root {
+        --width1 : 400px;
+      }
+      div {
+        width: 100%;
+      }
+      /* img {
+        display: block;
+        margin: 10px auto;
+      } */
+      img {
+        position: relative;
+        width: var(--width1);
+        left: calc(50% - var(--width1) / 2);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>가운데 정렬</h1>  
+    <hr />
+    <div>
+      <img 
+        src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/4Ypp/image/29HXYkgORgijEp3mNVjr0s4flxk.jpg" 
+        alt="" 
+      />
+    </div>
+  </body>
+</html>

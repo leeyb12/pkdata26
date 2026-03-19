@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가상클래스</title>
+    <style>
+      p:nth-child(4) {
+        color: red;
+      }
+      p:nth-of-type(2) {
+        color: blue;
+      }
+      p:nth-of-type(odd) {
+        background-color: darkseagreen;
+      }
+      p:nth-of-type(even) {
+        background-color: cornflowerblue;
+      }
+      p:nth-child(odd) {
+        border: 5px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>가상클래스</h1>
+    <hr />
+    <!-- div{여기는 세는 곳이 아님}*3+p{$번째 태그}*6 -->
+    <div>여기는 세는 곳이 아님</div>
+    <p>1번째 태그</p>
+    <p>2번째 태그</p>
+    <div>여기는 세는 곳이 아님</div>
+    <p>3번째 태그</p>
+    <p>4번째 태그</p>
+    <div>여기는 세는 곳이 아님</div>
+    <p>5번째 태그</p>
+    <p>6번째 태그</p>
+  </body>
+</html>
