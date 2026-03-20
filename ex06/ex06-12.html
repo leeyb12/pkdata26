@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일업로드</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+      label {
+        background-color: rgb(54, 119, 163);
+        border-radius: 20px;
+        padding: 25px 40px 30px;
+        color: white;
+        font-size: 2.5rem;
+        margin: 20px;
+      }
+      input {
+        display: none;
+      }
+      button {
+        width: 100px;
+        border: none;
+        background-color: rgb(124, 166, 255);
+        color: white;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+      button:disabled {
+        background-color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>파일업로드</h1>
+    <hr />
+    
+    <div class="container">
+      <label for="fileinput">+</label>
+      <input type="file" id="fileinput" />
+      <button>전송</button>
+
+      <script>
+        const btn = document.querySelector("button");
+        const inp = document.querySelector("#fileinput");
+
+        btn.addEventListener("click", () => alert("클릭했어요!"));
+        inp.addEventListener("change", () => {
+          console.log(inp.files[0].name, inp.files[0].size);
+          if (inp.files[0].size > 1 * 1024 * 1024) {
+            alert("파일의 용량이 1M을 초과하였습니다.");
+            btn.disabled = true;
+            btn.textContent = "불가";
+          } else {
+            alert("파일을 준비하였습니다.");
+            btn.disabled = false;
+            btn.textContent = "전송.";
+          }
+        });
+      </script>
+    </div>
+  </body>
+</html>

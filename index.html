@@ -1,1003 +1,659 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML, CSS, JavaScript 정리</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        --bg: #f7f5f0;
-        --surface: #ffffff;
-        --ink: #1a1814;
-        --muted: #8a8478;
-        --rule: #e4e0d8;
-        --html: #e05a2b;
-        --css:  #2563b0;
-        --ex: #7979eb;
-        --js:   #c49a00;
-        --hover-bg: #f0ece4;
-      }
-
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-
-      body {
-        background: var(--bg);
-        color: var(--ink);
-        font-family: 'Noto Sans KR', sans-serif;
-        min-height: 100vh;
-        /* overflow: hidden 제거 → 세로 스크롤 허용 */
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-
-      /* ════════════════════════════════
-         홈 화면 (index view)
-      ════════════════════════════════ */
-      #home-view {
-        padding: 60px 32px 80px;
-        min-height: 100vh;
-        /* overflow-y: auto 제거 → body가 스크롤 담당 */
-        transition: opacity .25s ease;
-      }
-
-      #home-view.hidden {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .page { max-width: 1100px; margin: 0 auto; }
-
-      /* ── 헤더 ── */
-      .page-header { margin-bottom: 48px; }
-
-      .page-header .eyebrow {
-        font-size: 11px;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        color: var(--muted);
-        font-weight: 400;
-        margin-bottom: 12px;
-      }
-
-      .page-header h1 {
-        font-size: 42px;
-        font-weight: 900;
-        letter-spacing: -1.5px;
-        line-height: 1.1;
-        color: var(--ink);
-      }
-
-      .page-header h1 .dot { color: var(--html); }
-
-      /* ── 3단 그리드 ── */
-      .columns {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-        align-items: start;
-      }
-
-      /* ── 컬럼 카드 ── */
-      .col {
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 12px;
-        overflow: hidden;
-        animation: fadeIn .4s ease both;
-      }
-
-      .col:nth-child(1) { animation-delay: .00s; }
-      .col:nth-child(2) { animation-delay: .08s; }
-      .col:nth-child(3) { animation-delay: .16s; }
-      .col:nth-child(4) { animation-delay: .24s; }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(14px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-
-      /* ── 컬럼 헤더 ── */
-      .col-header {
-        padding: 18px 22px 16px;
-        border-bottom: 1px solid var(--rule);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .col-icon {
-        width: 34px; height: 34px;
-        border-radius: 8px;
-        display: flex; align-items: center; justify-content: center;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        font-weight: 700;
-        flex-shrink: 0;
-      }
-
-      .html-col .col-icon { background: rgba(224,90,43,.12); color: var(--html); }
-      .css-col  .col-icon { background: rgba(37,99,176,.12);  color: var(--css);  }
-      .ex-col   .col-icon { background: rgba(128, 176, 234, .24); color: var(--ex); }
-      .js-col   .col-icon { background: rgba(196,154,0,.12);  color: var(--js);   }
-
-      .col-title { font-size: 15px; font-weight: 700; }
-
-      /* ── 폴더 그룹 ── */
-      .folder-group { border-bottom: 1px solid var(--rule); }
-      .folder-group:last-child { border-bottom: none; }
-
-      .folder-toggle {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 22px 9px;
-        background: #faf8f4;
-        border-bottom: 1px solid var(--rule);
-        cursor: pointer;
-        user-select: none;
-        transition: background .15s;
-      }
-
-      .folder-toggle:hover { background: #f0ece4; }
-      .folder-toggle.collapsed { border-bottom: none; }
-
-      .folder-chevron {
-        font-size: 10px;
-        color: var(--muted);
-        transition: transform .22s ease;
-        margin-right: 2px;
-        display: inline-block;
-      }
-
-      .folder-toggle.collapsed .folder-chevron { transform: rotate(-90deg); }
-
-      .folder-icon-emoji { font-size: 12px; opacity: .55; }
-
-      .folder-name {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        color: var(--muted);
-        font-weight: 700;
-        letter-spacing: .5px;
-        flex: 1;
-      }
-
-      .folder-count {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        color: var(--muted);
-        opacity: .6;
-      }
-
-      .folder-body {
-        overflow: hidden;
-        transition: max-height .28s cubic-bezier(.4,0,.2,1), opacity .22s ease;
-        max-height: 1000px;
-        opacity: 1;
-      }
-
-      .folder-body.collapsed { max-height: 0; opacity: 0; }
-
-      /* ── 링크 아이템 ── */
-      .link-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 13px 22px;
-        text-decoration: none;
-        color: var(--ink);
-        border-bottom: 1px solid var(--rule);
-        transition: background .15s;
-        position: relative;
-        cursor: pointer;
-      }
-
-      .link-item:last-child { border-bottom: none; }
-      .link-item:hover { background: var(--hover-bg); }
-      .link-item:hover .arrow { transform: translateX(3px); opacity: 1; }
-
-      .link-item::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 22%; bottom: 22%;
-        width: 2px;
-        border-radius: 2px;
-        opacity: 0;
-        transition: opacity .2s;
-      }
-
-      .html-col .link-item:hover::before { background: var(--html); opacity: 1; }
-      .css-col  .link-item:hover::before { background: var(--css);  opacity: 1; }
-      .ex-col   .link-item:hover::before { background: var(--ex);   opacity: 1; }
-      .js-col   .link-item:hover::before { background: var(--js);   opacity: 1; }
-
-      .item-num {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        color: var(--muted);
-        min-width: 20px;
-      }
-
-      .item-name { flex: 1; font-size: 13px; font-weight: 500; }
-
-      .arrow {
-        font-size: 13px;
-        color: var(--muted);
-        opacity: 0.3;
-        transition: transform .2s, opacity .2s;
-      }
-
-      .link-item.pending { opacity: .4; pointer-events: none; }
-
-      /* ════════════════════════════════
-         ★ 추가: 호버 미리보기 사이드 패널
-      ════════════════════════════════ */
-      #preview-panel {
-        position: fixed;
-        top: 0; right: 0;
-        width: min(480px, 44vw);
-        height: 100vh;
-        background: var(--surface);
-        border-left: 1px solid var(--rule);
-        box-shadow: -8px 0 32px rgba(0,0,0,.10);
-        display: flex;
-        flex-direction: column;
-        z-index: 150;
-        /* 기본: 오른쪽으로 숨김 */
-        transform: translateX(100%);
-        transition: transform .3s cubic-bezier(.4,0,.2,1);
-      }
-
-      #preview-panel.visible {
-        transform: translateX(0);
-      }
-
-      .preview-bar {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 14px;
-        background: #f4f1eb;
-        border-bottom: 1px solid var(--rule);
-        flex-shrink: 0;
-      }
-
-      .preview-dots { display: flex; gap: 4px; }
-      .preview-dot  { width: 8px; height: 8px; border-radius: 50%; }
-      .preview-dot:nth-child(1) { background: #ff5f57; }
-      .preview-dot:nth-child(2) { background: #febc2e; }
-      .preview-dot:nth-child(3) { background: #28c840; }
-
-      .preview-url {
-        flex: 1;
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 4px;
-        padding: 3px 8px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 9px;
-        color: var(--muted);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .preview-hint {
-        font-size: 9px;
-        color: var(--muted);
-        opacity: .7;
-        font-family: 'JetBrains Mono', monospace;
-        white-space: nowrap;
-      }
-
-      #preview-iframe {
-        flex: 1;
-        width: 100%;
-        border: none;
-        background: #fff;
-      }
-
-      /* ════════════════════════════════
-         파일 뷰어 (viewer view)
-      ════════════════════════════════ */
-      #viewer-view {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        background: var(--surface);
-        z-index: 300;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity .25s ease;
-      }
-
-      #viewer-view.visible {
-        opacity: 1;
-        pointer-events: all;
-      }
-
-      /* 뷰어 상단 바 */
-      .viewer-bar {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 10px 18px;
-        background: #f4f1eb;
-        border-bottom: 1px solid var(--rule);
-        flex-shrink: 0;
-      }
-
-      /* 홈 버튼 */
-      .home-btn {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: var(--ink);
-        color: #fff;
-        border: none;
-        border-radius: 7px;
-        padding: 6px 14px;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-size: 12px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: opacity .15s;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
-
-      .home-btn:hover { opacity: .75; }
-
-      .home-btn svg {
-        width: 13px; height: 13px;
-        fill: currentColor;
-      }
-
-      /* 브레드크럼 구분선 */
-      .viewer-sep {
-        font-size: 14px;
-        color: var(--rule);
-        flex-shrink: 0;
-      }
-
-      /* URL 바 */
-      .viewer-url {
-        flex: 1;
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-radius: 5px;
-        padding: 5px 12px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 11px;
-        color: var(--muted);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      /* 새 탭 버튼 */
-      .newtab-btn {
-        background: transparent;
-        border: 1px solid var(--rule);
-        border-radius: 7px;
-        padding: 5px 12px;
-        font-size: 11px;
-        color: var(--ink);
-        cursor: pointer;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-weight: 500;
-        text-decoration: none;
-        white-space: nowrap;
-        transition: background .15s;
-        flex-shrink: 0;
-      }
-
-      .newtab-btn:hover { background: var(--hover-bg); }
-
-      /* iframe */
-      .viewer-iframe {
-        flex: 1;
-        width: 100%;
-        border: none;
-        background: #fff;
-      }
-
-      /* ── 반응형 ── */
-      @media (max-width: 720px) {
-        .columns { grid-template-columns: 1fr; }
-        #home-view { padding: 40px 20px 60px; }
-        #preview-panel { display: none; } /* 모바일에서는 미리보기 숨김 */
-      }
-
-      @media (max-width: 1000px) and (min-width: 721px) {
-        .columns { grid-template-columns: 1fr 1fr; }
-        #preview-panel { width: 52vw; }
-      }
-    </style>
-  </head>
-  <body>
-
-    <!-- ════════ 홈 화면 ════════ -->
-    <div id="home-view">
-      <div class="page">
-
-        <header class="page-header">
-          <p class="eyebrow">웹 개발 학습 노트</p>
-          <h1>HTML, CSS<span class="dot"> &</span> JS</h1>
-        </header>
-
-        <div class="columns">
-
-          <!-- ── HTML ── -->
-          <div class="col html-col">
-            <div class="col-header">
-              <div class="col-icon">HTML</div>
-              <span class="col-title">HTML</span>
-            </div>
-
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex01</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex01/ex01-01.html" data-label="ex01-01.html">
-                  <span class="item-num">01</span>
-                  <span class="item-name">헤딩 태그</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex01/ex01-02.html" data-label="ex01-02.html">
-                  <span class="item-num">02</span>
-                  <span class="item-name">하이퍼링크</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex01/ex01-03.html" data-label="ex01-03.html">
-                  <span class="item-num">03</span>
-                  <span class="item-name">띄어쓰기 & 엔터</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex01/ex01-04.html" data-label="ex01-04.html">
-                  <span class="item-num">04</span>
-                  <span class="item-name">자주 쓰는 태그와 특징</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex01/ex01-05.html" data-label="ex01-05.html">
-                  <span class="item-num">05</span>
-                  <span class="item-name">시맨틱 레이아웃</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex01/ex01-06.html" data-label="ex01-06.html">
-                  <span class="item-num">06</span>
-                  <span class="item-name">시메틱 태그</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex01/ex01-07.html" data-label="ex01-07.html">
-                  <span class="item-num">07</span>
-                  <span class="item-name">링크</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex02</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex02/ex02-01.html" data-label="ex02-01.html">
-                  <span class="item-num">01</span>
-                  <span class="item-name">input 기능</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-01a.html" data-label="ex02-01a.html">
-                  <span class="item-num">01-1</span>
-                  <span class="item-name">input 기능-2</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-02.html" data-label="ex02-02.html">
-                  <span class="item-num">02</span>
-                  <span class="item-name">input 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-02a.html" data-label="ex02-02a.html">
-                  <span class="item-num">02-1</span>
-                  <span class="item-name">알림창</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-03.html" data-label="ex02-03.html">
-                  <span class="item-num">03</span>
-                  <span class="item-name">패턴테스트</span>
-                  <span class="arrow">→</span>                  
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-04.html" data-label="ex02-04.html">
-                  <span class="item-num">04</span>
-                  <span class="item-name">input 응용-2</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-05.html" data-label="ex02-05.html">
-                  <span class="item-num">05</span>
-                  <span class="item-name">리스트 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-06.html" data-label="ex02-06.html">
-                  <span class="item-num">06</span>
-                  <span class="item-name">연습문제</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-07.html" data-label="ex02-07.html">
-                  <span class="item-num">07</span>
-                  <span class="item-name">리스트 응용-2</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-08.html" data-label="ex02-08.html">
-                  <span class="item-num">08</span>
-                  <span class="item-name">정의리스트</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-09.html" data-label="ex02-09.html">
-                  <span class="item-num">09</span>
-                  <span class="item-name">오디오와 비디오 삽입하기</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-10.html" data-label="ex02-10.html">
-                  <span class="item-num">10</span>
-                  <span class="item-name">표 구조</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex02/ex02-11.html" data-label="ex02-11.html">
-                  <span class="item-num">11</span>
-                  <span class="item-name">표 구조 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── CSS ── -->
-          <div class="col css-col">
-            <div class="col-header">
-              <div class="col-icon">CSS</div>
-              <span class="col-title">CSS</span>
-            </div>
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex03</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex03/ex03-01.html" data-label="ex03-01.html">
-                  <span class="item-num">01</span>
-                  <span class="item-name">테이블 구조</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-02.html" data-label="ex03-02.html">
-                  <span class="item-num">02</span>
-                  <span class="item-name">테이블 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-03.html" data-label="ex03-03.html">
-                  <span class="item-num">03</span>
-                  <span class="item-name">태그 그외</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-04.html" data-label="ex03-04.html">
-                  <span class="item-num">04</span>
-                  <span class="item-name">외부스타일</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-05.html" data-label="ex03-05.html">
-                  <span class="item-num">05</span>
-                  <span class="item-name">div 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-06.html" data-label="ex03-06.html">
-                  <span class="item-num">06</span>
-                  <span class="item-name">선택자 id, class</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-07.html" data-label="ex03-07.html">
-                  <span class="item-num">07</span>
-                  <span class="item-name">복합선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-08.html" data-label="ex03-08.html">
-                  <span class="item-num">08</span>
-                  <span class="item-name">자식선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-09.html" data-label="ex03-09.html">
-                  <span class="item-num">09</span>
-                  <span class="item-name">인접선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-10.html" data-label="ex03-10.html">
-                  <span class="item-num">10</span>
-                  <span class="item-name">형제 선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-11.html" data-label="ex03-11.html">
-                  <span class="item-num">11</span>
-                  <span class="item-name">CDN , 구글폰트</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex03/ex03-12.html" data-label="ex03-12.html">
-                  <span class="item-num">12</span>
-                  <span class="item-name">여기서부터 아이콘</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex04</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex04/ex04-01.html" data-label="ex04-01.html">
-                  <span class="item-num">01</span>
-                  <span class="item-name">속성선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-02.html" data-label="ex04-02.html">
-                  <span class="item-num">02</span>
-                  <span class="item-name">가상선택자 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-03.html" data-label="ex04-03.html">
-                  <span class="item-num">03</span>
-                  <span class="item-name">미니얼페이지</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-04.html" data-label="ex04-04.html">
-                  <span class="item-num">04</span>
-                  <span class="item-name">폰트</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-05.html" data-label="ex04-05.html">
-                  <span class="item-num">05</span>
-                  <span class="item-name">텍스트 정렬</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-06.html" data-label="ex04-06.html">
-                  <span class="item-num">06</span>
-                  <span class="item-name">줄간격</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-07.html" data-label="ex04-07.html">
-                  <span class="item-num">07</span>
-                  <span class="item-name">text-decoration</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-08.html" data-label="ex04-08.html">
-                  <span class="item-num">08</span>
-                  <span class="item-name">text-shadow</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-09.html" data-label="ex04-09.html">
-                  <span class="item-num">09</span>
-                  <span class="item-name">border-box</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-10.html" data-label="ex04-10.html">
-                  <span class="item-num">10</span>
-                  <span class="item-name">background</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-11.html" data-label="ex04-11.html">
-                  <span class="item-num">11</span>
-                  <span class="item-name">border</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-12.html" data-label="ex04-12.html">
-                  <span class="item-num">12</span>
-                  <span class="item-name">box position</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-13.html" data-label="ex04-13.html">
-                  <span class="item-num">13</span>
-                  <span class="item-name">프사만들기</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-14.html" data-label="ex04-14.html">
-                  <span class="item-num">14</span>
-                  <span class="item-name">position</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-15.html" data-label="ex04-15.html">
-                  <span class="item-num">15</span>
-                  <span class="item-name">float</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-16.html" data-label="ex04-07.html">
-                  <span class="item-num">16</span>
-                  <span class="item-name">리스트 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex04/ex04-17.html" data-label="ex04-17.html">
-                  <span class="item-num">17</span>
-                  <span class="item-name">background 2</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex05</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex05/ex05-01.html" data-label="ex05-01.html">
-                  <span class="item-num">01</span>
-                  <span class="item-name">background(네이버아이콘)</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-02.html" data-label="ex05-02.html">
-                  <span class="item-num">02</span>
-                  <span class="item-name">position fixed</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-03.html" data-label="ex05-03.html">
-                  <span class="item-num">03</span>
-                  <span class="item-name">가운데 정렬</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-04.html" data-label="ex05-04.html">
-                  <span class="item-num">04</span>
-                  <span class="item-name">float 응용(레이아웃)</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-05.html" data-label="ex05-05.html">
-                  <span class="item-num">05</span>
-                  <span class="item-name">그라데이션</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-06.html" data-label="ex05-06.html">
-                  <span class="item-num">06</span>
-                  <span class="item-name">구조적가상클래스</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-07.html" data-label="ex05-07.html">
-                  <span class="item-num">07</span>
-                  <span class="item-name">가상클래스</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-08.html" data-label="ex05-08.html">
-                  <span class="item-num">08</span>
-                  <span class="item-name">가상요소선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-09.html" data-label="ex05-09.html">
-                  <span class="item-num">09</span>
-                  <span class="item-name">가상요소선택자 응용</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/ex05-10.html" data-label="ex05-10.html">
-                  <span class="item-num">10</span>
-                  <span class="item-name">달력</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./ex05/April.html" data-label="April.html">
-                  <span class="item-num">10-1</span>
-                  <span class="item-name">4월 달력</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex06</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex05/ex05-01.html" data-label="ex05-01.html">
-                  <span class="item-num">01</span>
-                  <span class="item-name">속성선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex07</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex05/ex05-01.html" data-label="ex05-01.html">
-                  <span class="item-num">01</span>
-                  <span class="item-name">속성선택자</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col ex-col">
-            <div class="col-header">
-              <div class="col-icon">CSS</div>
-              <span class="col-title">CSS 파일</span>
-            </div>
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">파일 모음</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item" data-src="./ex03/ex03-04.css" data-label="ex03-04.css">
-                  <span class="item-num">01</span>
-                  <span class="item-name">외부 스타일 CSS</span>
-                  <span class="arrow">→</span>
-                </a>
-                <a class="link-item" data-src="./myreset.css" data-label="myreset.css">
-                  <span class="item-num">02</span>
-                  <span class="item-name">리셋 CSS</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── JavaScript ── -->
-          <div class="col js-col">
-            <div class="col-header">
-              <div class="col-icon">JS</div>
-              <span class="col-title">JavaScript</span>
-            </div>
-            <div class="folder-group">
-              <div class="folder-toggle" onclick="toggleFolder(this)">
-                <span class="folder-chevron">▾</span>
-                <span class="folder-icon-emoji">📁</span>
-                <span class="folder-name">ex01</span>
-              </div>
-              <div class="folder-body">
-                <a class="link-item pending">
-                  <span class="item-num">—</span>
-                  <span class="item-name">준비 중...</span>
-                  <span class="arrow">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML · CSS · JS 학습 노트</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #0d0d0f;
+      --surface:  #141417;
+      --surface2: #1a1a1f;
+      --border:   #2a2a32;
+      --border2:  #363640;
+      --text:     #e8e6e0;
+      --muted:    #5a5a68;
+      --muted2:   #7a7a8a;
+      --html:     #ff6b35;
+      --html-dim: rgba(255,107,53,.10);
+      --css:      #4a9eff;
+      --css-dim:  rgba(74,158,255,.10);
+      --ex:       #a78bfa;
+      --ex-dim:   rgba(167,139,250,.10);
+      --js:       #fbbf24;
+      --js-dim:   rgba(251,191,36,.10);
+      --list:     #34d399;
+      --list-dim: rgba(52,211,153,.10);
+    }
+
+    /* ── 라이트 모드 ── */
+    :root.light {
+      --bg:       #f7f5f0;
+      --surface:  #ffffff;
+      --surface2: #f0ece4;
+      --border:   #e4e0d8;
+      --border2:  #d0ccc4;
+      --text:     #1a1814;
+      --muted:    #9a9488;
+      --muted2:   #7a7268;
+      --html:     #e05a2b;
+      --html-dim: rgba(224,90,43,.08);
+      --css:      #2563b0;
+      --css-dim:  rgba(37,99,176,.08);
+      --ex:       #6d5ce8;
+      --ex-dim:   rgba(109,92,232,.08);
+      --js:       #b38600;
+      --js-dim:   rgba(179,134,0,.08);
+      --list:     #0a8a5c;
+      --list-dim: rgba(10,138,92,.08);
+    }
+
+    /* ── 테마 전환 버튼 ── */
+    #theme-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 500;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.25);
+      transition: background .2s, border-color .2s, transform .15s, box-shadow .2s;
+    }
+    #theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(0,0,0,.35);
+    }
+    :root.light #theme-toggle {
+      box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    }
+    :root.light #theme-toggle:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,.2);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    ::selection { background:rgba(74,158,255,.25); color:var(--text); }
+    body {
+      background:var(--bg); color:var(--text);
+      font-family:'Noto Sans KR',sans-serif;
+      min-height:100vh; overflow-x:hidden; overflow-y:auto;
+    }
+    /* ── 홈 ── */
+    #home-view {
+      position:relative; z-index:1;
+      padding:52px 36px 100px; min-height:100vh;
+      transition:opacity .3s ease;
+    }
+    #home-view.hidden { opacity:0; pointer-events:none; }
+
+    .page-header {
+      margin-bottom:52px;
+      display:flex; align-items:flex-end;
+      justify-content:space-between; gap:24px; flex-wrap:wrap;
+    }
+    .eyebrow {
+      font-family:'Space Mono',monospace;
+      font-size:20px; letter-spacing:3px; text-transform:uppercase;
+      color:var(--muted2); margin-bottom:14px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .eyebrow::before { content:''; width:20px; height:1px; background:var(--muted); }
+    h1 { font-size:clamp(32px,5vw,54px); font-weight:900; letter-spacing:-2px; line-height:1; }
+    h1 .amp { color:var(--html); font-style:italic; font-weight:300; }
+    .header-meta {
+      font-family:'Space Mono',monospace; font-size:10px;
+      color:var(--muted); text-align:right; line-height:1.9;
+    }
+    .header-meta .hi { color:var(--list); }
+
+    .columns { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; align-items:start; }
+
+    .col {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:14px; overflow:hidden;
+      animation:slideUp .5s cubic-bezier(.16,1,.3,1) both;
+    }
+    .col:nth-child(1){animation-delay:.00s}
+    .col:nth-child(2){animation-delay:.07s}
+    .col:nth-child(3){animation-delay:.14s}
+    .col:nth-child(4){animation-delay:.21s}
+    .col:nth-child(5){animation-delay:.28s}
+    @keyframes slideUp {
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .col::before { content:''; display:block; height:2px; }
+    .html-col::before { background:linear-gradient(90deg,var(--html),transparent); }
+    .css-col::before  { background:linear-gradient(90deg,var(--css),transparent); }
+    .ex-col::before   { background:linear-gradient(90deg,var(--ex),transparent); }
+    .js-col::before   { background:linear-gradient(90deg,var(--js),transparent); }
+    .list-col::before { background:linear-gradient(90deg,var(--list),transparent); }
+
+    .col-header {
+      padding:14px 18px 12px; border-bottom:1px solid var(--border);
+      display:flex; align-items:center; gap:10px; background:var(--surface2);
+    }
+    .col-icon {
+      width:44px; height:30px; border-radius:6px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Space Mono',monospace; font-size:9px; font-weight:700;
+      flex-shrink:0; border:1px solid;
+    }
+    .html-col .col-icon { background:var(--html-dim); color:var(--html); border-color:rgba(255,107,53,.25); }
+    .css-col  .col-icon { background:var(--css-dim);  color:var(--css);  border-color:rgba(74,158,255,.25); }
+    .ex-col   .col-icon { background:var(--ex-dim);   color:var(--ex);   border-color:rgba(167,139,250,.25); }
+    .js-col   .col-icon { background:var(--js-dim);   color:var(--js);   border-color:rgba(251,191,36,.25); }
+    .list-col .col-icon { background:var(--list-dim); color:var(--list); border-color:rgba(52,211,153,.25); }
+    .col-title { font-size:13px; font-weight:700; color:var(--text); }
+
+    .folder-group { border-bottom:1px solid var(--border); }
+    .folder-group:last-child { border-bottom:none; }
+    .folder-toggle {
+      display:flex; align-items:center; gap:8px;
+      padding:9px 18px 8px; background:transparent;
+      border-bottom:1px solid var(--border);
+      cursor:pointer; user-select:none; transition:background .15s;
+    }
+    .folder-toggle:hover { background:rgba(128,128,128,.06); }
+    .folder-toggle.collapsed { border-bottom:none; }
+    .folder-chevron {
+      font-size:9px; color:var(--muted);
+      transition:transform .22s ease; flex-shrink:0;
+    }
+    .folder-toggle.collapsed .folder-chevron { transform:rotate(-90deg); }
+    .folder-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+    .html-col .folder-dot  { background:var(--html); }
+    .css-col  .folder-dot  { background:var(--css);  }
+    .ex-col   .folder-dot  { background:var(--ex);   }
+    .js-col   .folder-dot  { background:var(--js);   }
+    .list-col .folder-dot  { background:var(--list); }
+    .folder-name { font-family:'Space Mono',monospace; font-size:9.5px; color:var(--muted2); flex:1; }
+
+    .folder-body {
+      overflow:hidden;
+      transition:max-height .3s cubic-bezier(.4,0,.2,1),opacity .25s ease;
+      max-height:2000px; opacity:1;
+    }
+    .folder-body.collapsed { max-height:0; opacity:0; }
+
+    .link-item {
+      display:flex; align-items:center; gap:10px;
+      padding:10px 18px; text-decoration:none; color:var(--text);
+      border-bottom:1px solid var(--border);
+      transition:background .15s; position:relative; cursor:pointer;
+    }
+    .link-item:last-child { border-bottom:none; }
+    .link-item::before {
+      content:''; position:absolute;
+      left:0; top:20%; bottom:20%; width:2px; border-radius:2px;
+      opacity:0; transition:opacity .2s,transform .2s; transform:scaleY(.5);
+    }
+    .link-item:hover::before { opacity:1; transform:scaleY(1); }
+    .html-col .link-item:hover  { background:var(--html-dim); }
+    .css-col  .link-item:hover  { background:var(--css-dim);  }
+    .ex-col   .link-item:hover  { background:var(--ex-dim);   }
+    .js-col   .link-item:hover  { background:var(--js-dim);   }
+    .list-col .link-item:hover  { background:var(--list-dim); }
+    .html-col .link-item::before { background:var(--html); }
+    .css-col  .link-item::before { background:var(--css);  }
+    .ex-col   .link-item::before { background:var(--ex);   }
+    .js-col   .link-item::before { background:var(--js);   }
+    .list-col .link-item::before { background:var(--list); }
+
+    .item-num { font-family:'Space Mono',monospace; font-size:9px; color:var(--muted); min-width:22px; flex-shrink:0; }
+    .item-name { flex:1; font-size:12.5px; font-weight:500; }
+    .link-item:hover .item-name { color:var(--text); font-weight:700; }
+    :root:not(.light) .link-item:hover .item-name { color:#fff; }
+    .arrow { font-size:11px; color:var(--muted); opacity:0; transition:opacity .2s,transform .2s; }
+    .link-item:hover .arrow { opacity:1; transform:translateX(2px); }
+    .link-item.pending { opacity:.3; pointer-events:none; }
+
+    /* ── 미리보기 패널 ── */
+    #preview-panel {
+      position:fixed; top:0; right:0;
+      width:min(500px,42vw); height:100vh;
+      background:var(--surface); border-left:1px solid var(--border2);
+      box-shadow:-12px 0 48px rgba(0,0,0,.5);
+      display:flex; flex-direction:column;
+      z-index:150; transform:translateX(100%);
+      transition:transform .32s cubic-bezier(.4,0,.2,1);
+    }
+    #preview-panel.visible { transform:translateX(0); }
+    .preview-bar {
+      display:flex; align-items:center; gap:8px;
+      padding:10px 14px; background:var(--surface2);
+      border-bottom:1px solid var(--border); flex-shrink:0;
+    }
+    .preview-dots { display:flex; gap:5px; }
+    .preview-dot  { width:9px; height:9px; border-radius:50%; }
+    .preview-dot:nth-child(1){background:#ff5f57}
+    .preview-dot:nth-child(2){background:#febc2e}
+    .preview-dot:nth-child(3){background:#28c840}
+    .preview-url {
+      flex:1; background:var(--bg); border:1px solid var(--border);
+      border-radius:5px; padding:4px 10px;
+      font-family:'Space Mono',monospace; font-size:9px; color:var(--muted2);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .preview-hint { font-family:'Space Mono',monospace; font-size:9px; color:var(--muted); white-space:nowrap; }
+    #preview-iframe { flex:1; width:100%; border:none; background:#fff; }
+
+    /* ── 뷰어 ── */
+    #viewer-view {
+      position:fixed; inset:0;
+      display:flex; flex-direction:column;
+      background:var(--bg); z-index:300;
+      opacity:0; pointer-events:none;
+      transition:opacity .25s ease;
+    }
+    #viewer-view.visible { opacity:1; pointer-events:all; }
+    .viewer-bar {
+      display:flex; align-items:center; gap:12px;
+      padding:10px 20px; background:var(--surface);
+      border-bottom:1px solid var(--border); flex-shrink:0;
+    }
+    .home-btn {
+      display:flex; align-items:center; gap:6px;
+      background:var(--surface2); color:var(--text);
+      border:1px solid var(--border2); border-radius:8px;
+      padding:6px 14px; font-family:'Noto Sans KR',sans-serif;
+      font-size:12px; font-weight:600; cursor:pointer;
+      transition:background .15s; white-space:nowrap; flex-shrink:0;
+    }
+    .home-btn:hover { background:var(--border2); }
+    .home-btn svg { width:13px; height:13px; fill:currentColor; }
+    .viewer-sep { font-size:16px; color:var(--border2); flex-shrink:0; }
+    .viewer-url {
+      flex:1; background:var(--surface2); border:1px solid var(--border);
+      border-radius:6px; padding:6px 12px;
+      font-family:'Space Mono',monospace; font-size:10px; color:var(--muted2);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .newtab-btn {
+      background:transparent; border:1px solid var(--border2);
+      border-radius:8px; padding:6px 14px; font-size:11px; color:var(--muted2);
+      cursor:pointer; font-family:'Noto Sans KR',sans-serif; font-weight:500;
+      text-decoration:none; white-space:nowrap;
+      transition:background .15s,color .15s; flex-shrink:0;
+    }
+    .newtab-btn:hover { background:var(--surface2); color:var(--text); }
+    .viewer-iframe { flex:1; width:100%; border:none; background:#fff; }
+
+    @media(max-width:1200px){ .columns{grid-template-columns:repeat(3,1fr)} }
+    @media(max-width:800px){ .columns{grid-template-columns:repeat(2,1fr)} #preview-panel{display:none} }
+    @media(max-width:500px){ .columns{grid-template-columns:1fr} #home-view{padding:32px 16px 60px} }
+  </style>
+</head>
+<body>
+
+<div id="home-view">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">웹 개발 학습 노트</p>
+      <h1>HTML · CSS <span class="amp">&amp;</span> JS</h1>
+    </div>
+    <div class="header-meta">STUDY NOTES<br>v2026 · <span class="hi">KR</span></div>
+  </header>
+
+  <div class="columns">
+
+    <!-- HTML -->
+    <div class="col html-col">
+      <div class="col-header">
+        <div class="col-icon">HTML</div>
+        <span class="col-title">HTML</span>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex01</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex01/ex01-01.html"><span class="item-num">01</span><span class="item-name">헤딩 태그</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex01/ex01-02.html"><span class="item-num">02</span><span class="item-name">하이퍼링크</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex01/ex01-03.html"><span class="item-num">03</span><span class="item-name">띄어쓰기 &amp; 엔터</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex01/ex01-04.html"><span class="item-num">04</span><span class="item-name">자주 쓰는 태그와 특징</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex01/ex01-05.html"><span class="item-num">05</span><span class="item-name">시맨틱 레이아웃</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex01/ex01-06.html"><span class="item-num">06</span><span class="item-name">시맨틱 태그</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex01/ex01-07.html"><span class="item-num">07</span><span class="item-name">링크</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex02</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex02/ex02-01.html"><span class="item-num">01</span><span class="item-name">input 기능</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-01a.html"><span class="item-num">01-1</span><span class="item-name">input 기능-2</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-02.html"><span class="item-num">02</span><span class="item-name">input 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-02a.html"><span class="item-num">02-1</span><span class="item-name">알림창</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-03.html"><span class="item-num">03</span><span class="item-name">패턴테스트</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-04.html"><span class="item-num">04</span><span class="item-name">input 응용-2</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-05.html"><span class="item-num">05</span><span class="item-name">리스트 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-06.html"><span class="item-num">06</span><span class="item-name">연습문제</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-07.html"><span class="item-num">07</span><span class="item-name">리스트 응용-2</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-08.html"><span class="item-num">08</span><span class="item-name">정의리스트</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-09.html"><span class="item-num">09</span><span class="item-name">오디오와 비디오 삽입하기</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-10.html"><span class="item-num">10</span><span class="item-name">표 구조</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex02/ex02-11.html"><span class="item-num">11</span><span class="item-name">표 구조 응용</span><span class="arrow">→</span></a>
         </div>
       </div>
     </div>
 
-    <!-- ════════ ★ 추가: 호버 미리보기 패널 ════════ -->
-    <div id="preview-panel">
-      <div class="preview-bar">
-        <div class="preview-dots">
-          <div class="preview-dot"></div>
-          <div class="preview-dot"></div>
-          <div class="preview-dot"></div>
+    <!-- CSS -->
+    <div class="col css-col">
+      <div class="col-header">
+        <div class="col-icon">CSS</div>
+        <span class="col-title">CSS</span>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex03</span>
         </div>
-        <div class="preview-url" id="previewUrl">—</div>
-        <span class="preview-hint">클릭 → 전체 보기</span>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex03/ex03-01.html"><span class="item-num">01</span><span class="item-name">테이블 구조</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-02.html"><span class="item-num">02</span><span class="item-name">테이블 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-03.html"><span class="item-num">03</span><span class="item-name">태그 그외</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-04.html"><span class="item-num">04</span><span class="item-name">외부스타일</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-05.html"><span class="item-num">05</span><span class="item-name">div 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-06.html"><span class="item-num">06</span><span class="item-name">선택자 id, class</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-07.html"><span class="item-num">07</span><span class="item-name">복합선택자</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-08.html"><span class="item-num">08</span><span class="item-name">자식선택자</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-09.html"><span class="item-num">09</span><span class="item-name">인접선택자</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-10.html"><span class="item-num">10</span><span class="item-name">형제 선택자</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-11.html"><span class="item-num">11</span><span class="item-name">CDN, 구글폰트</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex03/ex03-12.html"><span class="item-num">12</span><span class="item-name">아이콘</span><span class="arrow">→</span></a>
+        </div>
       </div>
-      <iframe id="preview-iframe"></iframe>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex04</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex04/ex04-01.html"><span class="item-num">01</span><span class="item-name">속성선택자</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-02.html"><span class="item-num">02</span><span class="item-name">가상선택자 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-03.html"><span class="item-num">03</span><span class="item-name">미니얼페이지</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-04.html"><span class="item-num">04</span><span class="item-name">폰트</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-05.html"><span class="item-num">05</span><span class="item-name">텍스트 정렬</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-06.html"><span class="item-num">06</span><span class="item-name">줄간격</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-07.html"><span class="item-num">07</span><span class="item-name">text-decoration</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-08.html"><span class="item-num">08</span><span class="item-name">text-shadow</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-09.html"><span class="item-num">09</span><span class="item-name">border-box</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-10.html"><span class="item-num">10</span><span class="item-name">background</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-11.html"><span class="item-num">11</span><span class="item-name">border</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-12.html"><span class="item-num">12</span><span class="item-name">box position</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-13.html"><span class="item-num">13</span><span class="item-name">프사만들기</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-14.html"><span class="item-num">14</span><span class="item-name">position</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-15.html"><span class="item-num">15</span><span class="item-name">float</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-16.html"><span class="item-num">16</span><span class="item-name">리스트 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex04/ex04-17.html"><span class="item-num">17</span><span class="item-name">background 2</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex05</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex05/ex05-01.html"><span class="item-num">01</span><span class="item-name">background(네이버아이콘)</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-02.html"><span class="item-num">02</span><span class="item-name">position fixed</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-03.html"><span class="item-num">03</span><span class="item-name">가운데 정렬</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-04.html"><span class="item-num">04</span><span class="item-name">float 응용(레이아웃)</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-05.html"><span class="item-num">05</span><span class="item-name">그라데이션</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-06.html"><span class="item-num">06</span><span class="item-name">구조적가상클래스</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-07.html"><span class="item-num">07</span><span class="item-name">가상클래스</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-08.html"><span class="item-num">08</span><span class="item-name">가상요소선택자</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-09.html"><span class="item-num">09</span><span class="item-name">가상요소선택자 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/ex05-10.html"><span class="item-num">10</span><span class="item-name">달력</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex05/April.html"><span class="item-num">10-1</span><span class="item-name">4월 달력</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex06</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex06/ex06-01.html"><span class="item-num">01</span><span class="item-name">word-wrap</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-02.html"><span class="item-num">02</span><span class="item-name">로그인 창</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-03.html"><span class="item-num">03</span><span class="item-name">z-index</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-04.html"><span class="item-num">04</span><span class="item-name">transition</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-05.html"><span class="item-num">05</span><span class="item-name">transform rotate</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-06.html"><span class="item-num">06</span><span class="item-name">transform skew</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-07.html"><span class="item-num">07</span><span class="item-name">transform scale</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-08.html"><span class="item-num">08</span><span class="item-name">transform translate</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-09.html"><span class="item-num">09</span><span class="item-name">애니메이션의 범위</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-10.html"><span class="item-num">10</span><span class="item-name">keyframes</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ball.html"><span class="item-num">11</span><span class="item-name">움직이는 공 만들기</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-11.html"><span class="item-num">12</span><span class="item-name">keyframes2</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-12.html"><span class="item-num">13</span><span class="item-name">파일업로드</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-13.html"><span class="item-num">14</span><span class="item-name">justify-content</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-14.html"><span class="item-num">15</span><span class="item-name">align-items</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-15.html"><span class="item-num">16</span><span class="item-name">flex-direction</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-16.html"><span class="item-num">17</span><span class="item-name">flex wrap</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex06/ex06-17.html"><span class="item-num">18</span><span class="item-name">프로필</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex07</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex05/ex05-01.html"><span class="item-num">01</span><span class="item-name">속성선택자</span><span class="arrow">→</span></a>
+        </div>
+      </div>
     </div>
 
-    <!-- ════════ 파일 뷰어 ════════ -->
-    <div id="viewer-view">
-      <div class="viewer-bar">
-        <button class="home-btn" onclick="goHome()">
-          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 2.5L2 9h2v8.5h5v-5h2v5h5V9h2L10 2.5z"/>
-          </svg>
-          홈
-        </button>
-        <span class="viewer-sep">/</span>
-        <div class="viewer-url" id="viewerUrl"></div>
-        <a class="newtab-btn" id="viewerNewTabBtn" target="_blank">↗ 새 탭</a>
+    <!-- JavaScript -->
+    <div class="col js-col">
+      <div class="col-header">
+        <div class="col-icon">JS</div>
+        <span class="col-title">JavaScript</span>
       </div>
-      <iframe class="viewer-iframe" id="viewerIframe"></iframe>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex01</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./README/01.웹 프로그래밍 이해하기.pdf"><span class="item-num">01</span><span class="item-name">웹 프로그래밍 이해하기</span><span class="arrow">→</span></a>
+        </div>
+      </div>
     </div>
 
-    <script>
-      /* ── 폴더 접기/펼치기 ── */
-      function toggleFolder(toggle) {
-        const body = toggle.nextElementSibling;
-        const isCollapsed = body.classList.toggle('collapsed');
-        toggle.classList.toggle('collapsed', isCollapsed);
-        const emoji = toggle.querySelector('.folder-icon-emoji');
-        emoji.textContent = isCollapsed ? '📂' : '📁';
-      }
+    <!-- CSS 파일 -->
+    <div class="col ex-col">
+      <div class="col-header">
+        <div class="col-icon">CSS</div>
+        <span class="col-title">CSS 파일</span>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">파일 모음</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex03/ex03-04.css"><span class="item-num">01</span><span class="item-name">외부 스타일 CSS</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./myreset.css"><span class="item-num">02</span><span class="item-name">리셋 CSS</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
 
-      /* ════════════════════════════════
-         ★ 추가: 호버 미리보기
-      ════════════════════════════════ */
-      const previewPanel  = document.getElementById('preview-panel');
-      const previewIframe = document.getElementById('preview-iframe');
-      const previewUrlEl  = document.getElementById('previewUrl');
+    <!-- README -->
+    <div class="col list-col">
+      <div class="col-header">
+        <div class="col-icon">README</div>
+        <span class="col-title">설명 자료</span>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">HTML5 프로그래밍</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./README/01.웹 프로그래밍 이해하기.pdf"><span class="item-num">01</span><span class="item-name">웹 프로그래밍 이해하기</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">준비 중</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item pending"><span class="item-num">—</span><span class="item-name">준비 중...</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
 
-      let hideTimer = null;
-      let showTimer = null;
-      let currentPreviewSrc = '';
+  </div><!-- /.columns -->
+</div><!-- /#home-view -->
 
-      /* 미리보기 열기 */
-      function showPreview(src) {
-        clearTimeout(hideTimer);
-        // 이미 같은 파일이 열려 있으면 스킵
-        if (src === currentPreviewSrc && previewPanel.classList.contains('visible')) return;
-        currentPreviewSrc = src;
-        previewIframe.src = src;
-        previewUrlEl.textContent = src;
-        previewPanel.classList.add('visible');
-      }
+<!-- 테마 전환 버튼 -->
+<button id="theme-toggle" title="라이트/다크 모드 전환">🌙</button>
 
-      /* 미리보기 닫기 예약 (마우스가 패널로 이동하면 취소) */
-      function scheduleHide() {
-        clearTimeout(showTimer);
-        hideTimer = setTimeout(() => {
-          previewPanel.classList.remove('visible');
-          // 트랜지션 끝난 후 iframe src 비우기
-          setTimeout(() => {
-            if (!previewPanel.classList.contains('visible')) {
-              previewIframe.src = '';
-              currentPreviewSrc = '';
-            }
-          }, 320);
-        }, 200);
-      }
+<!-- 미리보기 패널 -->
+<div id="preview-panel">
+  <div class="preview-bar">
+    <div class="preview-dots">
+      <div class="preview-dot"></div>
+      <div class="preview-dot"></div>
+      <div class="preview-dot"></div>
+    </div>
+    <div class="preview-url" id="previewUrl">—</div>
+    <span class="preview-hint">클릭 → 전체 보기</span>
+  </div>
+  <iframe id="preview-iframe"></iframe>
+</div>
 
-      /* 각 링크에 mouseenter / mouseleave 등록 */
-      document.querySelectorAll('.link-item[data-src]').forEach(item => {
-        item.addEventListener('mouseenter', () => {
-          clearTimeout(hideTimer);
-          // 약간 딜레이 후 표시 (빠르게 스치는 경우 방지)
-          showTimer = setTimeout(() => showPreview(item.dataset.src), 150);
-        });
-        item.addEventListener('mouseleave', scheduleHide);
-      });
+<!-- 파일 뷰어 -->
+<div id="viewer-view">
+  <div class="viewer-bar">
+    <button class="home-btn" id="homeBtn">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 2.5L2 9h2v8.5h5v-5h2v5h5V9h2L10 2.5z"/>
+      </svg>
+      홈
+    </button>
+    <span class="viewer-sep">/</span>
+    <div class="viewer-url" id="viewerUrl"></div>
+    <a class="newtab-btn" id="viewerNewTabBtn" target="_blank">↗ 새 탭</a>
+  </div>
+  <iframe class="viewer-iframe" id="viewerIframe"></iframe>
+</div>
 
-      /* 패널 위에 마우스가 있는 동안은 닫히지 않게 */
-      previewPanel.addEventListener('mouseenter', () => clearTimeout(hideTimer));
-      previewPanel.addEventListener('mouseleave', scheduleHide);
+<script>
+  /* ── 테마 전환 ── */
+  const themeToggle = document.getElementById('theme-toggle');
+  const root = document.documentElement;
 
-      /* ── 뷰어 열기/닫기 ── */
-      const homeView        = document.getElementById('home-view');
-      const viewerView      = document.getElementById('viewer-view');
-      const viewerIframe    = document.getElementById('viewerIframe');
-      const viewerUrl       = document.getElementById('viewerUrl');
-      const viewerNewTabBtn = document.getElementById('viewerNewTabBtn');
+  // 저장된 테마 불러오기
+  if (localStorage.getItem('theme') === 'light') {
+    root.classList.add('light');
+    themeToggle.textContent = '☀️';
+  }
 
-      function openViewer(src) {
-        viewerIframe.src = src;
-        viewerUrl.textContent = src;
-        viewerNewTabBtn.href = src;
-        // 미리보기 패널 먼저 닫기
-        previewPanel.classList.remove('visible');
-        viewerView.classList.add('visible');
-        homeView.classList.add('hidden');
-      }
+  themeToggle.addEventListener('click', () => {
+    const isLight = root.classList.toggle('light');
+    themeToggle.textContent = isLight ? '☀️' : '🌙';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  });
 
-      function goHome() {
-        viewerView.classList.remove('visible');
-        homeView.classList.remove('hidden');
-        setTimeout(() => { viewerIframe.src = ''; }, 280);
-      }
+  /* ── 폴더 접기/펼치기 ── */
+  function toggleFolder(toggle) {
+    const body = toggle.nextElementSibling;
+    const isCollapsed = body.classList.toggle('collapsed');
+    toggle.classList.toggle('collapsed', isCollapsed);
+  }
 
-      /* 링크 클릭 이벤트 */
-      document.querySelectorAll('.link-item[data-src]').forEach(item => {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          openViewer(item.dataset.src);
-        });
-      });
-    </script>
-  </body>
+  /* ── DOM 참조 ── */
+  const previewPanel  = document.getElementById('preview-panel');
+  const previewIframe = document.getElementById('preview-iframe');
+  const previewUrlEl  = document.getElementById('previewUrl');
+  const homeView      = document.getElementById('home-view');
+  const viewerView    = document.getElementById('viewer-view');
+  const viewerIframe  = document.getElementById('viewerIframe');
+  const viewerUrlEl   = document.getElementById('viewerUrl');
+  const newTabBtn     = document.getElementById('viewerNewTabBtn');
+  const homeBtn       = document.getElementById('homeBtn');
+
+  let hideTimer = null;
+  let showTimer = null;
+  let currentPreviewSrc = '';
+
+  /* ── 미리보기 ── */
+  function showPreview(src) {
+    clearTimeout(hideTimer);
+    if (src === currentPreviewSrc && previewPanel.classList.contains('visible')) return;
+    currentPreviewSrc = src;
+    previewIframe.src = src;
+    previewUrlEl.textContent = src;
+    previewPanel.classList.add('visible');
+  }
+
+  function scheduleHide() {
+    clearTimeout(showTimer);
+    hideTimer = setTimeout(() => {
+      previewPanel.classList.remove('visible');
+      setTimeout(() => {
+        if (!previewPanel.classList.contains('visible')) {
+          previewIframe.src = '';
+          currentPreviewSrc = '';
+        }
+      }, 350);
+    }, 200);
+  }
+
+  /* ── 뷰어 열기/닫기 ── */
+  function openViewer(src) {
+    clearTimeout(hideTimer);
+    clearTimeout(showTimer);
+    previewPanel.classList.remove('visible');
+    previewIframe.src = '';
+    currentPreviewSrc = '';
+
+    viewerIframe.src = src;
+    viewerUrlEl.textContent = src;
+    newTabBtn.href = src;
+    viewerView.classList.add('visible');
+    homeView.classList.add('hidden');
+  }
+
+  function goHome() {
+    viewerView.classList.remove('visible');
+    homeView.classList.remove('hidden');
+    setTimeout(() => { viewerIframe.src = ''; }, 300);
+  }
+
+  /* ── 홈 버튼 ── */
+  homeBtn.addEventListener('click', goHome);
+
+  /* ── 링크 이벤트 (hover + click 통합) ── */
+  document.querySelectorAll('.link-item[data-src]').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      clearTimeout(hideTimer);
+      showTimer = setTimeout(() => showPreview(item.dataset.src), 150);
+    });
+    item.addEventListener('mouseleave', scheduleHide);
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      openViewer(item.dataset.src);
+    });
+  });
+
+  previewPanel.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+  previewPanel.addEventListener('mouseleave', scheduleHide);
+</script>
+</body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transform skew</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+      }
+      .container {
+        margin: 50px;
+        border: 4px solid tomato;
+      }
+      .trans {
+        background-color: aquamarine;
+        border-radius: 10px;
+        transition: all 1s ease;
+      }
+      .trans:hover {
+        /* transform: skew(225deg); 기본이 X */
+        /* transform: skewX(30deg); */
+        /* transform: skewY(30deg); */
+        transform: skew(0.5turn);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>transform skew</h1>
+    <hr />
+    <div class="container">
+      <div class=trans>transformed</div>
+    </div>
+  </body>
+</html>

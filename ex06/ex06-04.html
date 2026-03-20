@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transition</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        background-color: aquamarine;
+        margin: 20px;
+        transition: 
+          border-radius 1s ease,
+          background-color 2s ease;
+      }
+      div:hover {
+        border-radius: 50%;
+        background-color: cadetblue;
+      }
+      div:last-of-type {
+        background-color: chartreuse;
+        transition: all 1s linear;
+        /* transition: all 1s ease; */
+        /* transition: all 1s ease-in; */
+        /* transition: all 1s ease-out; */
+        /* transition: all 1s ease-in-out; */
+      }
+      div:last-of-type:hover {
+        background-color: rgb(59, 46, 240);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>transition</h1> 
+    <hr />
+    <div></div>
+    <div></div>
+  </body>
+</html>

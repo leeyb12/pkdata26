@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transform rotate</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+      }
+      .container {
+        margin: 50px;
+        border: 4px solid tomato;
+      }
+      .trans {
+        background-color: aquamarine;
+        border-radius: 10px;
+        transition: all 1s ease;
+      }
+      .trans:hover {
+        /* deg, rad, grad, turn */
+        /* transform: rotate(270deg);  */
+        transform: rotate(0.5turn);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>transform rotate</h1>
+    <hr /> 
+    <div class="container">
+      <div class=trans>transformed</div>
+    </div> 
+  </body>
+</html>

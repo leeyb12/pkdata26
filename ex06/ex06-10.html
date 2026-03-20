@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>keyframes</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        background-color: rgb(96, 130, 194);
+        animation: mymove 2s ease infinite;
+        /* alternate; 왕복 */
+      }
+      @keyframes mymove {
+        0% {
+          transform: translate(0);
+        }
+        25% {
+          transform: translate(500px, 0);
+        }
+        50% {
+          transform: translate(500px, 500px);
+        }
+        75% {
+          transform: translate(0, 500px);
+        }
+        100% {
+          transform: translate(0)
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>keyframes</h1>  
+    <hr />
+    <div></div>
+  </body>
+</html>

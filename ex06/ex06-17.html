@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko"> 
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필</title>
+    <style>
+      .box {
+        background-color: rgb(253, 222, 248);
+        height: 100vh;
+        /* padding-top: 8rem;
+        box-sizing: border-box; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card {
+        background-color: white;
+        max-width: 360px;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 30px;
+        overflow: hidden;
+      }
+
+      .banner {
+        background-image: url(https://images.unsplash.com/photo-1557411732-1797a9171fcf?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8JUVEJThDJUE4JUVEJTg0JUI0JTIwJUVCJUIwJUIwJUVBJUIyJUJEfGVufDB8fDB8fHww);
+        background-size: cover;
+        height: 140px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .profile {
+        background-image: url(https://dimg.donga.com/wps/NEWS/IMAGE/2019/04/25/95215551.1.jpg);
+        background-size: 150px;
+        background-position: -10px 1px;
+        border-radius: 50%;
+        width: 130px;
+        height: 130px;
+        box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.7);
+        transform: translateY(60%);
+        transition: transform 0.4s ease;
+      }
+
+      .profile:hover {
+        transform: translateY(60%) scale(1.2);
+      }
+
+      .name {
+        text-align: center;
+        padding-top: 60px;
+      }
+
+      .follow-btn {
+        padding: 0 2rem;
+        display:flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+      button {
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 50px;
+        background-color: yellow;
+        border: none;
+        padding: 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>프로필</h1>
+    <hr />
+    
+    <!-- div.card>div.banner>div.profile^h2.name{Yunbeom}+div.follow-btn>button{Follow}+div.desc{내용들...} -->
+    <div class="box">
+      <div class="card">
+        <div class="banner">
+          <div class="profile"></div>
+        </div>
+        <h2 class="name">Yunbeom</h2>
+        <div class="follow-btn"><button>Follow</button></div>
+        <div class="desc">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+          Provident harum, veniam expedita aperiam.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

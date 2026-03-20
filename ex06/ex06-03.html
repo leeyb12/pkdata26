@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        background-color: cornflowerblue;
+        margin: 10px;
+        position: relative;
+      }
+      div:nth-last-of-type(1) {
+        background-color: brown;
+        position: absolute;
+        top: 200px;
+        left: 100px;
+      }
+      div:first-of-type:hover {
+        z-index: 10;
+      }
+      div:first-of-type(1):hover {
+        opacity: 0.6;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>z-index</h1>
+    <hr />
+    
+    <div></div>
+    <div></div>
+  </body>
+</html>

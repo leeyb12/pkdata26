@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox 레이아웃</title>
+  <style>
+    * {
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column; 
+      height: 100vh;
+    }
+    header {
+      background: #5f9ea0; 
+      color: #1a1a1a;
+      text-align: center;
+      padding: 10px;
+      font-size: 48px;
+    }
+
+    nav {
+      background: #ffd700;
+      color: #1a1a1a;
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    .content-wrap {
+      display: flex;        
+      flex: 1;              
+    }
+
+    aside {
+      background: #f5ead8; 
+      flex: 1;    
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    article {
+      background: #d4a97a; 
+      flex: 4;             
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    section {
+      background: #f5ead8; 
+      flex: 1;      
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    footer {
+      background: #5f9ea0; 
+      color: #1a1a1a;
+      text-align: center;
+      padding: 30px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>Never</header>
+  <nav>nav</nav>
+  <div class="content-wrap">
+    <aside>aside</aside>
+    <article>article</article>
+    <section>section</section>
+  </div>
+  <footer>정보처리방침 &nbsp; 정책고객센터 &nbsp; Never corp.</footer>
+</body>
+</html>

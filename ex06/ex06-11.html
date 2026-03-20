@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>keyframes2</title>
+    <style>
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      h2 {
+        color: #ffffff;
+        font-size: 3rem;
+        transition: items 2s ease-in;
+        animation: items 0.7s ease-in infinite alternate;
+        border-radius: 10px;
+        line-height: 1.2;
+      }
+
+      h2:hover {
+        color: red;
+        animation: none;
+      }
+      
+      @keyframes items {
+        0% {
+          padding: 10px;
+          background-color: rgb(91, 255, 255);
+        }
+        100% {
+          padding: 5px;
+          background-color: chartreuse;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>keyframes2</h1>
+    <hr /> 
+    <div>
+      <h2>배고파요</h2>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transform scale</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+      }
+      .container {
+        margin: 50px;
+        border: 4px solid tomato;
+      }
+      .trans {
+        background-color: aquamarine;
+        border-radius: 10px;
+        transition: all 1s ease;
+      }
+      .trans:hover {
+        /* transform: scale(2); */
+        /* transform: scaleX(1.3); */
+        /* transform: scaleY(0.7); */
+        /* transform: scale(1.3, 0.7); */
+        transform: scale(-1.3);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>transform scale</h1>
+    <hr />
+    <div class="container">
+      <div class=trans>transformed</div>
+    </div>
+  </body>
+</html>
