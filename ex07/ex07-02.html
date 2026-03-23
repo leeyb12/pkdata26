@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카드중첩</title>
+    <style>
+      body {
+        background-color: rgb(255, 246, 234);
+      }
+      .post-list {
+        width: 800px;
+        margin: auto;
+      }
+      .post {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(32, 31, 31, 0.541);
+        margin-bottom: -70px;
+        position: relative;
+        transition: 0.4s ease-in;
+      }
+      .post:hover {
+        z-index: 100;
+        transform: translateY(-30px);
+      }
+      .post h3 {
+        color: #333;
+      }
+      .post p {
+        color: #555;
+      }
+      .post small {
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>카드중첩</h1>  
+    <hr />
+    <br />
+    <!-- div.post-list>(div.post>h3{제목$}+p{내용$}+small{2026년 03월 1$일})*7 -->
+    <div class="post-list">
+      <div class="post">
+        <h3>제목1</h3>
+        <p>
+          내용1 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate 
+          autem deserunt repudiandae quisquam veniam obcaecati rerum, dicta voluptates 
+          eum beatae amet, laudantium voluptate, perferendis quas! Tempora perspiciatis 
+          consectetur unde explicabo sed accusamus asperiores impedit sapiente, temporibus 
+          illo quo laudantium sequi rem eos similique tempore pariatur. Dicta voluptate 
+          magni illum iste!
+        </p>
+        <small>2026년 03월 11일</small>
+      </div>
+      <div class="post">
+        <h3>제목2</h3>
+        <p>
+          내용2 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate 
+          autem deserunt repudiandae quisquam veniam obcaecati rerum, dicta voluptates 
+          eum beatae amet, laudantium voluptate, perferendis quas! Tempora perspiciatis 
+          consectetur unde explicabo sed accusamus asperiores impedit sapiente, temporibus 
+          illo quo laudantium sequi rem eos similique tempore pariatur. Dicta voluptate 
+          magni illum iste!
+        </p>
+        <small>2026년 03월 12일</small>
+      </div>
+      <div class="post">
+        <h3>제목3</h3>
+        <p>
+          내용3 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate 
+          autem deserunt repudiandae quisquam veniam obcaecati rerum, dicta voluptates 
+          eum beatae amet, laudantium voluptate, perferendis quas! Tempora perspiciatis 
+          consectetur unde explicabo sed accusamus asperiores impedit sapiente, temporibus 
+          illo quo laudantium sequi rem eos similique tempore pariatur. Dicta voluptate 
+          magni illum iste!
+        </p>
+        <small>2026년 03월 13일</small>
+      </div>
+      <div class="post">
+        <h3>제목4</h3>
+        <p>
+          내용4 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate 
+          autem deserunt repudiandae quisquam veniam obcaecati rerum, dicta voluptates 
+          eum beatae amet, laudantium voluptate, perferendis quas! Tempora perspiciatis 
+          consectetur unde explicabo sed accusamus asperiores impedit sapiente, temporibus 
+          illo quo laudantium sequi rem eos similique tempore pariatur. Dicta voluptate 
+          magni illum iste!
+        </p>
+        <small>2026년 03월 14일</small>
+      </div>
+      <div class="post">
+        <h3>제목5</h3>
+        <p>
+          내용5 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate 
+          autem deserunt repudiandae quisquam veniam obcaecati rerum, dicta voluptates 
+          eum beatae amet, laudantium voluptate, perferendis quas! Tempora perspiciatis 
+          consectetur unde explicabo sed accusamus asperiores impedit sapiente, temporibus 
+          illo quo laudantium sequi rem eos similique tempore pariatur. Dicta voluptate 
+          magni illum iste!
+        </p>
+        <small>2026년 03월 15일</small>
+      </div>
+      <div class="post">
+        <h3>제목6</h3>
+        <p>
+          내용6 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate 
+          autem deserunt repudiandae quisquam veniam obcaecati rerum, dicta voluptates 
+          eum beatae amet, laudantium voluptate, perferendis quas! Tempora perspiciatis 
+          consectetur unde explicabo sed accusamus asperiores impedit sapiente, temporibus 
+          illo quo laudantium sequi rem eos similique tempore pariatur. Dicta voluptate 
+          magni illum iste!
+        </p>
+        <small>2026년 03월 16일</small>
+      </div>
+      <div class="post">
+        <h3>제목7</h3>
+        <p>
+          내용7 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate 
+          autem deserunt repudiandae quisquam veniam obcaecati rerum, dicta voluptates 
+          eum beatae amet, laudantium voluptate, perferendis quas! Tempora perspiciatis 
+          consectetur unde explicabo sed accusamus asperiores impedit sapiente, temporibus 
+          illo quo laudantium sequi rem eos similique tempore pariatur. Dicta voluptate 
+          magni illum iste!
+        </p>
+        <small>2026년 03월 17일</small>
+      </div>
+    </div>
+  </body>
+</html>
