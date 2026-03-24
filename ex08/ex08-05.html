@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>falsy, nullish coalescing</title>
+    <script>
+      const a1 = null;
+      const a2 = undefined;
+      const a3 = false;
+      const a4 = "1234";
+
+      /* falsy */
+      console.log(a1 || "제가 대신왔어요");
+      console.log(a2 || "저도 대신왔어요.");
+      console.log(a3 || "저 왔어요");
+      console.log(a4 || "저는.. 왜...");
+      console.log("=======================");
+      /* nullish coalescin */
+      console.log(a1 ?? "제가 대신왔어요.");
+      console.log(a1 ?? 0);
+      console.log(a2 ?? "저도 대신왔어요.");
+      console.log(a2 ?? 0);
+      console.log(a3 ?? "저 왔어요.");
+      console.log(a4 ?? "저는.. 왜...");
+
+      /* optional chaining */
+      // 다시 다룰것.
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -27,7 +27,6 @@
       --list-dim: rgba(52,211,153,.10);
     }
 
-    /* ── 라이트 모드 ── */
     :root.light {
       --bg:       #f7f5f0;
       --surface:  #ffffff;
@@ -49,38 +48,21 @@
       --list-dim: rgba(10,138,92,.08);
     }
 
-    /* ── 테마 전환 버튼 ── */
     #theme-toggle {
       position: fixed;
-      bottom: 28px;
-      right: 28px;
-      z-index: 500;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
+      bottom: 28px; right: 28px; z-index: 500;
+      width: 44px; height: 44px; border-radius: 50%;
       border: 1px solid var(--border2);
-      background: var(--surface2);
-      color: var(--text);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: var(--surface2); color: var(--text);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
       font-size: 18px;
       box-shadow: 0 4px 20px rgba(0,0,0,.25);
-      gap: 7px;
-      padding: 0 14px; 
+      gap: 7px; padding: 0 14px;
       transition: background .2s, border-color .2s, transform .15s, box-shadow .2s;
     }
-    #theme-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 28px rgba(0,0,0,.35);
-    }
-    :root.light #theme-toggle {
-      box-shadow: 0 4px 20px rgba(0,0,0,.12);
-    }
-    :root.light #theme-toggle:hover {
-      box-shadow: 0 6px 28px rgba(0,0,0,.2);
-    }
+    #theme-toggle:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,0,0,.35); }
+    :root.light #theme-toggle { box-shadow: 0 4px 20px rgba(0,0,0,.12); }
+
     * { margin:0; padding:0; box-sizing:border-box; }
     ::selection { background:rgba(74,158,255,.25); color:var(--text); }
     body {
@@ -88,7 +70,7 @@
       font-family:'Noto Sans KR',sans-serif;
       min-height:100vh; overflow-x:hidden; overflow-y:auto;
     }
-    /* ── 홈 ── */
+
     #home-view {
       position:relative; z-index:1;
       padding:52px 36px 100px; min-height:100vh;
@@ -110,12 +92,161 @@
     .eyebrow::before { content:''; width:20px; height:1px; background:var(--muted); }
     h1 { font-size:clamp(32px,5vw,54px); font-weight:900; letter-spacing:-2px; line-height:1; }
     h1 .amp { color:var(--html); font-style:italic; font-weight:300; }
-    .header-meta {
-      font-family:'Space Mono',monospace; font-size:10px;
-      color:var(--muted); text-align:right; line-height:1.9;
-    }
-    .header-meta .hi { color:var(--list); }
 
+    /* ── 우측 위젯 묶음 ── */
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      animation: slideUp .5s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    /* ── 시계 ── */
+    .clock-widget {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .clock-time {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+    .clock-time .colon {
+      color: var(--muted);
+      animation: blink 1s step-end infinite;
+      display: inline-block;
+      text-align: center;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.15; }
+    }
+    .clock-time .seconds {
+      font-size: 0.52em; color: var(--muted2);
+      font-weight: 400; align-self: flex-end; padding-bottom: 2px;
+    }
+    .clock-ampm {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; color: var(--list);
+      align-self: flex-end; margin-bottom: 2px;
+    }
+    .clock-date-row {
+      display: flex; align-items: center;
+      gap: 10px; justify-content: flex-end;
+    }
+    .clock-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 10.5px; color: var(--muted2);
+      letter-spacing: 1.5px; white-space: nowrap;
+    }
+    .clock-day-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 1.5px; padding: 2px 7px;
+      border-radius: 4px; border: 1px solid;
+      text-transform: uppercase;
+      transition: background .3s, color .3s, border-color .3s;
+    }
+    .day-mon { color:var(--css);  background:var(--css-dim);  border-color:rgba(74,158,255,.25); }
+    .day-tue { color:var(--html); background:var(--html-dim); border-color:rgba(255,107,53,.25); }
+    .day-wed { color:var(--list); background:var(--list-dim); border-color:rgba(52,211,153,.25); }
+    .day-thu { color:var(--js);   background:var(--js-dim);   border-color:rgba(251,191,36,.25); }
+    .day-fri { color:var(--ex);   background:var(--ex-dim);   border-color:rgba(167,139,250,.25); }
+    .day-sat { color:#60a5fa; background:rgba(96,165,250,.10); border-color:rgba(96,165,250,.25); }
+    .day-sun { color:#f87171; background:rgba(248,113,113,.10); border-color:rgba(248,113,113,.25); }
+
+    /* ── 날씨 위젯 ── */
+    .weather-widget {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      min-height: 48px;
+      min-width: 200px;
+      justify-content: flex-end;
+      transition: border-color .2s;
+    }
+    .weather-widget:hover { border-color: var(--border2); }
+
+    .weather-icon { font-size: 24px; line-height: 1; flex-shrink: 0; }
+
+    .weather-info {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 2px;
+    }
+    .weather-temp {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px; font-weight: 700;
+      color: var(--text); line-height: 1;
+    }
+    .weather-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 15px; color: var(--muted2);
+      letter-spacing: 1px; white-space: nowrap;
+    }
+    .weather-location {
+      font-family: 'Space Mono', monospace;
+      font-size: 15px; color: var(--muted);
+      letter-spacing: 0.8px; white-space: nowrap;
+    }
+    .weather-extra {
+      display: flex; gap: 8px; align-items: center;
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      padding-left: 10px;
+    }
+    .weather-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .weather-stat-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; font-weight: 700; color: var(--text);
+    }
+    .weather-stat-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; color: var(--muted); letter-spacing: 0.5px;
+    }
+
+    /* 로딩 / 에러 */
+    .weather-loading {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; color: var(--muted);
+      letter-spacing: 1px;
+      display: flex; align-items: center; gap: 7px;
+      width: 100%; justify-content: flex-end;
+    }
+    .weather-loading::before {
+      content: '';
+      width: 8px; height: 8px;
+      border: 1.5px solid var(--muted);
+      border-top-color: var(--list);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .weather-error {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; color: var(--muted);
+      letter-spacing: 1px; cursor: pointer;
+      text-decoration: underline dotted;
+      text-underline-offset: 3px;
+      width: 100%; text-align: right;
+    }
+    .weather-error:hover { color: var(--muted2); }
+
+    /* ── 컬럼 ── */
     .columns { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; align-items:start; }
 
     .col {
@@ -290,8 +421,19 @@
     .viewer-iframe { flex:1; width:100%; border:none; background:#fff; }
 
     @media(max-width:1200px){ .columns{grid-template-columns:repeat(3,1fr)} }
-    @media(max-width:800px){ .columns{grid-template-columns:repeat(2,1fr)} #preview-panel{display:none} }
-    @media(max-width:500px){ .columns{grid-template-columns:1fr} #home-view{padding:32px 16px 60px} }
+    @media(max-width:800px){
+      .columns{grid-template-columns:repeat(2,1fr)}
+      #preview-panel{display:none}
+      .clock-time { font-size: clamp(22px, 6vw, 34px); }
+    }
+    @media(max-width:500px){
+      .columns{grid-template-columns:1fr}
+      #home-view{padding:32px 16px 60px}
+      .page-header { flex-direction: column; align-items: flex-start; }
+      .header-right { align-items: flex-start; width: 100%; }
+      .clock-date-row { justify-content: flex-start; }
+      .weather-widget { justify-content: flex-start; min-width: unset; width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -302,7 +444,34 @@
       <p class="eyebrow">웹 개발 학습 노트</p>
       <h1>HTML · CSS <span class="amp">&amp;</span> JS</h1>
     </div>
-    <div class="header-meta">STUDY NOTES<br>v2026 · <span class="hi">KR</span></div>
+
+    <!-- 우측: 날씨 + 시계 -->
+    <div class="header-right">
+
+      <!-- 날씨 위젯 -->
+      <div class="weather-widget" id="weatherWidget">
+        <span class="weather-loading">날씨 불러오는 중</span>
+      </div>
+
+      <!-- 시계 & 날짜 -->
+      <div class="clock-widget">
+        <div style="display:flex; align-items:baseline; gap:6px;">
+          <div class="clock-time">
+            <span id="clockHH">00</span>
+            <span class="colon">:</span>
+            <span id="clockMM">00</span>
+            <span class="colon">:</span>
+            <span class="seconds" id="clockSS">00</span>
+          </div>
+          <span class="clock-ampm" id="clockAmpm">AM</span>
+        </div>
+        <div class="clock-date-row">
+          <span class="clock-date" id="clockDate">—</span>
+          <span class="clock-day-badge" id="clockDay">—</span>
+        </div>
+      </div>
+
+    </div>
   </header>
 
   <div class="columns">
@@ -492,16 +661,58 @@
           <span class="folder-name">ex08</span>
         </div>
         <div class="folder-body">
+          <a class="link-item" data-src="./ex08/ex08-01.html"><span class="item-num">01</span><span class="item-name">입력받기</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-02.html"><span class="item-num">02</span><span class="item-name">숫자입력</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-02a.html"><span class="item-num">02-1</span><span class="item-name">점수 등급</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-02b.html"><span class="item-num">02-2</span><span class="item-name">점수 등급(js)</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-03.html"><span class="item-num">03</span><span class="item-name">증감연산자</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-04.html"><span class="item-num">04</span><span class="item-name">null와 undefined</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-05.html"><span class="item-num">05</span><span class="item-name">falsy, nullish coalescing</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-06.html"><span class="item-num">06</span><span class="item-name">DOM</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-07.html"><span class="item-num">07</span><span class="item-name">시간표현</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-08.html"><span class="item-num">08</span><span class="item-name">시간표현 2</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-09.html"><span class="item-num">09</span><span class="item-name">가위바위보</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-10.html"><span class="item-num">10</span><span class="item-name">랜덤</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-11.html"><span class="item-num">11</span><span class="item-name">for</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-12.html"><span class="item-num">11</span><span class="item-name">for 응용</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-13.html"><span class="item-num">11</span><span class="item-name">구구단 for</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-13a.html"><span class="item-num">11</span><span class="item-name">자리배치도</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex09</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex08/ex08-01.html"><span class="item-num">01</span><span class="item-name"></span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex08</span>
+        </div>
+        <div class="folder-body">
+          <a class="link-item" data-src="./ex08/ex08-01.html"><span class="item-num">01</span><span class="item-name"></span><span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="folder-group">
+        <div class="folder-toggle" onclick="toggleFolder(this)">
+          <span class="folder-chevron">▾</span><span class="folder-dot"></span>
+          <span class="folder-name">ex08</span>
+        </div>
+        <div class="folder-body">
           <a class="link-item" data-src="./ex08/ex08-01.html"><span class="item-num">01</span><span class="item-name"></span><span class="arrow">→</span></a>
         </div>
       </div>
     </div>
 
-    <!-- CSS 파일 -->
+    <!-- 예제 파일 -->
     <div class="col ex-col">
       <div class="col-header">
-        <div class="col-icon">CSS</div>
-        <span class="col-title">CSS 파일</span>
+        <div class="col-icon">ex</div>
+        <span class="col-title">예제 파일</span>
       </div>
       <div class="folder-group">
         <div class="folder-toggle" onclick="toggleFolder(this)">
@@ -511,6 +722,9 @@
         <div class="folder-body">
           <a class="link-item" data-src="./ex03/ex03-04.css"><span class="item-num">01</span><span class="item-name">외부 스타일 CSS</span><span class="arrow">→</span></a>
           <a class="link-item" data-src="./myreset.css"><span class="item-num">02</span><span class="item-name">리셋 CSS</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex07/ex07-06.js"><span class="item-num">03</span><span class="item-name">js</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex07/ex07-06.py"><span class="item-num">04</span><span class="item-name">py</span><span class="arrow">→</span></a>
+          <a class="link-item" data-src="./ex08/ex08-03.js"><span class="item-num">05</span><span class="item-name">증감연산자 js</span><span class="arrow">→</span></a>
         </div>
       </div>
     </div>
@@ -581,27 +795,161 @@
   /* ── 테마 전환 ── */
   const themeToggle = document.getElementById('theme-toggle');
   const root = document.documentElement;
-
-  // 저장된 테마 불러오기
   if (localStorage.getItem('theme') === 'light') {
     root.classList.add('light');
     themeToggle.textContent = '☀️';
   }
-
   themeToggle.addEventListener('click', () => {
     const isLight = root.classList.toggle('light');
     themeToggle.textContent = isLight ? '☀️' : '🌙';
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
   });
 
-  /* ── 폴더 접기/펼치기 ── */
+  /* ── 폴더 ── */
   function toggleFolder(toggle) {
     const body = toggle.nextElementSibling;
     const isCollapsed = body.classList.toggle('collapsed');
     toggle.classList.toggle('collapsed', isCollapsed);
   }
 
-  /* ── DOM 참조 ── */
+  /* ── 시계 ── */
+  const DAY_CLASSES = ['day-sun','day-mon','day-tue','day-wed','day-thu','day-fri','day-sat'];
+  const DAY_KO   = ['일','월','화','수','목','금','토'];
+  const MONTH_KO = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateClock() {
+    const now  = new Date();
+    const h24  = now.getHours();
+    const min  = now.getMinutes();
+    const sec  = now.getSeconds();
+    const dow  = now.getDay();
+    const ampm = h24 < 12 ? 'AM' : 'PM';
+    const h12  = h24 % 12 || 12;
+
+    document.getElementById('clockHH').textContent   = pad(h12);
+    document.getElementById('clockMM').textContent   = pad(min);
+    document.getElementById('clockSS').textContent   = pad(sec);
+    document.getElementById('clockAmpm').textContent = ampm;
+
+    document.getElementById('clockDate').textContent =
+      `${now.getFullYear()}년 ${MONTH_KO[now.getMonth()]} ${now.getDate()}일`;
+
+    const dayEl = document.getElementById('clockDay');
+    dayEl.textContent = DAY_KO[dow] + '요일';
+    dayEl.className   = 'clock-day-badge ' + DAY_CLASSES[dow];
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  /* ── 날씨 ── */
+  // WMO 코드 → 이모지 + 설명
+  const WMO = {
+    0:  ['☀️',  '맑음'],
+    1:  ['🌤️', '대체로 맑음'],
+    2:  ['⛅',  '구름 조금'],
+    3:  ['☁️',  '흐림'],
+    45: ['🌫️', '안개'],
+    48: ['🌫️', '짙은 안개'],
+    51: ['🌦️', '가랑비'],
+    53: ['🌦️', '이슬비'],
+    55: ['🌧️', '강한 이슬비'],
+    61: ['🌧️', '약한 비'],
+    63: ['🌧️', '비'],
+    65: ['🌧️', '강한 비'],
+    71: ['🌨️', '약한 눈'],
+    73: ['❄️',  '눈'],
+    75: ['❄️',  '강한 눈'],
+    77: ['🌨️', '싸락눈'],
+    80: ['🌦️', '소나기'],
+    81: ['🌧️', '강한 소나기'],
+    82: ['⛈️', '폭우'],
+    85: ['🌨️', '눈 소나기'],
+    86: ['❄️',  '강한 눈 소나기'],
+    95: ['⛈️', '뇌우'],
+    96: ['⛈️', '우박 뇌우'],
+    99: ['⛈️', '강한 우박 뇌우'],
+  };
+
+  const weatherWidget = document.getElementById('weatherWidget');
+
+  async function getCityName(lat, lon) {
+    try {
+      const res  = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=ko`,
+        { headers: { 'Accept-Language': 'ko' } }
+      );
+      const data = await res.json();
+      const a    = data.address;
+      return a.city || a.town || a.county || a.state || '현재 위치';
+    } catch { return '현재 위치'; }
+  }
+
+  async function fetchWeather(lat, lon, city) {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast`
+                + `?latitude=${lat}&longitude=${lon}`
+                + `&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m`
+                + `&wind_speed_unit=ms&timezone=auto`;
+
+      const res  = await fetch(url);
+      if (!res.ok) throw new Error();
+      const d    = (await res.json()).current;
+      const [icon, desc] = WMO[d.weather_code] || ['🌡️', '알 수 없음'];
+      const temp   = Math.round(d.temperature_2m);
+      const feels  = Math.round(d.apparent_temperature);
+      const humid  = d.relative_humidity_2m;
+      const wind   = d.wind_speed_10m.toFixed(1);
+
+      weatherWidget.innerHTML = `
+        <div class="weather-icon">${icon}</div>
+        <div class="weather-info">
+          <span class="weather-temp">${temp}°C</span>
+          <span class="weather-desc">${desc}</span>
+          <span class="weather-location">📍 ${city}</span>
+        </div>
+        <div class="weather-extra">
+          <div class="weather-stat">
+            <span class="weather-stat-val">${feels}°</span>
+            <span class="weather-stat-lbl">체감</span>
+          </div>
+          <div class="weather-stat">
+            <span class="weather-stat-val">${humid}%</span>
+            <span class="weather-stat-lbl">습도</span>
+          </div>
+          <div class="weather-stat">
+            <span class="weather-stat-val">${wind}</span>
+            <span class="weather-stat-lbl">풍속m/s</span>
+          </div>
+        </div>
+      `;
+    } catch {
+      weatherWidget.innerHTML = `<span class="weather-error" onclick="initWeather()">⚠ 날씨 오류 — 재시도</span>`;
+    }
+  }
+
+  function initWeather() {
+    weatherWidget.innerHTML = '<span class="weather-loading">날씨 불러오는 중</span>';
+
+    if (!navigator.geolocation) {
+      fetchWeather(37.5665, 126.9780, '서울');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      async ({ coords: { latitude: lat, longitude: lon } }) => {
+        const city = await getCityName(lat, lon);
+        fetchWeather(lat, lon, city);
+      },
+      () => fetchWeather(37.5665, 126.9780, '서울'),
+      { timeout: 8000 }
+    );
+  }
+
+  initWeather();
+  setInterval(initWeather, 10 * 60 * 1000); // 10분마다 갱신
+
+  /* ── 미리보기 & 뷰어 ── */
   const previewPanel  = document.getElementById('preview-panel');
   const previewIframe = document.getElementById('preview-iframe');
   const previewUrlEl  = document.getElementById('previewUrl');
@@ -612,11 +960,8 @@
   const newTabBtn     = document.getElementById('viewerNewTabBtn');
   const homeBtn       = document.getElementById('homeBtn');
 
-  let hideTimer = null;
-  let showTimer = null;
-  let currentPreviewSrc = '';
+  let hideTimer = null, showTimer = null, currentPreviewSrc = '';
 
-  /* ── 미리보기 ── */
   function showPreview(src) {
     clearTimeout(hideTimer);
     if (src === currentPreviewSrc && previewPanel.classList.contains('visible')) return;
@@ -625,57 +970,39 @@
     previewUrlEl.textContent = src;
     previewPanel.classList.add('visible');
   }
-
   function scheduleHide() {
     clearTimeout(showTimer);
     hideTimer = setTimeout(() => {
       previewPanel.classList.remove('visible');
       setTimeout(() => {
-        if (!previewPanel.classList.contains('visible')) {
-          previewIframe.src = '';
-          currentPreviewSrc = '';
-        }
+        if (!previewPanel.classList.contains('visible')) { previewIframe.src = ''; currentPreviewSrc = ''; }
       }, 350);
     }, 200);
   }
-
-  /* ── 뷰어 열기/닫기 ── */
   function openViewer(src) {
-    clearTimeout(hideTimer);
-    clearTimeout(showTimer);
+    clearTimeout(hideTimer); clearTimeout(showTimer);
     previewPanel.classList.remove('visible');
-    previewIframe.src = '';
-    currentPreviewSrc = '';
-
-    viewerIframe.src = src;
-    viewerUrlEl.textContent = src;
+    previewIframe.src = ''; currentPreviewSrc = '';
+    viewerIframe.src = src; viewerUrlEl.textContent = src;
     newTabBtn.href = src;
     viewerView.classList.add('visible');
     homeView.classList.add('hidden');
   }
-
   function goHome() {
     viewerView.classList.remove('visible');
     homeView.classList.remove('hidden');
     setTimeout(() => { viewerIframe.src = ''; }, 300);
   }
 
-  /* ── 홈 버튼 ── */
   homeBtn.addEventListener('click', goHome);
-
-  /* ── 링크 이벤트 (hover + click 통합) ── */
   document.querySelectorAll('.link-item[data-src]').forEach(item => {
     item.addEventListener('mouseenter', () => {
       clearTimeout(hideTimer);
       showTimer = setTimeout(() => showPreview(item.dataset.src), 150);
     });
     item.addEventListener('mouseleave', scheduleHide);
-    item.addEventListener('click', e => {
-      e.preventDefault();
-      openViewer(item.dataset.src);
-    });
+    item.addEventListener('click', e => { e.preventDefault(); openViewer(item.dataset.src); });
   });
-
   previewPanel.addEventListener('mouseenter', () => clearTimeout(hideTimer));
   previewPanel.addEventListener('mouseleave', scheduleHide);
 </script>

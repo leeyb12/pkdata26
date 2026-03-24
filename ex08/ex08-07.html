@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시간표현</title>
+  </head>
+  <body>
+    <script>
+      const date = new Date();
+      console.log(date);
+
+        const year = date.getFullYear()
+        const month = date.getMonth()
+        const day = date.getDate()
+        const hour = date.getHours()
+        const min = date.getMinutes()
+        const sec = date.getSeconds()
+
+        console.log(`${year}년 ${month}월 ${day}일 ${hour}시 ${min}분 ${sec}초`);
+        document.body.innerHTML = `<h1>${year}년 ${month}월 ${day}일 ${hour}시 ${min}분 ${sec}초</h1>`;
+    </script>  
+  </body>
+</html>

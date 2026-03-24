@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.18/dayjs.min.js"></script>
+    <style>
+      div {
+        padding: 0;
+        margin: auto;
+        background: url(../mukzzibba.png);
+        background-size: 400px;
+        background-position: 0 -50px;
+        width: 150px;
+        height: 150px;
+      }
+      .zzi {
+        background-position: -150px -34px;
+      }
+      .bba {
+        background-position: 119px -18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <div class="zzi"></div>
+    <div class="bba"></div>
+    <script>
+      const now = dayjs();
+      const random = now.get("ms") % 3
+      console.log(random);
+
+        if (random == 0) {
+          document.body.innerHTML = `<div class="zzi"></div>`;
+        } else if (random == 1) {
+          document.body.innerHTML = `<div></div>`;
+        } else {
+          document.body.innerHTML = `<div class="bba"></div>`;
+        }
+    </script>  
+  </body>
+</html>

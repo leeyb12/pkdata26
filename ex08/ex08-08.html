@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.18/dayjs.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const date = dayjs();
+      console.log(date);
+      const list = `<h1>
+      ${date}<br>
+      ${date.format()}<br>
+      ${date.format("YYYY년 MM월 DD일 / HH시 mm분 ss초")}<br>
+      ${date.get("ms")}<br>
+        </h1>`;
+
+      document.body.innerHTML = list;
+    </script>  
+  </body>
+</html>

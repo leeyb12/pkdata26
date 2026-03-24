@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script>
+      const inp = prompt("숫자를 적어주세요.", 1);
+
+      if (inp > 3) {
+        console.log("3보다 큽니다.");
+        alert("3보다 큽니다.");
+        document.write(`<h2>${inp}는 3보다 큽니다.</h2>`);
+      } else if (inp == 3) {
+        console.log("3 입니다.");
+        alert("3 입니다.");
+        document.write(`<h2>입력하신 ${inp}은 3과 같습니다.</h2>`);
+      } else {
+        console.log("3보다 작습니다.");
+        alert("3보다 작습니다.");
+        document.write(`<h2>입력하신 ${inp}은 3보다 작습니다.</h2>`);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

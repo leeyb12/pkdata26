@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점수 등급</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        padding: 2rem;
+        width: 360px;
+      }
+
+      h2 { font-size: 18px; font-weight: 500; margin: 0 0 1.5rem; }
+
+      input[type="number"] {
+        flex: 1;
+        padding: 0 12px;
+        height: 40px;
+        font-size: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        outline: none;
+        width: 70%;
+      }
+      input[type="number"]:focus { border-color: #888; }
+
+      button {
+        height: 40px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+      }
+      button:hover { background: #f0f0f0; }
+
+      .result-box {
+        display: none;
+        margin-top: 1.5rem;
+        border-radius: 8px;
+        padding: 1.25rem 1.5rem;
+      }
+      .result-box p { margin: 0; }
+      .score-label { font-size: 13px; margin-bottom: 4px !important; }
+      .grade-label { font-size: 28px; font-weight: 500; }
+
+      /* 등급별 색상 */
+      .grade-aplus { background: #EEEDFE; color: #3C3489; }
+      .grade-a     { background: #E6F1FB; color: #0C447C; }
+      .grade-b     { background: #EAF3DE; color: #27500A; }
+      .grade-c     { background: #FAEEDA; color: #633806; }
+      .grade-d     { background: #FAECE7; color: #712B13; }
+      .grade-f     { background: #FCEBEB; color: #791F1F; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>점수 등급 확인</h2>
+        <input type="number" id="scoreInput" min="0" max="100" placeholder="점수를 입력해주세요." />
+        <button onclick="checkGrade()">점수 확인</button>
+      <div class="result-box" id="resultBox">
+        <p class="score-label" id="scoreLabel"></p>
+        <p class="grade-label" id="gradeLabel"></p>
+      </div>
+    </div>
+
+    <script>
+      function checkGrade() {
+        const score = Number(document.getElementById('scoreInput').value);
+        const box = document.getElementById('resultBox');
+        const scoreLabel = document.getElementById('scoreLabel');
+        const gradeLabel = document.getElementById('gradeLabel');
+
+        box.className = 'result-box';
+
+        let grade, cls;
+        if (score === 100)     { grade = 'A++'; cls = 'grade-aplus'; }
+        else if (score >= 90 && score < 100)  { grade = 'A';   cls = 'grade-a'; }
+        else if (score >= 80 && score < 90)   { grade = 'B';   cls = 'grade-b'; }
+        else if (score >= 70 && score < 80)   { grade = 'C';   cls = 'grade-c'; }
+        else if (score >= 60 && score < 70)   { grade = 'D';   cls = 'grade-d'; }
+        else                                  { grade = 'F';   cls = 'grade-f'; }
+
+        box.classList.add(cls);
+        scoreLabel.textContent = `${score}점입니다.`;
+        gradeLabel.textContent = `${grade} 등급입니다`;
+        box.style.display = 'block';
+
+        console.log(`${grade}점입니다.`);
+      }
+    </script>
+  </body>
+</html>

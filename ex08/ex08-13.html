@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단 for</title>
+    <style>
+      body {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      table {
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+        margin: auto;
+        text-align: center;
+        min-width: 200px;
+      }
+      th,
+      tr,
+      td {
+        background-color: antiquewhite;
+      }
+      tr:nth-of-type(even) td {
+        background-color: aliceblue;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let list = "";
+      for (let j = 2; j < 20; j++) {
+        list += `<table><tr><th colspan="2">구구단 ${"테스트"} </th></tr>`;
+        for (let i = 1; i <  10; i++) {
+          list += `<tr><td> ${j} x ${i}</td><td> ${j * i}</td></tr>`;
+        }
+      }
+      list += `</table>`;
+
+      document.body.innerHTML = list;
+    </script>  
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script>
+      const a = (b = c = d = e = f = g = 10);
+      let aa, bb, cc, dd, ee, ff, gg;
+      console.log(a, b, c, d, e, f, g);
+      console.log(aa, ~~bb, !!cc, Number(dd), ee, ff, gg); 
+      console.log(typeof Number(dd), Number(dd));
+      console.log(Number("반가워요."));
+      console.log(0 / 0);
+      console.log(Math.sqrt(-1));
+      console.log(ee === ff);
+      console.log(undefined === ff);
+      console.log(NaN == NaN);
+      const test = Number(undefined);
+      console.log(test === NaN);
+
+      // 핵심 중요
+      console.log(Number.isNaN(test));  // NaN 값을 확인하려면 함수사용
+      console.log(NaN === NaN);  // 숫자 타입 이긴하나 숫자로 표현안됨
+
+      console.log("undefined == undefined", undefined == undefined); // true
+      console.log("undefined === undefined", undefined === undefined); // true
+      console.log("null == null", null == null); // true
+      console.log("null === null", null === null); // true
+      console.log("null == undefined", null == undefined); // true (타입은 다르지만 값이 같다고 판단)
+      console.log("null === undefined", null === undefined); // false (타입이 다르므로 같지 않다고 판단)
+      // undefined: 값이 아직 할당되지 않았거나, 실수일 가능성이 있습니다.
+      // null: 값이 '없음'이 명확하게 확정된 상태이며, 의도적으로 부여됩니다.
+
+      /* 화장실에 갔을 때 휴지에 비유하자면, 어떤 화장실에 들어갔는데 휴지가 없어서 
+      벽을 봤더니 휴지걸이도 없고, 올려놓는 곳도 없고.. 아예 있는지도 없는지도 모르는 
+      상태지만 (undefined)휴지걸이는 보이기는 하고, 그런데 휴지가 없어 보이고, 그래서 
+      휴지심만 남아서 비어있는 상태라는 것이 확인이 되는 상태 (null) */ 
+    </script>
+  </head>
+  <body></body>
+</html>

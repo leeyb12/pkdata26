@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for 응용</title>
+    <style>
+      li {
+        background-color: cadetblue;
+        color: white;
+        margin: 1px;
+        display: block;
+        width: 120px;
+        transition: all 0.5s ease;
+      }
+      li:hover {
+        width: 200px;
+      }
+      li::marker {
+        color: brown;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let list = `<ol>`;
+      
+      for (let i = 0; i < 10; i++) {
+        list += `<li>건강합시다.</li>`;
+      }
+      list += `</ol>`;
+      document.body.innerHTML = list;
+    </script>  
+  </body>
+</html>
