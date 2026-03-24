@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 300px;
+        margin: auto;
+        text-align: center;
+      }
+      h2 {
+        text-align: center;
+      }
+      tr,
+      td {
+        border: 1px solid #ccc;
+        padding: 5px;
+      }
+      td:first-of-type {
+        background-color: rgb(180, 242, 248);
+      }
+    </style>
+    <script>
+      const inp = prompt("원하는 가격을 넣으세요.");
+
+      const list = `<h2>할인율</h2>
+    <table>
+      <tr>
+        <td>원가:</td>
+        <td>${inp}</td>
+      </tr>
+      <tr>
+        <td>10%할인</td>
+        <td>${inp * 0.9}</td>
+      </tr>
+      <tr>
+        <td>20%할인</td>
+        <td>${inp * 0.8}</td>
+      </tr>
+      <tr>
+        <td>30%할인</td>
+        <td>${inp * 0.7}</td>
+      </tr>
+    </table>`;
+      document.write(list);
+    </script>
+  </head>
+  <body></body>
+</html>

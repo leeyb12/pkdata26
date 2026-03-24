@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      table {
+        margin: auto;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.541);
+      }
+      tr,
+      td {
+        padding: 5px 10px;
+        background-color: aliceblue;
+      }
+      tr:nth-of-type(even) td {
+        background-color: rgb(218, 255, 210);
+      }
+    </style>
+    <script>
+      const inp = prompt("몇 단을 보여드릴까요?") || 2;
+      let list = `<table><tr><td colspan="2" style="text-align: center">구구단 ${inp}단</td></tr>`;
+
+      for (let i = 1; i < 10; i++) {
+        list += `<tr><td>${inp} x ${i}</td><td>${inp * i}</td></tr>`;
+      }
+      list += `</table>`;
+      document.write(list);
+
+      //   list += `  <tr><td>${inp} x 2</td><td>${inp * 2}</td></tr>`;
+      //   list += `  <tr><td>${inp} x 3</td><td>${inp * 3}</td></tr>`;
+      //   list += `  <tr><td>${inp} x 4</td><td>${inp * 4}</td></tr>`;
+      //   list += `  <tr><td>${inp} x 5</td><td>${inp * 5}</td></tr>`;
+      //   list += `  <tr><td>${inp} x 6</td><td>${inp * 6}</td></tr>`;
+      //   list += `  <tr><td>${inp} x 7</td><td>${inp * 7}</td></tr>`;
+      //   list += `  <tr><td>${inp} x 8</td><td>${inp * 8}</td></tr>`;
+      //   list += `  <tr><td>${inp} x 9</td><td>${inp * 98}</td></tr>`;
+    </script>
+  </head>
+  <body></body>
+</html>

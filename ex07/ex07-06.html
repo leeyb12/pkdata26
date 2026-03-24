@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>console</title>
+    <style>
+      p {
+        border: 1px solid red;
+        background-color: yellow;
+        color: blue;
+        font-size: 2rem;
+      }
+    </style>
+    <script>
+      /* 필수 */
+      console.group("필수적인것");
+      console.log("콘솔에 보이는 내용입니다.");
+      console.error("치명적입니다.");
+      console.warn("경고합니다.");
+
+      /* 그외 */
+      console.group("그외 것");
+      console.info("정보입니다.");
+      console.debug("디버깅합니다.");
+      console.groupEnd();
+
+
+      /* 신박한것 */
+      console.log("%c강력합니다.", "border: 1px solid red;background-color: yellow;color: blue;font-size: 2rem;");
+    </script>
+  </head>
+  <body>
+    <script>
+      // 여기에 스크립트를 작성하세요
+    </script>  
+  </body>
+</html>
