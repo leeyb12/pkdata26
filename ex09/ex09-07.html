@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      const todo = ["우유구매"];
+      // todo = [];
+      todo[1] = "커피구매";
+      todo.push("저녁식사");  // py: todo.append()
+      todo.push("일찍자기");  // py: todo.append()
+      console.log(todo);
+      /* slice */
+      console.log(todo, todo.slice(0, 2));  // py: todo[0:2]
+
+      /* splice */
+      console.log(todo);
+      // todo.splice(start, deleteCount, item1, item2....) 
+      todo.splice(0, 0, "꿈꾸기");  // 추가됨
+      todo.splice(1, 2, "수술1", "수술2", "수술3");  // 수정됨
+      todo.splice(1, 2);  // 삭제
+      todo.splice(todo.length, 0, "끝");  // 삭제
+      console.log(todo);
+    </script>  
+  </body>
+</html>

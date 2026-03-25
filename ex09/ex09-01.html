@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랜덤고급</title>
+  </head>
+  <body>
+    <script>
+      const array = new Uint8Array(6);
+      crypto.getRandomValues(array);
+      console.log(array);
+      const ran1 = Math.floor((array[0] / 255) * 100) + 1;
+      const ran2 = Math.floor(array[1] % 100) + 1;
+      console.log(ran1);
+      console.log(ran2);
+    </script>  
+  </body>
+</html>

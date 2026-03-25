@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구간 합산</title>
+  </head>
+  <body>
+    <script>
+        const start = parseInt(prompt("시작값을 입력하세요."));
+        const end = parseInt(prompt("끝값을 입력하세요."));
+
+        let sum = 0;
+        for (let i = start; i <= end; i++) {
+            sum += i;
+        }
+
+        document.body.innerHTML = `<h2>${start}부터 ${end}까지의 합은 ${sum}이다.</h2>`;
+    </script>
+  </body>
+</html>

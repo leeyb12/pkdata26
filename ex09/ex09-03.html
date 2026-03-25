@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼항연산자</title>
+  </head>
+  <body>
+    <script>
+      const data = !true ? "true 군요" : "false 군요";
+      console.log(data);
+    </script>
+    <script>
+      const score = 85;
+      const grade =
+        score >= 90
+          ? "A"
+          : score >= 80
+            ? "B"
+            : score >= 70
+              ? "C"
+              : score >= 60
+                ? "D"
+                : "F";
+      console.log(`점수: ${score}, 학점: ${grade}`);
+    </script>  
+  </body>
+</html>

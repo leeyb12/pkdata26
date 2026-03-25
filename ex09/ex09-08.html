@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      const arr = [11, 22, 33, 44, 55, 66, 77, 88, 99];
+      const inp = +prompt("찾는 값을 입력하세요.");
+      const choice = arr.indexOf(inp);
+      /* indexOf 찾는 값의 인덱스를 반환, 없으면 -1을 반환 */
+      if (choice == -1) {
+        console.log("찾는 요소가 없습니다.");
+      } else {
+        console.log(`${choice}번째 인덱스로 ${arr[choice]}값이 있습니다.`);
+      }
+
+      /* includes는 true or false만 반환 */
+      const choice2 = arr.includes(inp);
+      if (choice2) {
+        console.log(choice2, "요소가 있습니다.");
+      } else {
+        console.log(choice2, "요소가 없습니다.");
+      }
+    
+      /* arr.find(콜백)  // 있으면 그대로 없으면 undefined */
+      const choice3 = arr.find((v) => v === inp);  // py : filter, map
+      if (choice3 === undefined) {
+        console.log(choice3, "요소가 없습니다.");
+      }
+
+      /* arr.findIndex(콜백) // 있으면 index값 없으면 -1 */
+      const choice4 = arr.findIndex((v) => v === inp);
+      console.log(choice4);
+    </script>  
+  </body>
+</html>

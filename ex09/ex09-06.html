@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배열</title>
+  </head>
+  <body>
+    <script>
+      const str = "안녕하세요";
+      console.log(str[0]);
+      console.log(str[1]);
+      console.log(str[2]);
+      // 배열선언1
+      const arr0 = new Array(5);
+      console.log(arr0, arr0.length);
+      // 배열선언2
+      const arr1 = [];
+      arr1[4] = undefined;
+      arr1[100] = 1;
+      console.log(arr1, arr1.length);
+      // 배열선언3
+      const arr2 = [ 
+        135, 
+        "777", 
+        true, 
+        null, 
+        function () {}, 
+        {}, 
+        [1, 2, 3], 
+      ];
+      console.log(arr2, arr2.length);
+      console.log("---------------");
+      // 배열초기화1
+      let arr00 = [1, 2, 3, 4, 5]
+      console.log(arr00);
+      arr00 = [];
+      console.log(arr00);
+      // 배열초기화2
+      const arr01 = [11, 22, 33, 44, 55]
+      console.log(arr01);
+      arr01.length = 0;
+      console.log(arr01);
+      // 특이사항
+      const arr10 = [66, 77, 88, 99];
+      arr10["나는누구?"] = "여긴어디";
+      console.log(arr10, arr10.length);
+
+      arr10.forEach((v) => console.log(v));
+
+    </script>  
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생성자 함수</title>
+  </head>
+  <body>
+    <h2>파이썬에서 new 자동(숨겨져있음)</h2>
+    <pre>
+      class Arrays:
+      def __new__(cls):
+          print("new 연산자") 
+          return super().__new__(cls)
+        
+      def __init__(self):
+          print("초기화됨")
+      a = Arrays()
+      print(a)
+    </pre>
+    <script>
+      const array = new Array(5);
+      console.log(array);
+    </script>  
+  </body>
+</html>

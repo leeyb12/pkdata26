@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과일 상자 제거, 추가</title>
+  </head>
+  <body>
+    <script>
+        const box = ["딸기", "바나나", "사과", "수박", "배", "키위", "복숭아", "포도"];
+        const inp1 = prompt(`${box} 중에 제거하고 싶은 품목을 입력하세요.`);
+        const index1 = box.indexOf(inp1);   
+
+        let message = "";
+        if (index1 !== -1) {
+            box.splice(index1, 1);          
+            alert(`${inp1}가 제거되었습니다.`); 
+        } else {
+            alert(`${inp1}는 목록에 없습니다.`); 
+        }
+
+        const inp2 = prompt(`${box} 외에 추가하고 싶은 품목을 입력하세요.`);
+        const index2 = box.indexOf(inp2);   
+        if (index2 === -1) {
+            box.push(inp2);                 
+            alert(`${inp2}가 추가되었습니다.`);  
+        } else {
+          alert(`${inp2}는 목록에 이미 있습니다.`);  
+        }
+
+        message += `<h2>과일상자관리</h2>
+                    <h3>정리된 품목은 ${box}입니다.</h3>`;  
+
+        document.body.innerHTML = message;
+    </script>
+  </body>
+</html>
