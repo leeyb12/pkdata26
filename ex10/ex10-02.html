@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      function myscope() {
+        const a = "나는 var의 a 입니다."
+        console.log(a);
+        {
+          var b = "나는 var의 b 입니다.";
+          let c = "나는 let의 c 입니다.";
+        }
+        console.log(b);
+        console.log(c);
+      }
+      myscope();
+      console.log(b);
+      // console.log(a);  // 함수스코프에서는 전역이 아닌 함수스코프로 동작
+      // console.log(c);
+    </script>  
+  </body>
+</html>

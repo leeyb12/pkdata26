@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      .box {
+        margin: 40% auto;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1><span id="timer">0</span>초마다 진행</h1>
+      <button onclick="start()">시작</button>
+      <button onclick="stop()">정지</button>
+    </div>
+    <script>
+      let num = 0;  // 전역으로 설정
+      let iid;  // undefined로 시작
+
+      const start = () => {
+        console.log(iid);
+        if (iid) return;  // 중복실행 방지
+        iid = setInterval( 
+          () => (document.querySelector("#timer").textContent = ++num),
+          1000,
+        );
+        console.log(iid);
+      };
+      const stop = () => {
+        clearInterval(iid); 
+        iid = null;  // 초기화
+        console.log(iid);
+      };
+    </script>
+  </body>
+</html>

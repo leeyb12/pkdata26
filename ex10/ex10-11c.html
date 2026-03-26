@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      .box {
+        margin: 200px auto;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1><span id="timer">0</span>초마다 진행</h1>
+      <button onclick="start()">시작</button>
+    </div>  
+    <script>
+      let count = 0;
+      function start() {
+        count++;
+        console.log(count);
+      setTimeout(start, 1000);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>즉시실행함수(IIFE)</title>
+  </head>
+  <body>
+    <script>
+      /* 일반 함수 표현식 */
+      const add = function(a, b) {
+        return a + b;
+      };
+      console.log(typeof add(10, 6), add(10, 6));
+      console.log(typeof add);
+      
+      /* 즉시실행함수 */
+      const add2 = (function(a, b) {
+        return a + b;
+      })(10, 6);
+      console.log(typeof add2, add2);
+
+      /* 즉시실행함수 간단 */
+      (function () {
+        console.log("반가워요요요요~~~");
+      })();
+    </script>  
+  </body>
+</html>

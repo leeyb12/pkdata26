@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화살표 함수</title>
+  </head>
+  <body>
+    <script>
+      /* 일반 */
+      const fn1 = function (a, b) {
+        return a * b;
+      };
+      console.log(fn1(5, 4));
+
+      /* 화살표 함수 */
+      const fn2 = (a, b) => a * b;
+      console.log(fn2(5, 4));
+
+      /* 응용 */
+      const log = (text) => console.log(text)
+      log("쉽네");
+      log("전환되네");
+      log("되네");
+    </script>  
+  </body>
+</html>

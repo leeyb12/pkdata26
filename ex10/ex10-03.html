@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      /* 같은 이름 전역변수 지역변수 구분 */
+      let num = 100;
+      function fn1() {
+        let num = 200;
+        console.log(`함수1 내부에서 변수 값은 ${num}이다`);
+      }
+      fn1();
+      console.log(`함수1 외부에서 변수 값은 ${num}이다`);
+
+      /* 전역변수 A 스타일 */
+      let num2 = 100;
+      function fn2() {
+        num2 = 200;
+        console.log(`함수1 내부에서 변수 값은 ${num2}이다`);
+      }
+      fn2();
+      console.log(`함수1 외부에서 변수 값은 ${num2}이다`);
+
+      /* 전역변수 B 스타일, 호이스팅 테스 */
+      let num3 = 100;
+      function fn3() {
+        num2 = 200;
+        console.log(`함수1 내부에서 변수 값은 ${num3}이다`);
+      }
+      fn3();
+      console.log(`함수1 외부에서 변수 값은 ${num3}이다`);
+    </script>  
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <h1 id="count">글자수 : 0</h1>
+    <textarea 
+      name="" 
+      id="text" 
+      cols="40" 
+      rows="20" 
+      maxlength="200" 
+      onkeyup="ctext()"
+      placeholder="글을 작성해주세요"
+    ></textarea>
+
+    <script>
+      function ctext() {
+        const textArea = document.querySelector("#text");
+        const disp = document.querySelector("#count");
+        disp.textContent = `글자수 : ${textArea.value.length}`;
+      }
+    </script>  
+  </body>
+</html>

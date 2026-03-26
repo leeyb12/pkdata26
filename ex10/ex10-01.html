@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>호이스팅</title>
+  </head>
+  <body>
+    <script>
+      /* 변수 호이스팅 */
+      console.log(1, num);
+      var num = 1234;
+      // let num1 = 5678;
+      console.log(2, num);
+
+      /* 함수 호이스팅 */
+      console.log(abc());
+      function abc(v) {
+        let bb = "나는 밤양갱";
+        return bb;
+      }
+
+      const abcc = (v) => "나는 꿀양갱";
+      console.log(abcc()); 
+
+      const log = v => console.log(v)
+      log("안녕");
+    </script>  
+  </body>
+</html>

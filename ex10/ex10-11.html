@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <h1 id="app"></h1>
+    
+    <script>
+      const app = document.querySelector("#app");
+      let count = 0;
+      const tt = setInterval(() => {
+        app.textContent = `${++count}초마다 실행`;
+        if (count === 5) {
+          clearInterval(tt);
+        }
+      }, 1000);
+      
+      // setTimeout
+      // clearTimeout
+      // setInterval
+      // clearInterval
+    </script>
+  </body>
+</html>
