@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <h2>JSON.stringify()  // json 만듬</h2>
+    <h2>JSON.parse()  // json 해석</h2>
+    <script>
+      const obj1 = { id: 1, name: "홍길동", age: 22 }
+      console.log(obj1, typeof obj1);
+      console.log("============");
+      const jn = JSON.stringify(obj1);
+      console.log("JSON.stringify:", jn, typeof jn);
+      const pn = JSON.parse(jn);
+      console.log("JSON.parse:", pn, typeof pn);
+    </script>
+  </body>
+</html>

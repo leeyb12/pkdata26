@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+      /* ── 기본 변수 & 리셋 ── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --bg:       #f0ede8;
+        --card:     #ffffff;
+        --ink:      #1a1814;
+        --muted:    #9e9a94;
+        --accent:   #d4522a;
+        --accent-l: #f0c4b4;
+        --done-bg:  #f5f3f0;
+        --done-txt: #b8b3ab;
+        --shadow:   0 4px 24px rgba(0,0,0,.09);
+        --radius:   18px;
+      }
+
+      body {
+        min-height: 100vh;
+        background: var(--bg);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 60px 20px 80px;
+        font-family: 'Gowun Dodum', sans-serif;
+      }
+
+      /* ── 카드 래퍼 ── */
+      .card {
+        width: 100%;
+        max-width: 480px;
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 36px 32px 32px;
+        box-shadow: var(--shadow);
+      }
+
+      /* ── 헤더 ── */
+      .header {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+
+      .header h2 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2.4rem;
+        letter-spacing: .04em;
+        color: var(--ink);
+        line-height: 1;
+      }
+
+      .header .count {
+        font-size: .82rem;
+        color: var(--muted);
+        background: var(--bg);
+        padding: 3px 10px;
+        border-radius: 20px;
+        transition: background .2s;
+      }
+
+      /* ── 입력 영역 ── */
+      .input-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      #input {
+        flex: 1;
+        border: 1.5px solid #e8e4de;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-family: 'Gowun Dodum', sans-serif;
+        font-size: .92rem;
+        color: var(--ink);
+        background: var(--bg);
+        outline: none;
+        transition: border-color .2s, box-shadow .2s;
+      }
+      #input::placeholder { color: var(--muted); }
+      #input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgba(212,82,42,.1);
+        background: #fff;
+      }
+
+      #add {
+        padding: 12px 20px;
+        background: var(--ink);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-family: 'Gowun Dodum', sans-serif;
+        font-size: .92rem;
+        font-weight: 600;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: transform .15s, box-shadow .2s;
+      }
+      #add::before {
+        content: '';
+        position: absolute; inset: 0;
+        background: linear-gradient(135deg, var(--accent), #e8864a);
+        opacity: 0;
+        transition: opacity .2s;
+      }
+      #add span { position: relative; z-index: 1; }
+      #add:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,82,42,.35); }
+      #add:hover::before { opacity: 1; }
+      #add:active { transform: translateY(0); }
+
+      /* ── 구분선 ── */
+      .divider {
+        height: 1px;
+        background: #ede9e3;
+        margin-bottom: 20px;
+      }
+
+      /* ── 리스트 ── */
+      #list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* 아이템 진입 애니메이션 */
+      #list li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        background: var(--bg);
+        border-radius: 12px;
+        font-size: .92rem;
+        color: var(--ink);
+        cursor: pointer;
+        border: 1.5px solid transparent;
+        transition: background .2s, color .2s, border-color .2s, transform .15s, opacity .2s;
+        animation: itemIn .28s cubic-bezier(.22,.68,0,1.2) forwards;
+        user-select: none;
+      }
+
+      @keyframes itemIn {
+        from { opacity: 0; transform: translateY(10px) scale(.97); }
+        to   { opacity: 1; transform: translateY(0)    scale(1); }
+      }
+
+      /* 체크 아이콘 */
+      #list li::before {
+        content: '';
+        flex-shrink: 0;
+        width: 20px; height: 20px;
+        border-radius: 50%;
+        border: 2px solid #d1ccc5;
+        transition: background .2s, border-color .2s;
+      }
+
+      #list li:hover {
+        border-color: var(--accent-l);
+        background: #fdf8f6;
+        transform: translateX(2px);
+      }
+
+      /* 완료 상태 */
+      #list li.done {
+        background: var(--done-bg);
+        color: var(--done-txt);
+        text-decoration: line-through;
+        text-decoration-color: var(--muted);
+      }
+      #list li.done::before {
+        background: var(--accent);
+        border-color: var(--accent);
+        /* 체크마크 */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 10px;
+      }
+
+      /* 삭제 힌트 */
+      #list li .del-hint {
+        margin-left: auto;
+        font-size: .72rem;
+        color: #ccc;
+        opacity: 0;
+        transition: opacity .15s;
+        white-space: nowrap;
+      }
+      #list li:hover .del-hint { opacity: 1; }
+
+      /* 빈 상태 메시지 */
+      .empty {
+        text-align: center;
+        padding: 32px 0 16px;
+        color: var(--muted);
+        font-size: .88rem;
+        animation: fadeIn .3s ease;
+      }
+      .empty .emoji { font-size: 2rem; display: block; margin-bottom: 8px; }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <h2>Todo</h2>
+        <span class="count" id="count">0개</span>
+      </div>
+
+      <div class="input-row">
+        <input type="text" id="input" placeholder="할 일을 입력하세요" />
+        <button id="add"><span>추가</span></button>
+      </div>
+
+      <div class="divider"></div>
+
+      <ul id="list"></ul>
+      <div class="empty" id="empty">
+        <span class="emoji">📋</span>
+        아직 할 일이 없어요
+      </div>
+    </div>
+
+    <script>
+      const input   = document.querySelector("#input");
+      const addBtn  = document.querySelector("#add");
+      const list    = document.querySelector("#list");
+      const countEl = document.querySelector("#count");
+      const emptyEl = document.querySelector("#empty");
+
+      /* 카운트 + 빈 상태 업데이트 */
+      function updateUI() {
+        const total = list.children.length;
+        const done  = list.querySelectorAll(".done").length;
+        countEl.textContent = total === 0 ? "0개" : `${done}/${total}개 완료`;
+        emptyEl.style.display = total === 0 ? "block" : "none";
+      }
+
+      /* 아이템 추가 */
+      const inEnter = () => {
+        const text = input.value.trim();
+        if (!text) return;                          // 빈칸 제외
+
+        const li = document.createElement("li");
+
+        /* 텍스트 span */
+        const span = document.createElement("span");
+        span.textContent = text;
+        li.appendChild(span);
+
+        /* 더블클릭 힌트 */
+        const hint = document.createElement("span");
+        hint.className = "del-hint";
+        hint.textContent = "더블클릭 삭제";
+        li.appendChild(hint);
+
+        /* 클릭 → 완료 토글 */
+        li.addEventListener("click", () => {
+          li.classList.toggle("done");
+          updateUI();
+        });
+
+        /* 더블클릭 → 삭제 (버그 수정: list.remove → li.remove) */
+        li.addEventListener("dblclick", () => {
+          li.style.animation = "none";
+          li.style.transition = "opacity .2s, transform .2s";
+          li.style.opacity = "0";
+          li.style.transform = "translateX(20px)";
+          setTimeout(() => { li.remove(); updateUI(); }, 200);
+        });
+
+        input.value = "";
+        list.appendChild(li);
+        updateUI();
+      };
+
+      addBtn.addEventListener("click", inEnter);
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") inEnter();
+      });
+
+      updateUI(); // 초기 상태
+    </script>
+  </body>
+</html>

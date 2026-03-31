@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>modal</title>
+
+    <link 
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+      rel="stylesheet" 
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+      crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+      .modals {
+        margin: 0;
+        padding: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      } 
+      .modals.show { 
+        display: flex; 
+      }
+
+      .test {
+        width: 400px;
+        padding: 35px;
+        border-radius: 20px;
+        background-color: white;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7);
+      }
+      
+      .login-container {
+        position: relative;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.5);
+        width: 350px;
+      }
+      h2 {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      input {
+        width: 93%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      #login-btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(55, 76, 170);
+        color: white;
+        margin: 10px 0;
+        cursor: pointer;
+      }
+      #login-btn:hover {
+        background-color: rgb(153, 170, 245);
+      }
+      #new-btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(68, 149, 255);
+        color: white;
+        margin: 10px 0;
+        cursor: pointer;
+      }
+      #new-btn:hover {
+        background-color: rgb(123, 1739, 238);
+      }
+      #closebtn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        background-color: #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>간단한 뒷 배경내용들</h1>
+
+    <button id="loginBtn" class="btn btn-success">로그인</button>
+
+    <button id="btns" class="btn btn-primary" type="button">
+      <span id="types" class="spinner-border-sm"></span>
+      <span id="names">버튼</span>
+    </button>
+    <button class="btn" type="button">
+      <span id="spinner" class="spinner-border text-info"></span>
+    </button>
+
+    <h3>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, velit 
+      mollitia! Culpa vitae similique ipsum nihil, nam sapiente, quidem laboriosam 
+      id ratione, cumque corrupti. Consequuntur perferendis autem ducimus veritatis 
+      corporis.Ab asperiores maxime veniam! Iusto fuga commodi corrupti ipsa distinctio 
+      tempore eligendi, provident inventore obcaecati delectus tempora eius ut eveniet 
+      architecto molestiae aspernatur unde optio libero laboriosam. Optio, sit blanditiis.
+      Atque quae voluptatibus minus adipisci, sequi odit quos sit dolorem obcaecati consequuntur 
+      voluptatum excepturi quaerat animi, dolore fugiat eveniet corporis! Distinctio molestias 
+      reiciendis autem quas neque voluptatem dolorem, deleniti maxime?
+      Laudantium quibusdam officiis dolores blanditiis ratione accusantium consequatur, tenetur 
+      voluptatibus, debitis officia vero a autem at. Placeat, accusamus? Illum officiis nam illo 
+      ullam eligendi, blanditiis laborum ut a tenetur ad.Repellat temporibus, nemo culpa voluptate 
+      pariatur sed a, quidem maiores ad, mollitia provident qui vel! Ipsa, molestias quae animi fuga 
+      aperiam, voluptas asperiores perspiciatis, fugit tempore dignissimos obcaecati exercitationem in?
+    </h3>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem adipisci 
+      accusantium ullam quae cum veniam laudantium dicta ducimus ipsam, officia 
+      ipsum, vero iste, nam assumenda dignissimos iusto impedit fugiat. Vero. Error 
+      maxime debitis nemo natus molestiae voluptas laudantium fugit alias, incidunt 
+      ipsa iste praesentium ad tenetur at! Reiciendis, voluptate voluptas aperiam hic 
+      totam, minima deserunt doloribus facilis magni voluptates blanditiis.
+    </p>
+    <h3>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, velit 
+      mollitia! Culpa vitae similique ipsum nihil, nam sapiente, quidem laboriosam 
+      id ratione, cumque corrupti. Consequuntur perferendis autem ducimus veritatis 
+      corporis.Ab asperiores maxime veniam! Iusto fuga commodi corrupti ipsa distinctio 
+      tempore eligendi, provident inventore obcaecati delectus tempora eius ut eveniet 
+      architecto molestiae aspernatur unde optio libero laboriosam. Optio, sit blanditiis.
+      Atque quae voluptatibus minus adipisci, sequi odit quos sit dolorem obcaecati consequuntur 
+      voluptatum excepturi quaerat animi, dolore fugiat eveniet corporis! Distinctio molestias 
+      reiciendis autem quas neque voluptatem dolorem, deleniti maxime?
+      Laudantium quibusdam officiis dolores blanditiis ratione accusantium consequatur, tenetur 
+      voluptatibus, debitis officia vero a autem at. Placeat, accusamus? Illum officiis nam illo 
+      ullam eligendi, blanditiis laborum ut a tenetur ad.Repellat temporibus, nemo culpa voluptate 
+      pariatur sed a, quidem maiores ad, mollitia provident qui vel! Ipsa, molestias quae animi fuga 
+      aperiam, voluptas asperiores perspiciatis, fugit tempore dignissimos obcaecati exercitationem in?
+    </h3>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem adipisci 
+      accusantium ullam quae cum veniam laudantium dicta ducimus ipsam, officia 
+      ipsum, vero iste, nam assumenda dignissimos iusto impedit fugiat. Vero. Error 
+      maxime debitis nemo natus molestiae voluptas laudantium fugit alias, incidunt 
+      ipsa iste praesentium ad tenetur at! Reiciendis, voluptate voluptas aperiam hic 
+      totam, minima deserunt doloribus facilis magni voluptates blanditiis.
+    </p>
+
+    <div class="modals">
+      <div class="login-container">
+        <h2>로그인</h2>
+        <button class="login-close" id="closebtn">✕</button>
+        <form action="#" method="post">
+          <label for="id">ID:</label>
+          <input type="text" id="id" placeholder="아이디입력" />
+          <label for="password">password:</label>
+          <input type="password" id="passsword" placeholder="패스워드 입력" />
+          <button id="login-btn">로그인</button>
+          <hr />
+          <small>회원이 아니신 분은 회원가입을 해주세요.</small>
+          <button id="new-btn">회원가입</button>
+        </form>
+      </div>
+    </div>
+   
+    <script>
+      /* ── 스피너 버튼 ── */
+      const btn = document.querySelector("#btns");
+      btn.addEventListener("click", () => {
+        const types = document.querySelector("#types");
+        const names = document.querySelector("#names");
+        types.classList.toggle("spinner-border");
+        if (types.classList.contains("spinner-border")) {
+          names.textContent = "Loading...";
+        } else {
+          names.textContent = "버튼";
+        }
+      });
+      const spinner = document.querySelector("#spinner");
+      const stopSpinner = () => spinner.classList.remove("spinner-border");
+      setTimeout(stopSpinner, 2000);
+
+      const logbtn = document.querySelector("#loginBtn");
+      const modals = document.querySelector(".modals");
+      logbtn.addEventListener("click", () => {
+        modals.classList.add("show");
+      });
+      const closeBtn = document.querySelector("#closebtn");
+      closeBtn.addEventListener("click", () => {
+        modals.classList.remove("show");
+      });
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" 
+      integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" 
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

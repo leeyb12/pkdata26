@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>메모장</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --bg:         #FAF8F5;
+      --card:       #FFFFFF;
+      --border:     #EBEBEB;
+      --ink:        #1C1B1A;
+      --muted:      #A09D99;
+      --accent:     #FF6B35;
+      --accent-s:   rgba(255,107,53,.12);
+      --green:      #2DCE89;
+      --green-s:    rgba(45,206,137,.12);
+      --red:        #F44336;
+      --shadow-sm:  0 2px 8px rgba(0,0,0,.06);
+      --shadow-md:  0 8px 28px rgba(0,0,0,.10);
+      --r:          16px;
+      --font:       'Pretendard', -apple-system, sans-serif;
+      /* 챗봇 색상 */
+      --bot-bg:     #1E1B4B;
+      --bot-accent: #818CF8;
+      --bot-bubble: #2D2A5E;
+      --bot-user:   #4F46E5;
+    }
+
+    html, body { height: 100%; background: var(--bg); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+
+    /* ══════════ 메모장 레이아웃 ══════════ */
+    .app { max-width: 480px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; padding-bottom: env(safe-area-inset-bottom); }
+
+    .header { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 20px 20px 0; padding-top: max(20px, env(safe-area-inset-top)); }
+    .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .title-wrap h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
+    .title-wrap h1 span { color: var(--accent); }
+    .stats { font-size: .72rem; color: var(--muted); margin-top: 3px; }
+    .stats b { color: var(--ink); font-weight: 600; }
+
+    .tabs { display: flex; gap: 6px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 4px; margin-bottom: 16px; }
+    .tab { flex: 1; padding: 8px 6px; border: none; border-radius: 9px; background: transparent; font-family: var(--font); font-size: .8rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .18s; }
+    .tab.active { background: var(--ink); color: #fff; }
+
+    .memo-list { flex: 1; padding: 0 20px 140px; display: flex; flex-direction: column; gap: 10px; }
+
+    .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0; color: var(--muted); gap: 10px; animation: fadeIn .3s ease; }
+    .empty .e-icon { font-size: 2.8rem; opacity: .5; }
+    .empty p { font-size: .88rem; }
+
+    .memo-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--r); padding: 16px 16px 14px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow-sm); animation: slideIn .25s cubic-bezier(.22,.68,0,1.2) forwards; transition: border-color .2s, box-shadow .2s, opacity .2s, transform .2s; position: relative; }
+    .memo-card:active { transform: scale(.985); }
+    .memo-card.done { background: #FAFAFA; border-color: #F0F0F0; }
+
+    @keyframes slideIn { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .check-btn { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; margin-top: 1px; }
+    .check-btn svg { display: none; width: 13px; height: 13px; }
+    .memo-card.done .check-btn { background: var(--green); border-color: var(--green); }
+    .memo-card.done .check-btn svg { display: block; }
+
+    .memo-content { flex: 1; min-width: 0; }
+    .memo-text { font-size: .95rem; line-height: 1.55; color: var(--ink); word-break: break-all; white-space: pre-wrap; transition: color .2s; }
+    .memo-card.done .memo-text { color: var(--muted); text-decoration: line-through; text-decoration-color: #ccc; }
+
+    .memo-edit { width: 100%; background: var(--bg); border: 1.5px solid var(--accent); border-radius: 10px; padding: 8px 12px; font-family: var(--font); font-size: .95rem; line-height: 1.55; color: var(--ink); resize: none; outline: none; min-height: 72px; box-shadow: 0 0 0 3px var(--accent-s); }
+
+    .memo-meta { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .memo-date { font-size: .7rem; color: var(--muted); }
+    .memo-badge { font-size: .65rem; font-weight: 600; padding: 2px 7px; border-radius: 20px; }
+    .badge-done { background: var(--green-s); color: var(--green); }
+    .badge-todo { background: var(--accent-s); color: var(--accent); }
+
+    .memo-actions { display: flex; flex-direction: column; gap: 6px; }
+    .icon-btn { width: 32px; height: 32px; border: none; border-radius: 9px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; color: var(--muted); flex-shrink: 0; }
+    .icon-btn:hover { background: var(--border); }
+    .icon-btn.edit { color: var(--accent); }
+    .icon-btn.edit:hover { background: var(--accent-s); }
+    .icon-btn.del { color: var(--red); }
+    .icon-btn.del:hover { background: rgba(244,67,54,.1); }
+
+    .input-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 12px 20px max(16px, env(safe-area-inset-bottom)); background: linear-gradient(to top, var(--bg) 70%, transparent); z-index: 200; }
+    .input-inner { display: flex; gap: 10px; background: var(--card); border: 1.5px solid var(--border); border-radius: 18px; padding: 10px 10px 10px 18px; box-shadow: var(--shadow-md); align-items: flex-end; }
+    .input-inner textarea { flex: 1; border: none; background: transparent; font-family: var(--font); font-size: .95rem; color: var(--ink); resize: none; outline: none; line-height: 1.5; max-height: 120px; overflow-y: auto; }
+    .input-inner textarea::placeholder { color: var(--muted); }
+    .add-btn { width: 40px; height: 40px; flex-shrink: 0; background: var(--ink); border: none; border-radius: 12px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, transform .15s; }
+    .add-btn:hover { background: var(--accent); }
+    .add-btn:active { transform: scale(.92); }
+
+    /* ══════════ 챗봇 FAB 버튼 ══════════ */
+    .chatbot-fab {
+      position: fixed;
+      bottom: 90px;
+      right: max(20px, calc((100vw - 480px) / 2 + 20px));
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #4F46E5, #818CF8);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      z-index: 300;
+      box-shadow: 0 6px 24px rgba(79,70,229,.45);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .2s, box-shadow .2s;
+      animation: fabIn .4s cubic-bezier(.22,.68,0,1.3) forwards;
+    }
+    @keyframes fabIn { from { opacity:0; transform: scale(0); } to { opacity:1; transform: scale(1); } }
+    .chatbot-fab:hover { transform: scale(1.08); box-shadow: 0 10px 32px rgba(79,70,229,.55); }
+    .chatbot-fab:active { transform: scale(.94); }
+
+    /* 알림 뱃지 */
+    .fab-badge {
+      position: absolute;
+      top: -3px; right: -3px;
+      width: 18px; height: 18px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      font-size: .6rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      display: none;
+    }
+    .fab-badge.show { display: flex; }
+
+    /* ══════════ 챗봇 모달 오버레이 ══════════ */
+    .bot-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: flex-end;
+      justify-content: center;
+      animation: overlayIn .2s ease forwards;
+    }
+    .bot-overlay.show { display: flex; }
+    @keyframes overlayIn { from { opacity:0; } to { opacity:1; } }
+
+    /* 챗봇 패널 */
+    .bot-panel {
+      width: 100%;
+      max-width: 480px;
+      height: 72vh;
+      background: var(--bot-bg);
+      border-radius: 28px 28px 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: panelUp .3s cubic-bezier(.22,.68,0,1.15) forwards;
+      box-shadow: 0 -8px 40px rgba(0,0,0,.4);
+    }
+    @keyframes panelUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    /* 챗봇 헤더 */
+    .bot-header {
+      padding: 16px 20px 14px;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      flex-shrink: 0;
+    }
+    .bot-avatar {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--bot-accent), #4F46E5);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .bot-header-info { flex: 1; }
+    .bot-header-name { font-size: .9rem; font-weight: 600; color: #fff; }
+    .bot-header-sub { font-size: .7rem; color: rgba(255,255,255,.45); margin-top: 1px; }
+    .bot-close, .bot-clear {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,.1);
+      border: none; border-radius: 50%;
+      color: rgba(255,255,255,.7);
+      font-size: .9rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .bot-close:hover { background: rgba(255,255,255,.2); }
+    .bot-clear:hover { background: rgba(244,67,54,.35); color: #fff; }
+
+    /* 메시지 영역 */
+    .bot-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 16px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scroll-behavior: smooth;
+    }
+    .bot-messages::-webkit-scrollbar { width: 3px; }
+    .bot-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
+
+    /* 말풍선 */
+    .bm { display: flex; align-items: flex-end; gap: 8px; }
+    .bm.user { justify-content: flex-end; }
+    .bm.bot  { justify-content: flex-start; }
+    .bm-avatar { width: 28px; height: 28px; background: linear-gradient(135deg, var(--bot-accent), #4F46E5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .8rem; flex-shrink: 0; }
+    .bm.user .bm-avatar { display: none; }
+
+    .bm-bubble {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: .85rem;
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: pre-wrap;
+      animation: bubbleIn .2s cubic-bezier(.22,.68,0,1.2) forwards;
+    }
+    @keyframes bubbleIn { from { opacity:0; transform: scale(.9) translateY(4px); } to { opacity:1; transform: scale(1) translateY(0); } }
+
+    .bm.bot  .bm-bubble { background: var(--bot-bubble); color: rgba(255,255,255,.9); border-bottom-left-radius: 5px; }
+    .bm.user .bm-bubble { background: var(--bot-user); color: #fff; border-bottom-right-radius: 5px; box-shadow: 0 3px 12px rgba(79,70,229,.4); }
+
+    /* 타이핑 */
+    .typing { display: flex; gap: 5px; align-items: center; padding: 12px 14px; }
+    .typing span { width: 7px; height: 7px; background: rgba(255,255,255,.4); border-radius: 50%; animation: blink 1s infinite; }
+    .typing span:nth-child(2) { animation-delay: .16s; }
+    .typing span:nth-child(3) { animation-delay: .32s; }
+    @keyframes blink { 0%,60%,100% { transform:translateY(0); opacity:.4; } 30% { transform:translateY(-5px); opacity:1; } }
+
+    /* 빠른 명령 칩 */
+    .bot-chips {
+      padding: 8px 16px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .chip {
+      padding: 5px 12px;
+      background: rgba(129,140,248,.18);
+      border: 1px solid rgba(129,140,248,.3);
+      border-radius: 20px;
+      color: var(--bot-accent);
+      font-size: .74rem;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .chip:hover { background: rgba(129,140,248,.32); }
+
+    /* 입력창 */
+    .bot-input-area {
+      padding: 10px 14px max(14px, env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(255,255,255,.08);
+      display: flex; gap: 10px; align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .bot-input-area textarea {
+      flex: 1;
+      background: rgba(255,255,255,.08);
+      border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-family: var(--font);
+      font-size: .88rem;
+      color: #fff;
+      resize: none;
+      outline: none;
+      line-height: 1.5;
+      max-height: 90px;
+      transition: border-color .2s;
+    }
+    .bot-input-area textarea::placeholder { color: rgba(255,255,255,.3); }
+    .bot-input-area textarea:focus { border-color: var(--bot-accent); }
+    .bot-send {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--bot-user);
+      border: none; border-radius: 12px;
+      color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .12s;
+    }
+    .bot-send:hover { background: #4338CA; }
+    .bot-send:active { transform: scale(.9); }
+
+    /* ══════════ 공통 ══════════ */
+    #toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(6px); background: var(--ink); color: #fff; font-size: .82rem; font-weight: 500; padding: 9px 20px; border-radius: 30px; opacity: 0; pointer-events: none; transition: opacity .22s, transform .22s; white-space: nowrap; z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="header-top">
+      <div class="title-wrap">
+        <h1>메<span>모</span>장</h1>
+        <div class="stats" id="stats">전체 0개</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-filter="all">전체</button>
+      <button class="tab" data-filter="todo">진행중</button>
+      <button class="tab" data-filter="done">완료</button>
+    </div>
+  </div>
+  <div class="memo-list" id="memoList"></div>
+</div>
+
+<!-- 메모 입력창 -->
+<div class="input-bar">
+  <div class="input-inner">
+    <textarea id="memoInput" placeholder="메모를 입력하세요..." rows="1"></textarea>
+    <button class="add-btn" id="addBtn" aria-label="추가">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- 챗봇 FAB -->
+<button class="chatbot-fab" id="chatbotFab" aria-label="AI 어시스턴트">
+  <span class="fab-badge" id="fabBadge">!</span>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    <circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="12" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/>
+  </svg>
+</button>
+
+<!-- 챗봇 모달 -->
+<div class="bot-overlay" id="botOverlay">
+  <div class="bot-panel">
+    <div class="bot-header">
+      <div class="bot-avatar">🤖</div>
+      <div class="bot-header-info">
+        <div class="bot-header-name">메모 AI 어시스턴트</div>
+        <div class="bot-header-sub">메모 추가·완료·삭제를 도와드려요</div>
+      </div>
+      <button class="bot-clear" id="botClear" title="대화 삭제">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+        </svg>
+      </button>
+      <button class="bot-close" id="botClose">✕</button>
+    </div>
+
+    <div class="bot-messages" id="botMessages"></div>
+
+    <div class="bot-chips" id="botChips">
+      <button class="chip" data-msg="메모 목록 알려줘">📋 목록 보기</button>
+      <button class="chip" data-msg="완료된 메모 알려줘">✅ 완료 목록</button>
+      <button class="chip" data-msg="전체 몇 개야?">📊 통계</button>
+      <button class="chip" data-msg="전체 삭제해줘">🗑 전체 삭제</button>
+    </div>
+
+    <div class="bot-input-area">
+      <textarea id="botInput" placeholder="메시지를 입력하세요..." rows="1"></textarea>
+      <button class="bot-send" id="botSend">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════
+   메모 상태 & localStorage
+════════════════════════════════════════ */
+const STORE_KEY = "memo_app_v1";
+let memos  = loadMemos();
+let filter = "all";
+
+function loadMemos() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch { return []; }
+}
+function saveMemos() { localStorage.setItem(STORE_KEY, JSON.stringify(memos)); }
+
+/* CRUD */
+function createMemo(text) {
+  const m = { id: Date.now(), text, done: false, createdAt: new Date().toISOString() };
+  memos.unshift(m); saveMemos(); return m;
+}
+function updateMemo(id, text) { const m = memos.find(m=>m.id===id); if(m){m.text=text; saveMemos();} }
+function toggleMemo(id) { const m = memos.find(m=>m.id===id); if(m){m.done=!m.done; saveMemos();} return memos.find(m=>m.id===id); }
+function deleteMemo(id) { memos = memos.filter(m=>m.id!==id); saveMemos(); }
+function clearAllMemos() { memos = []; saveMemos(); }
+
+/* ════════════════════════════════════════
+   메모 렌더링
+════════════════════════════════════════ */
+function escHtml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function formatDate(iso){ const d=new Date(iso),p=n=>String(n).padStart(2,"0"); return `${d.getMonth()+1}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`; }
+
+function render() {
+  const list = document.getElementById("memoList");
+  const filtered = memos.filter(m=> filter==="all"?true: filter==="done"?m.done:!m.done);
+  const total=memos.length, done=memos.filter(m=>m.done).length;
+  document.getElementById("stats").innerHTML=`전체 <b>${total}</b>개 &nbsp;·&nbsp; 완료 <b>${done}</b>개`;
+
+  if(filtered.length===0){
+    list.innerHTML=`<div class="empty"><span class="e-icon">${filter==="done"?"✅":"📝"}</span><p>${filter==="done"?"완료된 메모가 없어요":"메모를 추가해 보세요"}</p></div>`;
+    return;
+  }
+  list.innerHTML="";
+  filtered.forEach((m,idx)=>{
+    const card=document.createElement("div");
+    card.className="memo-card"+(m.done?" done":"");
+    card.style.animationDelay=`${idx*0.04}s`;
+    card.dataset.id=m.id;
+    card.innerHTML=`
+      <button class="check-btn" data-action="toggle" aria-label="완료 토글">
+        <svg viewBox="0 0 13 10" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,5 4.5,8.5 12,1"/></svg>
+      </button>
+      <div class="memo-content">
+        <div class="memo-text">${escHtml(m.text)}</div>
+        <div class="memo-meta">
+          <span class="memo-date">${formatDate(m.createdAt)}</span>
+          <span class="memo-badge ${m.done?"badge-done":"badge-todo"}">${m.done?"완료":"진행중"}</span>
+        </div>
+      </div>
+      <div class="memo-actions">
+        <button class="icon-btn edit" data-action="edit" aria-label="편집">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="icon-btn del" data-action="delete" aria-label="삭제">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+/* 이벤트 위임 */
+document.getElementById("memoList").addEventListener("click", e=>{
+  const btn=e.target.closest("[data-action]"), card=e.target.closest(".memo-card");
+  if(!btn||!card) return;
+  const id=Number(card.dataset.id), action=btn.dataset.action;
+  if(action==="toggle"){ toggleMemo(id); toast(memos.find(m=>m.id===id)?.done?"✅ 완료 처리":"↩ 진행중으로 변경"); render(); }
+  if(action==="edit"){ startEdit(card,id); }
+  if(action==="delete"){ card.style.cssText="opacity:0;transform:translateX(20px);transition:opacity .2s,transform .2s"; setTimeout(()=>{deleteMemo(id);render();toast("🗑 삭제됨");},200); }
+  if(action==="save-edit"){ const ta=card.querySelector(".memo-edit"),txt=ta.value.trim(); if(!txt){toast("내용을 입력하세요",true);return;} updateMemo(id,txt);toast("💾 저장됨");render(); }
+  if(action==="cancel-edit"){ render(); }
+});
+
+function startEdit(card,id){
+  const m=memos.find(m=>m.id===id),content=card.querySelector(".memo-content");
+  content.innerHTML=`<textarea class="memo-edit" rows="3">${escHtml(m.text)}</textarea><div class="memo-meta" style="margin-top:8px;"><button class="icon-btn save-edit" data-action="save-edit" style="width:auto;padding:4px 12px;font-size:.8rem;border-radius:8px;font-family:var(--font);font-weight:600;color:var(--green);background:var(--green-s);">저장</button><button class="icon-btn cancel-edit" data-action="cancel-edit" style="width:auto;padding:4px 12px;font-size:.8rem;border-radius:8px;font-family:var(--font);color:var(--muted);background:var(--border);">취소</button></div>`;
+  card.querySelector(".memo-actions").style.display="none";
+  const ta=content.querySelector(".memo-edit"); ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length);
+  ta.addEventListener("input",()=>{ ta.style.height="auto"; ta.style.height=ta.scrollHeight+"px"; });
+}
+
+/* 메모 추가 */
+const memoInput=document.getElementById("memoInput"), addBtn=document.getElementById("addBtn");
+function addMemo(){ const text=memoInput.value.trim(); if(!text){toast("내용을 입력하세요",true);return;} createMemo(text); memoInput.value=""; memoInput.style.height="auto"; if(filter==="done")setFilter("all"); else render(); toast("📝 메모 추가됨"); }
+addBtn.addEventListener("click",addMemo);
+memoInput.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();addMemo();} });
+memoInput.addEventListener("input",()=>{ memoInput.style.height="auto"; memoInput.style.height=Math.min(memoInput.scrollHeight,120)+"px"; });
+
+function setFilter(f){ filter=f; document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.filter===f)); render(); }
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setFilter(t.dataset.filter)));
+
+/* ════════════════════════════════════════
+   챗봇 대화 localStorage
+════════════════════════════════════════ */
+const CHAT_KEY = "memo_chat_v1";
+
+// 저장 형식: [{ role:"bot"|"user", text }]
+let chatLog = loadChatLog();
+
+function loadChatLog(){
+  try { return JSON.parse(localStorage.getItem(CHAT_KEY)) || []; } catch { return []; }
+}
+function saveChatLog(){ localStorage.setItem(CHAT_KEY, JSON.stringify(chatLog)); }
+function clearChatLog(){ chatLog=[]; localStorage.removeItem(CHAT_KEY); }
+
+/* ════════════════════════════════════════
+   챗봇 모달 열기/닫기
+════════════════════════════════════════ */
+const overlay=document.getElementById("botOverlay"), fab=document.getElementById("chatbotFab"),
+      botCloseBtn=document.getElementById("botClose"), botClearBtn=document.getElementById("botClear");
+
+fab.addEventListener("click",()=>{
+  overlay.classList.add("show");
+  document.getElementById("fabBadge").classList.remove("show");
+  document.body.style.overflow="hidden";
+  renderChatLog(); // ← 저장된 대화 복원
+});
+botCloseBtn.addEventListener("click",closeBot);
+overlay.addEventListener("click",e=>{ if(e.target===overlay)closeBot(); });
+function closeBot(){ overlay.classList.remove("show"); document.body.style.overflow=""; const panel=overlay.querySelector(".bot-panel"); panel.style.animation="none"; panel.offsetHeight; panel.style.animation=""; }
+
+/* 대화 삭제 버튼 */
+botClearBtn.addEventListener("click",()=>{
+  if(!confirm("대화 내용을 모두 삭제할까요?")) return;
+  clearChatLog();
+  botHistory=[];
+  botMsgs.innerHTML="";
+  addBotMessage("대화 내용을 삭제했어요. 새로 시작해 볼까요? 😊", true);
+});
+
+/* ════════════════════════════════════════
+   챗봇 메시지 렌더
+════════════════════════════════════════ */
+const botMsgs=document.getElementById("botMessages");
+
+/* 저장된 대화 전체를 DOM에 복원 */
+function renderChatLog(){
+  botMsgs.innerHTML="";
+  if(chatLog.length===0){
+    addBotMessage("안녕하세요! 저는 메모 AI 어시스턴트예요 🤖\n\n메모 추가, 완료 처리, 삭제 등을 도와드릴게요.\n예) \"장보기 메모 추가해줘\" \"첫 번째 메모 완료 처리해줘\"", true);
+    return;
+  }
+  chatLog.forEach(msg=>{
+    if(msg.role==="bot")  addBotMessage(msg.text, true);  // persist=true → 이미 저장됨, 재저장 안 함
+    else                  addUserMessage(msg.text, true);
+  });
+}
+
+/* persist=false(기본) 면 chatLog에 push+save, true면 DOM만 그림 */
+function addBotMessage(text, skipSave=false){
+  if(!skipSave){ chatLog.push({role:"bot",text}); saveChatLog(); }
+  const wrap=document.createElement("div"); wrap.className="bm bot";
+  const avatar=document.createElement("div"); avatar.className="bm-avatar"; avatar.textContent="🤖";
+  const bubble=document.createElement("div"); bubble.className="bm-bubble"; bubble.textContent=text;
+  wrap.appendChild(avatar); wrap.appendChild(bubble); botMsgs.appendChild(wrap);
+  botMsgs.scrollTop=botMsgs.scrollHeight;
+}
+function addUserMessage(text, skipSave=false){
+  if(!skipSave){ chatLog.push({role:"user",text}); saveChatLog(); }
+  const wrap=document.createElement("div"); wrap.className="bm user";
+  const bubble=document.createElement("div"); bubble.className="bm-bubble"; bubble.textContent=text;
+  wrap.appendChild(bubble); botMsgs.appendChild(wrap);
+  botMsgs.scrollTop=botMsgs.scrollHeight;
+}
+function addTyping(){
+  const wrap=document.createElement("div"); wrap.className="bm bot"; wrap.id="botTyping";
+  const avatar=document.createElement("div"); avatar.className="bm-avatar"; avatar.textContent="🤖";
+  const bubble=document.createElement("div"); bubble.className="bm-bubble";
+  const dots=document.createElement("div"); dots.className="typing";
+  for(let i=0;i<3;i++){const s=document.createElement("span"); dots.appendChild(s);}
+  bubble.appendChild(dots); wrap.appendChild(avatar); wrap.appendChild(bubble); botMsgs.appendChild(wrap);
+  botMsgs.scrollTop=botMsgs.scrollHeight;
+}
+function removeTyping(){ const t=document.getElementById("botTyping"); if(t)t.remove(); }
+
+/* 빠른 명령 칩 */
+document.getElementById("botChips").addEventListener("click",e=>{
+  const chip=e.target.closest(".chip"); if(!chip)return;
+  sendToBot(chip.dataset.msg);
+});
+
+/* ════════════════════════════════════════
+   Claude API 호출
+════════════════════════════════════════ */
+// API용 히스토리는 chatLog에서 복원
+let botHistory = chatLog.map(m=>({ role: m.role==="bot"?"assistant":"user", content: m.text }));
+
+async function sendToBot(userText) {
+  if(!userText.trim()) return;
+  addUserMessage(userText);
+  addTyping();
+
+  // 현재 메모 목록을 컨텍스트로 전달
+  const memoContext = memos.length === 0
+    ? "현재 메모가 없습니다."
+    : memos.map((m,i)=>`${i+1}. [${m.done?"완료":"진행중"}] ${m.text} (id:${m.id})`).join("\n");
+
+  const systemPrompt = `당신은 메모장 앱의 AI 어시스턴트입니다. 사용자의 메모 관리를 도와주세요.
+
+현재 메모 목록:
+${memoContext}
+
+당신이 할 수 있는 작업:
+- 메모 추가: 사용자가 "~추가해줘", "~메모해줘", "~적어줘" 라고 하면 메모를 추가합니다
+- 완료 처리: "~완료해줘", "~체크해줘", 번호나 내용으로 특정 메모를 완료 처리합니다
+- 삭제: "~삭제해줘", "~지워줘"로 특정 메모 또는 전체 삭제합니다
+- 목록 조회, 통계 제공
+
+응답 규칙:
+1. 작업을 수행할 때는 반드시 JSON 액션을 응답 끝에 포함하세요:
+   - 추가: [ACTION:ADD:메모내용]
+   - 완료토글: [ACTION:TOGGLE:메모id]
+   - 삭제: [ACTION:DELETE:메모id]
+   - 전체삭제: [ACTION:CLEAR]
+2. 여러 액션이 필요하면 여러 개 포함 가능합니다
+3. 자연스럽고 친근한 한국어로 응답하세요
+4. 응답은 2-3문장으로 간결하게 해주세요`;
+
+  botHistory.push({ role: "user", content: userText });
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: botHistory
+      })
+    });
+
+    const data = await res.json();
+    const replyText = data.content?.[0]?.text || "죄송해요, 응답을 받지 못했어요.";
+
+    // 액션 파싱 및 실행
+    const cleanText = executeActions(replyText);
+
+    botHistory.push({ role: "assistant", content: replyText });
+    // chatLog에도 저장 (새로고침 대비)
+    if(chatLog[chatLog.length-1]?.text !== cleanText){
+      // addBotMessage 내부에서 이미 저장하므로 히스토리 길이만 관리
+    }
+    // 히스토리 최대 20개 유지
+    if(botHistory.length > 20) botHistory = botHistory.slice(-20);
+
+    removeTyping();
+    addBotMessage(cleanText);
+    render(); // 메모 목록 갱신
+
+  } catch(err) {
+    removeTyping();
+    addBotMessage("네트워크 오류가 발생했어요. 다시 시도해 주세요. 😢");
+    console.error(err);
+  }
+}
+
+/* 액션 파싱 */
+function executeActions(text) {
+  let clean = text;
+  const actions = [];
+
+  // [ACTION:ADD:내용]
+  const addReg = /\[ACTION:ADD:([^\]]+)\]/g;
+  let m;
+  while((m=addReg.exec(text))!==null){
+    actions.push({type:"add", value:m[1].trim()});
+    clean=clean.replace(m[0],"");
+  }
+  // [ACTION:TOGGLE:id]
+  const togReg = /\[ACTION:TOGGLE:(\d+)\]/g;
+  while((m=togReg.exec(text))!==null){
+    actions.push({type:"toggle", value:Number(m[1])});
+    clean=clean.replace(m[0],"");
+  }
+  // [ACTION:DELETE:id]
+  const delReg = /\[ACTION:DELETE:(\d+)\]/g;
+  while((m=delReg.exec(text))!==null){
+    actions.push({type:"delete", value:Number(m[1])});
+    clean=clean.replace(m[0],"");
+  }
+  // [ACTION:CLEAR]
+  if(text.includes("[ACTION:CLEAR]")){
+    actions.push({type:"clear"});
+    clean=clean.replace("[ACTION:CLEAR]","");
+  }
+
+  // 액션 실행
+  actions.forEach(a=>{
+    if(a.type==="add")    { createMemo(a.value); toast("📝 "+a.value); }
+    if(a.type==="toggle") { toggleMemo(a.value); }
+    if(a.type==="delete") { deleteMemo(a.value); toast("🗑 삭제됨"); }
+    if(a.type==="clear")  { clearAllMemos(); toast("🗑 전체 삭제됨"); }
+  });
+
+  return clean.trim();
+}
+
+/* 챗봇 입력 전송 */
+const botInput=document.getElementById("botInput"), botSendBtn=document.getElementById("botSend");
+function submitBot(){ const t=botInput.value.trim(); if(!t)return; botInput.value=""; botInput.style.height="auto"; sendToBot(t); }
+botSendBtn.addEventListener("click",submitBot);
+botInput.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submitBot();} });
+botInput.addEventListener("input",()=>{ botInput.style.height="auto"; botInput.style.height=Math.min(botInput.scrollHeight,90)+"px"; });
+
+/* ════════════════════════════════════════
+   토스트 & 초기화
+════════════════════════════════════════ */
+let toastTimer;
+function toast(msg,isErr=false){ const el=document.getElementById("toast"); el.textContent=msg; el.style.background=isErr?"#F44336":"var(--ink)"; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),1600); }
+
+render();
+
+// 처음 방문 시 FAB 뱃지 표시
+if(!localStorage.getItem("bot_seen")){ document.getElementById("fabBadge").classList.add("show"); localStorage.setItem("bot_seen","1"); }
+</script>
+</body>
+</html>

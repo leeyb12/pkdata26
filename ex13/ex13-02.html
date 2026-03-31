@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      body {
+        margin: 40px;
+      }
+      input,
+      button {
+        padding: 6px;
+      }
+      input {
+        width: 70%;
+      }
+      button {
+        border: none;
+        background-color: cadetblue;
+        color: white;
+      }
+      li {
+        width: 70%;
+        list-style-type: none;
+        padding: 6px 0;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+      }
+      li:hover {
+        background-color: antiquewhite;
+      }
+      li.done {
+        color: #aaa;
+        text-decoration: line-through;
+        background-color: rgb(245, 244, 244);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Todo List</h2>
+    <input type="text" id="input" placeholder="할 일 입력" />
+    <button id="add">추가</button>
+    <ul id="list"></ul>
+    <script>
+      const input = document.querySelector("#input");
+      const addBtn = document.querySelector("#add");
+      const list = document.querySelector("#list");
+      /* 엔터동작추가 */
+
+      const inEnter = () => {
+        const li = document.createElement("li");
+        /* 빈칸제외 */
+        if (!input.value) return;
+        
+        /* 내용추가 */
+        li.textContent = input.value;
+        
+        /* 클릭시 완료처리 */
+        li.addEventListener("click", () => {
+        li.classList.toggle("done");
+        });
+
+        /* 더블클릭시 삭제 */
+        li.addEventListener("dblclick", () => {
+        list.remove();
+        });
+
+        /* 내용 비우기 */
+        input.value = "";
+
+
+        list.appendChild(li);
+      };
+      addBtn.addEventListener("click", inEnter);
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") inEnter();
+      });
+    </script> 
+  </body>
+</html>

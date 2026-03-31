@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로컬스토리지</title>
+  </head>
+  <body>
+    <h2>localStorage 사용법</h2>
+    <ol>
+      <li><mark>무조건 Str 형식으로 저장됨</mark></li>
+      <li>영구저장됨</li>
+    </ol>
+    <ul>
+      기본 사용법 4가지 
+      <li>localStorage.setItem("key", "value"):저장</li>
+      <li>localStorage.getItem("key"):조회</li>
+      <li>localStorage.removeItem("key"):삭제</li>
+      <li>localStorage.clear():전체 삭제</li>
+    </ul>
+    <hr />
+    <input type="text" id="name" placeholder="이름 입력" />
+    <button id="save">저장</button>
+    <button id="load">불러오기</button>
+    <hr />
+    <button id="obj-save">객체저장</button>
+    <button id="obj-load">객체로드</button>
+    <hr />
+    <h2 id="disp"></h2>
+    <script>
+      const name = document.getElementById("name");
+      const disp = document.getElementById("disp");
+      const objSave = document.getElementById("obj-save");
+      const objLoad = document.getElementById("obj-load");
+
+      /* localStorage에 저장 */
+      document.getElementById("save").onclick = () =>
+        localStorage.setItem("첫번째키", name.value);
+      
+      /* localStorage로부터 로드 */
+      const load = document.getElementById("load");
+      load.addEventListener("click", () => {
+        disp.textContent = localStorage.getItem("첫번째키");
+      });
+
+      /* localStorage에 객체를 저장 */
+      const obj = [
+        { id: 1, name: "홍길동", age: 22 }, 
+        { id: 2, name: "수퍼맨", age: 33 }
+      ];
+
+      const obj1 = { id: 1, name: "홍길동", age: 22 };
+      objSave.addEventListener("click", () => {
+        localStorage.setItem("객체넣기", JSON.stringify(obj));
+      });
+
+      objLoad.addEventListener("click", () => {
+        const pn = localStorage.getItem("객체넣기");
+        const objPn = JSON.stringify(pn);
+        disp.textContent = pn;
+        console.log(objPn[0].name);
+        console.log(objPn[0].age)
+      });
+
+      /* localStorage로부터 객체를 로드 */
+    </script> 
+  </body>
+</html>
