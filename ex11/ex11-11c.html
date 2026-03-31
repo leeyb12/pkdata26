@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reduce</title>
+  </head>
+  <body>
+    <h2>reduce</h2>
+    <h3>3. 성능!</h3>
+    <pre>
+      arr.reduce((<mark>누적값</mark>, 현재값, 인덱스, 배열) => {
+        return <mark>누적값</mark>
+      }, 초기값 )
+    </pre>
+    <script>
+      /* 여러개 메소드 체이닝 연산 */
+      // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      const arr = Array(10000)
+        .fill(0)
+        .map((_, i) => i + 1);
+      // console.log(arr);
+
+      /* 짝수만 뽑아내서 10배를 하고 그값의 합 */
+      console.time("연속한 메소드 체닝연산");
+      const result = arr
+        .filter((v) => v % 2 === 0)
+        .map((v) => v % 10)
+        .reduce((a, c) => a + c, 0);
+      console.log(result);
+      console.timeEnd("연속한 메소드 체닝연산");
+      /* reduce 한번에 처리 */
+      console.time("reduce 한번에 처리");
+      const result2 = arr.reduce((a, c) => {
+        if (c % 2 === 0) a = a + (c * 10);
+        return a;
+      }, 0)
+      console.log(result2);
+      console.timeEnd("reduce 한번에 처리");
+    </script>
+  </body>
+</html>

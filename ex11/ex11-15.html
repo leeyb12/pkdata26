@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      h1 {
+        text-align: center;
+      }
+      ul {
+        list-style: none;
+      }
+      li {
+        padding: 5px;
+        margin-bottom: 5px;
+        background-color: beige;
+        border-radius: 10px;
+        transition: 0.6s ease;
+      }
+      li:hover {
+        background-color: chartreuse;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* 루트 생성 */
+        const root = document.createElement("div");
+        document.body.appendChild(root);
+        /* 제목생성 */
+        const h1 = document.createElement("h1");
+        h1.textContent = "댓글 목록";
+        root.appendChild(h1);
+        /* ul 생성 */
+        const ul = document.createElement("ul");
+        root.appendChild(ul);
+
+        const url = "https://jsonplaceholder.typicode.com/comments";
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            const list = data.slice(0, 30);
+            list.forEach((v, i) => {
+              const li = document.createElement("li");
+              li.textContent = `${i + 1}번: ${v.name}`;
+              ul.appendChild(li); 
+            });
+          })
+          .then(() => console.log("완료"));
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동적생성 연습</title>
+    <style>
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        background-color: beige;
+        margin: 5px 0;
+        padding: 10px 20px;
+        border-radius: 10px;
+        width: 200px;
+        transition: 0.6s ease;
+      }
+      li:hover {
+        background-color: yellow;
+        width: 250px;
+      }
+    </style>
+    <script>
+      const item = [
+        "사과", 
+        "수박", 
+        "참외", 
+        "딸기", 
+        "키위", 
+        "배", 
+        "오렌지",
+        "키위", 
+        "망고", 
+        "바나나"
+    ]
+    
+      document.addEventListener("DOMContentLoaded", () => {
+        const ul = document.createElement("ul");
+        document.body.appendChild(ul);  
+        items.forEach(v => {
+          const li = document.createElement("li");
+          ul.appendChild(li);
+          li.textContent = v;
+        });
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reduce</title>
+  </head>
+  <body>
+    <h2>reduce</h2>
+    <h3>1. 누적계</h3>
+    <h3>2. 누적객체</h3>
+    <h3>3. 조건비교</h3>
+    <pre>
+      arr.reduce((<mark>누적값</mark>, 현재값, 인덱스, 배열) => {
+        return <mark>누적값</mark>
+      }, 초기값 )
+    </pre>
+    <script>
+      /* 누적계 */
+      const arrObj = [{ price: 110 }, { price: 220 }, { price: 330 }];
+      
+      const total = arrObj.reduce((acc, cur) => {
+        return acc + cur.price;
+      }, 0);
+      console.log(total);
+    </script>
+    <script>
+      // const obj = {} // -> {name: '홍길동'}
+      // obj[name] = '홍길동'
+
+      /* 누적객체 */
+      const arr = ["aa", "bb", "cc", "dd", "ee", "ff"];
+      const result = arr.reduce((acc, cur) => {
+        acc[cur] = (acc[cur] || 0) + 1;
+        return acc;
+      }, {});
+      console.log(result);
+
+      // 맵리듀서, java, 하둡, 빅데이터의 분산처리시스템의 조상
+    </script>
+    <script>
+      const nums = [12, 32, 31, 43, 56, 77, 23, 14]
+      const max = nums.reduce((acc, cur) => {
+        return acc > cur ? acc : cur;
+      });
+      console.log(max)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reduce</title>
+  </head>
+  <body>
+    <h2>reduce</h2>
+    <h3>1. map 구현</h3>
+    <h3>2. filter 구현</h3>
+    <pre>
+      arr.reduce((<mark>누적값</mark>, 현재값, 인덱스, 배열) => {
+        return <mark>누적값</mark>
+      }, 초기값 )
+    </pre>
+    <script>
+      /* map 구현 */
+      const arr = [1, 2, 3, 4, 5];
+      const result = arr.reduce((acc, cur) => {
+        acc.push(cur * 2);
+        return acc;
+      }, []);
+      console.log(result);
+      /* filter 구현 */
+      const result2 = arr.reduce((a, c) => {
+        if(c % 2 === 0) {
+          a.push(c);
+        } 
+        return a;
+      }, []);
+      console.log(result2);
+    </script>
+  </body>
+</html>

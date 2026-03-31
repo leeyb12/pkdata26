@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      const arr = [11, 22, 33, 44, 55, 66, 77, 88, 99];
+      const arr2 = [];
+
+      function test(value) {
+        console.log(value);
+      }
+      function make(some) {
+        arr2.push(some);
+      }
+      function what(who) {
+        arr2.splice(0, 0, who);
+      }
+      // const what = (who) => arr2.splice(0, 0, who);
+      arr.forEach((who) => arr2.splice(0, 0, who));
+      console.log(arr2);
+    </script>  
+  </body>
+</html>

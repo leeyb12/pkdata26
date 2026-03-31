@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <canvas id="myChart1"></canvas>
+      <canvas id="myChart2"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+      const ctx1 = document.getElementById("myChart1");
+      const labels1 = ["일", "월", "화", "수", "목", "금", "토"];
+      const box1 = [];
+      for (let i = 0; i < 7; i++) {
+        box1.push({
+          x: Math.floor(Math.random() * 50),
+          y: Math.floor(Math.random() * 50),
+          r: Math.floor(Math.random() * 50)
+        });
+      }
+      const data1 = {
+        labels : labels1,
+        datasets: [
+          {
+            label: "My First Dataset1",
+            data: box1,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 205, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(201, 203, 207, 0.2)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+      const config1 = {
+        type: "bubble",
+        data: data1,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      };
+
+      new Chart(ctx1, config1);
+    </script>
+
+    <script>
+      const ctx2 = document.getElementById("myChart2");
+      const labels2 = ["일", "월", "화", "수", "목", "금", "토"];
+      const box2 = [];
+      for (let i = 0; i < 7; i++) {
+        box2.push(Math.floor(Math.random() * 70));
+      }
+      const data2 = {
+        labels : labels2,
+        datasets: [
+          {
+            label: "My First Dataset2",
+            data: box2,
+            fill: false,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 205, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(201, 203, 207, 0.2)",
+            ],
+            borderColor: [
+              "rgb(255, 99, 132)",
+              "rgb(255, 159, 64)", 
+              "rgb(255, 205, 86)",
+              "rgb(75, 192, 192)",
+              "rgb(54, 162, 235)",
+              "rgb(153, 102, 255)",
+              "rgb(201, 203, 207)",
+            ],
+            borderWidth: 1,
+            tension: 0.1
+          },
+        ],
+      };
+      const config2 = {
+        type: "line",
+        data: data2,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      };
+
+      new Chart(ctx2, config2);
+    </script>
+  </body>
+</html>

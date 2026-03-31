@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <!-- div#parent{부모 div}>button#child{아이 버튼}   -->
+    <div id="parent">
+      부모 div
+    <button id="child">아이 버튼</button>
+    </div>
+    <script>
+      const parent = document.getElementById("parent");
+      const child = document.getElementById("child");
+
+      parent.addEventListener("click", () => {
+        console.log("부모 실행");
+      });
+      child.addEventListener("click", (e) => {
+        e.stopPropagation();  // 이벤트 버블링 차단
+        console.log("자식 실행");
+      });
+    </script>
+  </body>
+</html>

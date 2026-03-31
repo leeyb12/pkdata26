@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reduce</title>
+  </head>
+  <body>
+    <h2>reduce</h2>
+    <pre>
+      arr.reduce((<mark>누적값</mark>, 현재값, 인덱스, 배열) => {
+        return <mark>누적값</mark>
+      }, 초기값 )
+    </pre>
+    <script>
+      const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+      const result = arr.reduce((acc, cur, idx, ar) => {
+        console.log(acc, cur, idx, ar);
+        return acc + cur;
+      }, 0);
+      console.log(result);
+    </script>  
+  </body>
+</html>

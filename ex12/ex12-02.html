@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      const ctx = document.getElementById("myChart");
+
+      // 0~100 까지 임의의 랜덤값을 배열(6)에 담아라.
+      const box = [];
+      for (let i = 0; i < 6; i++) {
+        const ran = Math.floor(Math.random() * 100);
+        box.push(ran);
+      } 
+
+      new Chart(ctx, {
+        type: "polarArea",
+        data: {
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          datasets: [
+            {
+              label: "# of Votes",
+              data: box,
+              borderWidth: 1
+            }]
+        },
+        options: {
+          scales: {
+              y: {
+                beginAtZero: true
+              },
+            },
+          },
+      });
+    </script>
+  </body>
+</html>

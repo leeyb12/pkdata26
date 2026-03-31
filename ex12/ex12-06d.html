@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래스 필드</title>
+    <script>
+      class Cf1 {
+        constructor(value) {
+          this.value = value;
+        }
+        click() {
+          // 일반 함수는 this 호출하는 객체에 따라 다름.
+          console.log(this.value);
+        }
+      }
+      class Cf2 {
+        constructor(value) {
+          this.value = value;
+        }
+        click = () => {
+          // 화살표 함수는 this를 바꾸지 않음.
+          console.log(this.value);
+        };
+      }
+
+      const cf1 = new Cf1("안녕하세요1.");
+      const cf2 = new Cf2("안녕하세요1.");
+      cf1.click();
+      cf2.click();
+      setTimeout(cf1.click, 1000); // 호출시 결정
+      setTimeout(cf2.click, 1000); // this 가 고정
+      setTimeout(function () {
+        cf1.click();
+      }, 1000);
+      setTimeout(function () {
+        cf2.click();
+      }, 1000);
+      setTimeout(() => cf1.click(), 1000);
+      setTimeout(() => cf2.click(), 1000);
+    </script>
+  </head>
+  <body></body>
+</html>

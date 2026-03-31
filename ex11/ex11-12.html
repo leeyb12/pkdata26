@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat rem
+      totam, alias corrupti repellendus vero nihil dignissimos, blanditiis ullam
+      saepe modi quae quia nesciunt maiores voluptatibus. Aspernatur deleniti
+      eum accusantium assumenda vero neque animi inventore consequatur quam
+      nulla, culpa asperiores atque non. Sapiente eos accusamus suscipit illo
+      dolores facilis explicabo laboriosam voluptas id? Excepturi modi tempora
+      reiciendis saepe eos, quibusdam accusamus eius deleniti ullam pariatur
+      voluptates dicta architecto beatae? Minima omnis repellat, sunt odio esse
+      earum blanditiis sequi quae ducimus perferendis enim cupiditate quas
+      maiores harum, suscipit, inventore accusantium! Ipsam unde optio quisquam
+      iure fugiat rem ratione exercitationem illo atque!
+    </div>
+    <script>
+      const text = document.querySelector("#app");
+      const str = text.textContent;
+      
+      const words = str.split(/\s+/);
+      const big = [];
+      const small = [];
+
+      for (let i = 0; i < words.length; i++) {
+        if (words[i].length > 5) {
+          big.push(words[i]);
+        } else {
+          small.push(words[i]);
+        }
+      }
+      console.log("big: ", big);
+      console.log("small: ", small);
+    </script>
+  </body>
+</html>

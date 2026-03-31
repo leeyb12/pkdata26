@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래스내부 this</title>
+  </head>
+  <body>
+    <script>
+      function Person(name) {
+        this.name = name;
+      }
+
+      Person.prototype.show = function() {
+        console.log(`이름은 ${this.name}입니다.`);
+      };
+
+      const p1 = new Person("홍길동");
+      const p2 = new Person("배트맨");
+      p1.show();
+      p2.show();
+    </script>
+  </body>
+</html>

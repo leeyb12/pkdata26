@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <!-- div.test>button>span{테스트용 버튼} -->
+    <div class="test">
+      <button><span>테스트용1 버튼</span></button>
+      <button><span>테스트용2 버튼</span></button>
+    </div>
+    <script>
+      function fn1(e) {
+        console.log("===== 일반 함수 =====");
+        console.log("e.target:", e.target);
+        console.log("e.currentTarget:", e.currentTarget);
+        console.log("this:", this);
+        console.log("this === e.currentTarget:", this === e.currentTarget);
+      }
+
+      const fn2 = (e) => {
+        console.log("===== 화살표 함수 =====");
+        console.log("e.target:", e.target);
+        console.log("e.currentTarget:", e.currentTarget);
+        // console.log("this:", this);  // 조심하라, 짬이되면 써라.
+        console.log("this === e.currentTarget:", this === e.currentTarget);
+      };
+      
+      const btns = document.querySelectorAll("button");
+      btns[0].addEventListener("click", fn1);
+      btns[1].addEventListener("click", fn2);
+    </script>  
+  </body>
+</html>

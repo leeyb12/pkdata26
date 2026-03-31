@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- A root element for TypeIt to target. -->
+    <h1 id="app"></h1>
+
+    <!-- The script itself, loaded AFTER your root element. -->
+    <script src="https://unpkg.com/typeit/dist/index.umd.js"></script>
+    <script>
+      new TypeIt("#app", {
+        speed: 50,
+        startDelay: 300,
+      })
+        .type("제 홈페이지에 오신 것을 환영합니다.", { delay: 3000 })
+        .move(-14, { delay: 1000 })
+        .delete(1, { delay: 100 })
+        .delete(1, { delay: 100 })
+        .delete(1, { delay: 100 })
+        .delete(1, { delay: 100 })
+        .type("포트폴리오 사이트", { delay: 400 })
+        .go();
+    </script>
+  </body>
+</html>

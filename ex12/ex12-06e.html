@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      const test = {
+        a: function () {
+          "use strict";
+          function inner() {
+            console.log(this);
+          }
+          inner();
+        },
+        b: function () {
+          function inner() {
+            console.log(this);
+          }
+          inner();
+        },
+        c: function () {
+          const inner = () => {
+            console.log(this);
+          };
+          inner();
+        },
+        d: () => {
+          function inner() {
+            console.log(this);
+          }
+          inner();
+        },
+      };
+      test.a();
+      test.b();
+      test.c();
+      test.d();
+    </script>  
+  </body>
+</html>

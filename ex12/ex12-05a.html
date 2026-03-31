@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Move</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      h1 {
+        margin: 0;
+        border-radius: 50%;
+        font-size: 3rem;
+        position: absolute;
+        padding: 20px 30px 30px;
+        user-select: none;
+
+        /* 핵심: GPU 가속 */
+        will-change: transform;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1️⃣ 요소 생성
+        const star = document.createElement("h1");
+        star.textContent = "⭐";
+        document.body.appendChild(star);
+
+        // 2️⃣ 상태 관리 (실무 스타일)
+        const state = {
+          x: 0,
+          y: 0,
+          step: 40,
+        };
+
+        // 3️⃣ 렌더 함수 (UI 업데이트 분리)
+        const render = () => {
+          star.style.transform = `translate(${state.x * state.step}px, ${
+            state.y * state.step
+          }px)`;
+        };
+
+        // 4️⃣ 키 입력 처리 (확장 가능한 구조)
+        const keyMap = {
+          ArrowLeft: () => state.x--,
+          ArrowRight: () => state.x++,
+          ArrowUp: () => state.y--,
+          ArrowDown: () => state.y++,
+        };
+
+        // 5️⃣ 이벤트 처리
+        window.addEventListener("keydown", (e) => {
+          const action = keyMap[e.key];
+          if (!action) return;
+
+          e.preventDefault(); // 스크롤 방지
+          action();
+          render();
+        });
+
+        // 6️⃣ 초기 렌더
+        render();
+      });
+    </script>
+  </head>
+
+  <body></body>
+</html>

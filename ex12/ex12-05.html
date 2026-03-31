@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        position: absolute;
+        left: 400px;
+        top: 400px;
+        margin: 0;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const star = document.createElement("h1");
+        star.textContent = "⭐";
+        document.body.appendChild(star);
+
+        let x = 10;
+        let y = 10;
+        const step = 40;
+
+        const move = () => {
+          star.style.left = `${x * step}px`;
+          star.style.top = `${y * step}px`;
+        };
+        window.addEventListener("keydown", (event) => {
+          //   console.log(event.key);
+          if (event.key === "ArrowRight") x++;
+          if (event.key === "ArrowLeft") x--;
+          if (event.key === "ArrowUp") y--;
+          if (event.key === "ArrowDown") y++;
+          move();
+        });
+      });
+    </script>
+  <body></body>
+</html>
